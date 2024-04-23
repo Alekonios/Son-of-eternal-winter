@@ -4,7 +4,7 @@ extends CharacterBody3D
 
 @export var speed: float = 1.0
 @export var jump: float = 2.0
-@onready var fire = $"ARMS_CAM_POS/ak_aim_pos/ARMS/ak-74_arms/Sketchfab_model/810f0276179d4425a118b331d5f38189_fbx/Object_2/RootNode/Rig/Object_8/Skeleton3D/MeshInstance3D"
+
 
 var cam_down_limit = 50
 var cam_up_limit = -50
@@ -14,12 +14,13 @@ var cam_up_limit = -50
 @onready var ARMS = $ARMS_CAM_POS/ak_aim_pos/ARMS
 @onready var AK_ORIG_NODE = $"ARMS_CAM_POS/ak_aim_pos/ARMS/ak-74_arms"
 @onready var AK_74 = $"ARMS_CAM_POS/ak_aim_pos/ARMS/ak-74_arms/Sketchfab_model/810f0276179d4425a118b331d5f38189_fbx/Object_2/RootNode/Rig/Object_8/Skeleton3D/AK-74"
-@onready var left_arm = $Armature/Skeleton3D/Left_full_arm
-@onready var rigt_arm = $Armature/Skeleton3D/right_arm
 @onready var camera = $camera_node/Camera3D
 @onready var animator = $AnimationPlayer
 @onready var ak_animator = $"ARMS_CAM_POS/ak_aim_pos/ARMS/ak-74_arms/AnimationPlayer"
 @onready var collider = $camera_node/Camera3D/RayCast3D
+@onready var AK_collider = $camera_node/Camera3D/AK_SHOOT_RAYCAST
+
+@onready var fires_AK = [$"ARMS_CAM_POS/ak_aim_pos/ARMS/ak-74_arms/Sketchfab_model/810f0276179d4425a118b331d5f38189_fbx/Object_2/RootNode/Rig/Object_8/Skeleton3D/fires/fire", $"ARMS_CAM_POS/ak_aim_pos/ARMS/ak-74_arms/Sketchfab_model/810f0276179d4425a118b331d5f38189_fbx/Object_2/RootNode/Rig/Object_8/Skeleton3D/fires/fire2", $"ARMS_CAM_POS/ak_aim_pos/ARMS/ak-74_arms/Sketchfab_model/810f0276179d4425a118b331d5f38189_fbx/Object_2/RootNode/Rig/Object_8/Skeleton3D/fires/fire3", $"ARMS_CAM_POS/ak_aim_pos/ARMS/ak-74_arms/Sketchfab_model/810f0276179d4425a118b331d5f38189_fbx/Object_2/RootNode/Rig/Object_8/Skeleton3D/fires/fire4", $"ARMS_CAM_POS/ak_aim_pos/ARMS/ak-74_arms/Sketchfab_model/810f0276179d4425a118b331d5f38189_fbx/Object_2/RootNode/Rig/Object_8/Skeleton3D/fires/fire5", $"ARMS_CAM_POS/ak_aim_pos/ARMS/ak-74_arms/Sketchfab_model/810f0276179d4425a118b331d5f38189_fbx/Object_2/RootNode/Rig/Object_8/Skeleton3D/fires/fire6", $"ARMS_CAM_POS/ak_aim_pos/ARMS/ak-74_arms/Sketchfab_model/810f0276179d4425a118b331d5f38189_fbx/Object_2/RootNode/Rig/Object_8/Skeleton3D/fires/fire7", $"ARMS_CAM_POS/ak_aim_pos/ARMS/ak-74_arms/Sketchfab_model/810f0276179d4425a118b331d5f38189_fbx/Object_2/RootNode/Rig/Object_8/Skeleton3D/fires/fire8", $"ARMS_CAM_POS/ak_aim_pos/ARMS/ak-74_arms/Sketchfab_model/810f0276179d4425a118b331d5f38189_fbx/Object_2/RootNode/Rig/Object_8/Skeleton3D/fires/fire9", $"ARMS_CAM_POS/ak_aim_pos/ARMS/ak-74_arms/Sketchfab_model/810f0276179d4425a118b331d5f38189_fbx/Object_2/RootNode/Rig/Object_8/Skeleton3D/fires/fire10"]
 
 @onready var cam_origin = [$cam_positions/AK_positions/ak_def_position, $cam_positions/AK_positions/ak_walk_position, $cam_positions/AK_positions/ak_run_position, $cam_positions/def_positions/def_position, $cam_positions/def_positions/walk_position, $cam_positions/def_positions/run_position, $cam_positions/AK_positions/ak_aim]
 
@@ -31,7 +32,7 @@ var weapons = []
 
 var object = null
 
-enum states {IDLE, WALK, RUN, AIM_A, IDLE_A, WALK_A, RUN_A, SHOOT_A}
+enum states {IDLE, WALK, RUN, AIM_A, IDLE_A, WALK_A, RUN_A, SHOOT_A, RELOADING_A}
 
 @export var state : states = states.IDLE
 
@@ -47,7 +48,7 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-
+	$SubViewportContainer/SubViewport.size = DisplayServer.window_get_size()
 
 func state_change():
 	if state == states.IDLE:
@@ -79,31 +80,44 @@ func state_change():
 		animator.play("idle with automat")
 		ak_animator.play("Rig|AK_Idle")
 		camera.global_position= lerp(camera.global_position, cam_origin[6].global_position, 0.1)
+	elif state == states.RELOADING_A:
+		if AK_ORIG_NODE.reloadnig:
+			ak_animator.play("Rig|AK_Reload_full")
+			camera.global_position= lerp(camera.global_position, cam_origin[0].global_position, 0.1)
 		
 		
-		
+func _process(delta):
+	print(AK_ORIG_NODE.reloadnig)
+	state_change()
+	
+	if Input.is_action_pressed("lc"):
+		if weapon_in_hand and !shooting:
+			if current_weapon == "AK-74":
+				if AK_ORIG_NODE.ammo > 0:
+					shooting = true
+					AK_ORIG_NODE.ammo -= 1
+					print(AK_ORIG_NODE.ammo)
+					shoot_cd = 0.1
+					kickback()
+					ak_animator.play("Rig|AK_Shot")
+					shoot_func("_body")
+					for i in fires_AK:
+						i.rotation.z = randi_range(1, 360)
+						i.show()
+					await get_tree().create_timer(shoot_cd, false).timeout
+					for i in fires_AK:
+						i.hide()
+					shooting = false
+				else:
+					state = states.RELOADING_A
+					AK_ORIG_NODE.ammo_reload()
 
 func _physics_process(delta):
 	states_logics()
 	inventory_system()
-	state_change()
 	if not is_on_floor():
 		velocity.y -= gravity * delta
-		
-	if Input.is_action_pressed("lc") and !shooting:
-		if weapon_in_hand:
-			print(current_weapon)
-			if current_weapon == "AK-74":
-				shooting = true
-				shoot_cd = 0.1
-				print("FIRE")
-				shoot_func("_body")
-				fire.show()
-				await get_tree().create_timer(shoot_cd, false).timeout
-				fire.hide()
-				shooting = false
-			
-	
+				
 	if Input.is_action_pressed("rc") and !cycle_aim_anim:
 		is_aim = true
 		state = states.AIM_A
@@ -151,13 +165,14 @@ func _physics_process(delta):
 		moving = true
 		if !is_run and !current_weapon:
 			state = states.WALK
-		elif current_weapon == "AK-74":
+		elif current_weapon == "AK-74" and !AK_ORIG_NODE.reloadnig:
 			state = states.WALK_A
 		if is_run:
 			if !current_weapon:
 				state = states.RUN
 			elif current_weapon == "AK-74":
-				state = states.RUN_A
+				if !AK_ORIG_NODE.reloadnig:
+					state = states.RUN_A
 				
 	else:
 		moving = false
@@ -166,10 +181,11 @@ func _physics_process(delta):
 		if !current_weapon and !is_aim:
 			state = states.IDLE
 		elif current_weapon == "AK-74":
-			if !is_aim:
+			if !is_aim and !AK_ORIG_NODE.reloadnig:
 				state = states.IDLE_A
 			else:
-				state = states.AIM_A
+				if !AK_ORIG_NODE.reloadnig:
+					state = states.AIM_A
 		
 	move_and_slide()
 	
@@ -182,17 +198,16 @@ func take_it(_body):
 				weapons.push_back(object.gun_name)
 				_body.activation(false, 0)
 				if object.gun_name == "AK-74":
-					AK_74.show()
+					AK_ARMS_CAM_POS.show()
+					ak_animator.play("Rig|AK_Draw")
 				weapon_in_hand = true
 				
 func shoot_func(_body):
-	if collider.is_colliding():
-		if collider.get_collider() is Hitbox:
-			_body = collider.get_collider()
+	if AK_collider.is_colliding():
+		if AK_collider.get_collider() is Hitbox:
+			_body = AK_collider.get_collider()
 			_body.activation(true, 5)
 			
-	
-
 func states_logics():
 	if weapon_in_hand and !is_aim:
 		AK_ARMS_CAM_POS.rotation.x = camera.rotation.x
@@ -218,5 +233,14 @@ func _input(event):
 			
 	if Input.is_action_just_pressed("e"):
 		take_it("_body")
+		
+func kickback():
+	var random_x = randfn(0.002, -0.004)
+	var random_y = randfn(0.01, 0.001)
+	camera.global_position.x += random_x
+	camera.rotation.x += random_y
+	
+	
+	
 
 

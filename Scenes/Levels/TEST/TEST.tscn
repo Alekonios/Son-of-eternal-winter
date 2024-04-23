@@ -9,14 +9,14 @@
 [ext_resource type="PackedScene" uid="uid://bvl0rhc1cydyj" path="res://Scenes/Objects/usable/scarecrow.tscn" id="7_423p0"]
 
 [sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_7lstj"]
-rayleigh_coefficient = 5.53
+rayleigh_coefficient = 32.39
 rayleigh_color = Color(0.145098, 0.203922, 0.27451, 1)
-mie_coefficient = 0.561
-mie_eccentricity = -0.04
+mie_coefficient = 1.0
+mie_eccentricity = 0.38
 mie_color = Color(0.243137, 0.0313726, 0, 1)
 turbidity = 0.0
 sun_disk_scale = 0.0
-ground_color = Color(0.913725, 0.843137, 0.768627, 1)
+ground_color = Color(0.211765, 0.156863, 0.0980392, 1)
 night_sky = ExtResource("3_qtkbj")
 
 [sub_resource type="Sky" id="Sky_5c8is"]
@@ -25,20 +25,33 @@ sky_material = SubResource("PhysicalSkyMaterial_7lstj")
 [sub_resource type="Environment" id="Environment_xmct3"]
 background_mode = 2
 sky = SubResource("Sky_5c8is")
-ambient_light_source = 2
-ambient_light_color = Color(0.215686, 0.196078, 0.188235, 1)
-ambient_light_energy = 6.05
+ambient_light_source = 3
+ambient_light_color = Color(0.423529, 0.392157, 0.388235, 1)
+ambient_light_energy = 8.41
 reflected_light_source = 2
 tonemap_mode = 3
 tonemap_exposure = 1.51
 tonemap_white = 16.0
+ssr_fade_in = 0.0955921
+ssr_fade_out = 1.23115
+ssao_radius = 5.38
 ssao_intensity = 4.36
-ssao_power = 0.00193287
-ssao_detail = 5.0
+ssao_power = 12.9095
+ssao_detail = 3.68
 ssao_horizon = 1.0
-ssao_sharpness = 1.0
-glow_bloom = 0.09
+ssao_sharpness = 0.0
+sdfgi_read_sky_light = false
+sdfgi_cascades = 1
+sdfgi_min_cell_size = 0.01
+sdfgi_cascade0_distance = 0.64
+sdfgi_max_distance = 1.28
+glow_intensity = 8.0
+glow_strength = 0.35
+glow_bloom = 0.16
 glow_blend_mode = 1
+glow_hdr_threshold = 2.18
+glow_hdr_scale = 4.0
+glow_map_strength = 1.0
 volumetric_fog_enabled = true
 volumetric_fog_albedo = Color(0.309804, 0.309804, 0.309804, 1)
 volumetric_fog_emission = Color(0.168627, 0.168627, 0.168627, 1)
@@ -94,9 +107,9 @@ material = ExtResource("1_bnopc")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="graphic"]
 transform = Transform3D(-0.990393, -0.02403, 0.136181, 0.0609904, 0.807923, 0.586124, -0.124108, 0.588799, -0.798695, 0, 4.72751, 0)
-light_color = Color(0.278431, 0.278431, 0.278431, 1)
-light_energy = 3.101
-light_indirect_energy = 12.798
+light_color = Color(0.384314, 0.384314, 0.384314, 1)
+light_energy = 2.777
+light_indirect_energy = 16.0
 shadow_enabled = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="graphic"]
@@ -132,4 +145,4 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.904488, 0, 0)
 shape = SubResource("CylinderShape3D_nonow")
 
 [node name="scrawcrow" parent="." instance=ExtResource("7_423p0")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.57572, 0.5, 2.28696)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.64918, 0.46361, 2.2879)

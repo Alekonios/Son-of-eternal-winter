@@ -1,12 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://bobigb8lbujvl"]
+[gd_scene load_steps=2 format=3 uid="uid://bobigb8lbujvl"]
 
 [ext_resource type="Script" path="res://Scripts/components/hitbox.gd" id="1_vob1r"]
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_dgk1u"]
-size = Vector3(1, 1.5249, 5.56777)
 
 [node name="Hitbox" type="Area3D"]
 script = ExtResource("1_vob1r")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-shape = SubResource("BoxShape3D_dgk1u")

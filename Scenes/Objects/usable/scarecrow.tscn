@@ -55,6 +55,21 @@ height = 121.506
 [sub_resource type="BoxShape3D" id="BoxShape3D_p81mn"]
 size = Vector3(0.407959, 0.676636, 0.442749)
 
+[sub_resource type="Animation" id="Animation_377y0"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
 [sub_resource type="Animation" id="Animation_oxhji"]
 resource_name = "died"
 length = 0.4
@@ -71,8 +86,9 @@ tracks/0/keys = {
 "values": [Vector3(0, 0, 0), Vector3(1.5708, 0, 0)]
 }
 
-[sub_resource type="Animation" id="Animation_377y0"]
-length = 0.001
+[sub_resource type="Animation" id="Animation_2swxu"]
+resource_name = "hit"
+length = 0.2
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -80,10 +96,10 @@ tracks/0/path = NodePath(".:rotation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Vector3(0, 0, 0)]
+"values": [Vector3(0, 0, 0), Vector3(0, 0.287438, 0), Vector3(0, -0.0455007, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_81137"]
@@ -100,22 +116,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Vector3(1.5708, 0, 0), Vector3(0, 0, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_2swxu"]
-resource_name = "hit"
-length = 0.2
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Vector3(0, 0, 0), Vector3(0, 0.287438, 0), Vector3(0, -0.0455007, 0)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_a3f2j"]

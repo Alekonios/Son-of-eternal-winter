@@ -1,0 +1,135 @@
+[gd_scene load_steps=14 format=3 uid="uid://c3dhuwu7hivmq"]
+
+[ext_resource type="Material" uid="uid://dj65m8b8qvbut" path="res://tres-materials/grid.tres" id="1_bnopc"]
+[ext_resource type="Texture2D" uid="uid://bimbbar8mmyde" path="res://Textures/Sky/evermotion_nr_00221.jpg" id="3_qtkbj"]
+[ext_resource type="PackedScene" uid="uid://b3fk84gudx7q5" path="res://Load-Asstets/wooden_table.glb" id="4_sl635"]
+[ext_resource type="PackedScene" uid="uid://hf3sjkmvyipt" path="res://Scenes/Objects/table.tscn" id="5_uacpm"]
+[ext_resource type="PackedScene" uid="uid://d1re2v1u6yut5" path="res://Scenes/Charapters/humans/player/main_player_betaV5.tscn" id="6_iey66"]
+[ext_resource type="PackedScene" uid="uid://cy30rxg6bi125" path="res://Scenes/Guns/AK-74.tscn" id="6_rj6g3"]
+[ext_resource type="PackedScene" uid="uid://bvl0rhc1cydyj" path="res://Scenes/Objects/usable/scarecrow.tscn" id="7_423p0"]
+
+[sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_7lstj"]
+rayleigh_coefficient = 5.53
+rayleigh_color = Color(0.145098, 0.203922, 0.27451, 1)
+mie_coefficient = 0.561
+mie_eccentricity = -0.04
+mie_color = Color(0.243137, 0.0313726, 0, 1)
+turbidity = 0.0
+sun_disk_scale = 0.0
+ground_color = Color(0.913725, 0.843137, 0.768627, 1)
+night_sky = ExtResource("3_qtkbj")
+
+[sub_resource type="Sky" id="Sky_5c8is"]
+sky_material = SubResource("PhysicalSkyMaterial_7lstj")
+
+[sub_resource type="Environment" id="Environment_xmct3"]
+background_mode = 2
+sky = SubResource("Sky_5c8is")
+ambient_light_source = 2
+ambient_light_color = Color(0.215686, 0.196078, 0.188235, 1)
+ambient_light_energy = 6.05
+reflected_light_source = 2
+tonemap_mode = 3
+tonemap_exposure = 1.51
+tonemap_white = 16.0
+ssao_intensity = 4.36
+ssao_power = 0.00193287
+ssao_detail = 5.0
+ssao_horizon = 1.0
+ssao_sharpness = 1.0
+glow_bloom = 0.09
+glow_blend_mode = 1
+volumetric_fog_enabled = true
+volumetric_fog_albedo = Color(0.309804, 0.309804, 0.309804, 1)
+volumetric_fog_emission = Color(0.168627, 0.168627, 0.168627, 1)
+volumetric_fog_gi_inject = 2.14
+volumetric_fog_anisotropy = 0.9
+volumetric_fog_detail_spread = 0.5
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ky1j1"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_ixhrg"]
+material = ExtResource("1_bnopc")
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_nonow"]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="CSG" type="CSGCombiner3D" parent="."]
+use_collision = true
+collision_layer = 2
+collision_mask = 0
+
+[node name="CSGBox3D" type="CSGBox3D" parent="CSG"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.23394, 0, 7.81156)
+size = Vector3(160.211, 1, 165.392)
+material = ExtResource("1_bnopc")
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="CSG"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.971994, 1.92133, 7.78994)
+size = Vector3(6.03406, 2.83411, 0.0874023)
+material = ExtResource("1_bnopc")
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="CSG"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.90468, 1.92133, 5.24087)
+size = Vector3(0.280701, 2.83411, 4.96643)
+material = ExtResource("1_bnopc")
+
+[node name="CSGPolygon3D" type="CSGPolygon3D" parent="CSG"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.505513, 0.381575)
+polygon = PackedVector2Array(0, 0, -1.53535, 1.82927, 1, 0)
+material = ExtResource("1_bnopc")
+
+[node name="CSGPolygon3D2" type="CSGPolygon3D" parent="CSG"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.505513, -1.28976)
+polygon = PackedVector2Array(0, 0, -2.59737, 1.80268, 1, 0)
+material = ExtResource("1_bnopc")
+
+[node name="CSGPolygon3D3" type="CSGPolygon3D" parent="CSG"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.505513, -2.9649)
+polygon = PackedVector2Array(0, 0, -1.39367, 2.64009, 1, 0)
+material = ExtResource("1_bnopc")
+
+[node name="graphic" type="Node3D" parent="."]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="graphic"]
+transform = Transform3D(-0.990393, -0.02403, 0.136181, 0.0609904, 0.807923, 0.586124, -0.124108, 0.588799, -0.798695, 0, 4.72751, 0)
+light_color = Color(0.278431, 0.278431, 0.278431, 1)
+light_energy = 3.101
+light_indirect_energy = 12.798
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="graphic"]
+environment = SubResource("Environment_xmct3")
+
+[node name="Sketchfab_Scene" parent="." instance=ExtResource("4_sl635")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.74469, 0.5, 3.44493)
+
+[node name="table" parent="." instance=ExtResource("5_uacpm")]
+transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, 1.27197, 0.5, 6.34762)
+
+[node name="AK-74" parent="." instance=ExtResource("6_rj6g3")]
+transform = Transform3D(-3.88668e-09, 0.0889168, -0.049586, -0.101809, -4.45019e-09, 0, -2.16747e-09, 0.049586, 0.0889168, 1.06845, 1.07298, 6.29478)
+
+[node name="charapter" parent="." instance=ExtResource("6_iey66")]
+transform = Transform3D(0.006, 0, 0, 0, 0.006, 0, 0, 0, 0.006, 5.53957, 0.500001, 0.757267)
+
+[node name="objects" type="Node3D" parent="."]
+
+[node name="RigidBody3D" type="RigidBody3D" parent="objects"]
+transform = Transform3D(0.581115, 0.813821, 0, -0.813821, 0.581115, 0, 0, 0, 1, 1.50154, 4.7415, 0)
+collision_layer = 2
+collision_mask = 2
+mass = 1000.0
+physics_material_override = SubResource("PhysicsMaterial_ky1j1")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="objects/RigidBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.907458, 0, 0)
+mesh = SubResource("CylinderMesh_ixhrg")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="objects/RigidBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.904488, 0, 0)
+shape = SubResource("CylinderShape3D_nonow")
+
+[node name="scrawcrow" parent="." instance=ExtResource("7_423p0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.57572, 0.5, 2.28696)

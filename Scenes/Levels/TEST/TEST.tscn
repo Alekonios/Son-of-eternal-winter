@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://c3dhuwu7hivmq"]
+[gd_scene load_steps=16 format=3 uid="uid://c3dhuwu7hivmq"]
 
 [ext_resource type="Material" uid="uid://dj65m8b8qvbut" path="res://tres-materials/grid.tres" id="1_bnopc"]
 [ext_resource type="Texture2D" uid="uid://bimbbar8mmyde" path="res://Textures/Sky/evermotion_nr_00221.jpg" id="3_qtkbj"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://cy30rxg6bi125" path="res://Scenes/Guns/AK-74.tscn" id="6_rj6g3"]
 [ext_resource type="PackedScene" uid="uid://bvl0rhc1cydyj" path="res://Scenes/Objects/usable/scarecrow.tscn" id="7_423p0"]
 [ext_resource type="PackedScene" uid="uid://dtf7y5t5okh7r" path="res://Scenes/Guns/pistol.tscn" id="8_0kpvb"]
+[ext_resource type="PackedScene" uid="uid://bo5cshyfoalf5" path="res://Scenes/Objects/static/bak_with_fire.tscn" id="12_33byx"]
 
 [sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_7lstj"]
 rayleigh_coefficient = 32.39
@@ -26,8 +27,9 @@ sky_material = SubResource("PhysicalSkyMaterial_7lstj")
 [sub_resource type="Environment" id="Environment_xmct3"]
 background_mode = 2
 sky = SubResource("Sky_5c8is")
+sky_rotation = Vector3(0, 1.82736, 0)
 ambient_light_source = 3
-ambient_light_color = Color(0.423529, 0.392157, 0.388235, 1)
+ambient_light_color = Color(0.211765, 0.192157, 0.192157, 1)
 ambient_light_energy = 8.41
 reflected_light_source = 2
 tonemap_mode = 3
@@ -41,11 +43,9 @@ ssao_power = 12.9095
 ssao_detail = 3.68
 ssao_horizon = 1.0
 ssao_sharpness = 0.0
-sdfgi_read_sky_light = false
-sdfgi_cascades = 1
-sdfgi_min_cell_size = 0.01
-sdfgi_cascade0_distance = 0.64
-sdfgi_max_distance = 1.28
+sdfgi_enabled = true
+sdfgi_y_scale = 2
+sdfgi_energy = 0.5
 glow_intensity = 8.0
 glow_strength = 0.35
 glow_bloom = 0.16
@@ -145,8 +145,37 @@ mesh = SubResource("CylinderMesh_ixhrg")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.904488, 0, 0)
 shape = SubResource("CylinderShape3D_nonow")
 
-[node name="scrawcrow" parent="." instance=ExtResource("7_423p0")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.64918, 0.46361, 2.2879)
-
 [node name="pistol" parent="." instance=ExtResource("8_0kpvb")]
 transform = Transform3D(0.0075116, -0.467769, 0.206737, 0.511407, 0.00821236, 0, -0.00331943, 0.206711, 0.46783, 1.51942, 1.07955, 6.13917)
+
+[node name="bak_with_fire" parent="." instance=ExtResource("12_33byx")]
+transform = Transform3D(0.380136, 0, 0, 0, 0.380136, 0, 0, 0, 0.380136, 10.4342, 0.509839, 1.12964)
+
+[node name="bak_with_fire3" parent="." instance=ExtResource("12_33byx")]
+transform = Transform3D(0.380136, 0, 0, 0, 0.380136, 0, 0, 0, 0.380136, 9.01, 0.509839, 6.84943)
+
+[node name="bak_with_fire4" parent="." instance=ExtResource("12_33byx")]
+transform = Transform3D(0.380136, 0, 0, 0, 0.380136, 0, 0, 0, 0.380136, 12.3095, 0.509839, 5.10555)
+
+[node name="bak_with_fire2" parent="." instance=ExtResource("12_33byx")]
+transform = Transform3D(0.380136, 0, 0, 0, 0.380136, 0, 0, 0, 0.380136, -0.0820283, 0.509839, 6.82682)
+
+[node name="scarecrow" type="Node3D" parent="."]
+transform = Transform3D(-0.411562, 0, 0.911382, 0, 1, 0, -0.911382, 0, -0.411562, 8.2196, 0.502244, 2.22721)
+
+[node name="scrawcrow" parent="scarecrow" instance=ExtResource("7_423p0")]
+
+[node name="scarecrow2" type="Node3D" parent="."]
+transform = Transform3D(0.307174, 0, 0.951653, 0, 1, 0, -0.951653, 0, 0.307174, 10.5329, 0.502244, 3.05925)
+
+[node name="scrawcrow" parent="scarecrow2" instance=ExtResource("7_423p0")]
+
+[node name="scarecrow3" type="Node3D" parent="."]
+transform = Transform3D(0.487738, 0, 0.87299, 0, 1, 0, -0.87299, 0, 0.487738, 9.09753, 0.502244, 5.30296)
+
+[node name="scrawcrow" parent="scarecrow3" instance=ExtResource("7_423p0")]
+
+[node name="scarecrow4" type="Node3D" parent="."]
+transform = Transform3D(0.246965, 0, 0.969024, 0, 1, 0, -0.969024, 0, 0.246965, 14.0433, 0.502244, 3.76796)
+
+[node name="scrawcrow" parent="scarecrow4" instance=ExtResource("7_423p0")]

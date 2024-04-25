@@ -26,6 +26,7 @@ folder_colors={
 "res://Load-Asstets/": "red",
 "res://Scenes/": "blue",
 "res://Scripts/": "green",
+"res://Shaders/": "pink",
 "res://Sounds/": "teal",
 "res://Textures/": "purple"
 }
@@ -110,5 +111,6 @@ r={
 lights_and_shadows/directional_shadow/soft_shadow_filter_quality=3
 lights_and_shadows/positional_shadow/soft_shadow_filter_quality=3
 reflections/sky_reflections/roughness_layers=16
+environment/ssao/quality=4
 scaling_3d/mode=1
 anti_aliasing/quality/msaa_3d=1

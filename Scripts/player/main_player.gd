@@ -30,12 +30,18 @@ var cam_up_limit = -50
 @onready var cam_origin = [$cam_positions/AK_positions/ak_def_position, $cam_positions/AK_positions/ak_walk_position, $cam_positions/AK_positions/ak_run_position, $cam_positions/def_positions/def_position, $cam_positions/def_positions/walk_position, $cam_positions/def_positions/run_position, $cam_positions/AK_positions/ak_aim, $cam_positions/pistol_positions/pistol_def_position, $cam_positions/pistol_positions/pistol_walk, $cam_positions/pistol_positions/pistol_run, $cam_positions/pistol_positions/pistol_aim]
 @onready var ak_sounds = [$"ARMS_CAM_POS/ak_aim_pos/ARMS/ak-74_arms/sounds/shoot_sound"]
 
+
 var cycle_aim_logic = 0
 var cycle_aim_anim = false
 var new_gun = null
 var weapon_in_hand = false
 var weapons = [""]
+var ammo5_45 = []
+var ammo9_19 = []
 var can_run = true
+var shaking = false
+var deleting = false
+@onready var player_2d = $SubViewportContainer
 
 var object = null
 
@@ -119,16 +125,29 @@ func can_run_func():
 		if !shooting:
 			can_run = true
 
+func delate_ammo_5_45():
+	if !deleting:
+		ammo5_45.pop_back()
+		deleting = true
+func delate_ammo_9_19():
+	if !deleting:
+		ammo9_19.pop_back()
+		deleting = true
+
 func _process(delta):
 	print(states)
+	print(ammo5_45.size())
+	print(ammo5_45)
+	print(ammo9_19)
 	can_run_func()
 	state_change()
 	print(state)
 	
 	if Input.is_action_pressed("lc"):
 		if weapon_in_hand and !shooting:
-			if current_weapon == "AK-74":
+			if current_weapon == "AK-74" and ammo5_45.size() > 0:
 				if AK_ORIG_NODE.ammo > 0 and !AK_ORIG_NODE.reloadnig:
+					deleting = false
 					can_run = false
 					shooting = true
 					ak_sounds[0].play()
@@ -138,6 +157,7 @@ func _process(delta):
 					print(AK_ORIG_NODE.ammo)
 					shoot_cd = 0.1
 					kickback()
+					camera_shake_func(0.003)
 					shoot_func("_body")
 					for i in fires_AK:
 						i.rotation.z = randi_range(1, 360)
@@ -147,10 +167,13 @@ func _process(delta):
 						i.hide()
 					shooting = false
 				else:
-					state = states.RELOADING_A
-					AK_ORIG_NODE.ammo_reload()
-			elif current_weapon == "pistol":
+					delate_ammo_5_45()
+					if ammo5_45.size() > 0:
+						state = states.RELOADING_A
+						AK_ORIG_NODE.ammo_reload()
+			elif current_weapon == "pistol" and ammo9_19.size() > 0:
 				if PISTOL_ORIG_NODE.ammo > 0 and !PISTOL_ORIG_NODE.reloadnig:
+					deleting = false
 					can_run = false
 					shooting = true
 					$"ARMS_CAM_POS/pistol_cam_pos/pistol_aim_pos/pistol_arms/Sketchfab_model/3ab9f780f2294ec8ba398c31f25c6b54_fbx/Object_2/RootNode/Armature/sound/shoot".play()
@@ -158,6 +181,7 @@ func _process(delta):
 					pistol_animator.play("Armature|FPS_Pistol_Fire")
 					shoot_cd = 0.2
 					kickback()
+					camera_shake_func(0.0006)
 					shoot_func("_body")
 					for i in fires_pistol:
 						i.rotation.z = randi_range(1, 360)
@@ -168,15 +192,21 @@ func _process(delta):
 					await get_tree().create_timer(shoot_cd, false).timeout
 					shooting = false
 				else:
-					state = states.RELOADING_P
-					PISTOL_ORIG_NODE.ammo_reload()
+					delate_ammo_9_19()
+					if ammo9_19.size() > 0:
+						state = states.RELOADING_P
+						PISTOL_ORIG_NODE.ammo_reload()
 
 	if Input.is_action_just_pressed("r"):
 		if weapon_in_hand:
-			if current_weapon == "AK-74" and !AK_ORIG_NODE.reloadnig:
+			if current_weapon == "AK-74" and !AK_ORIG_NODE.reloadnig and ammo5_45.size() > 1:
+				delate_ammo_5_45()
+				deleting = false
 				state = states.RELOADING_A
 				AK_ORIG_NODE.ammo_reload()
-			elif current_weapon == "pistol" and !PISTOL_ORIG_NODE.reloadnig:
+			elif current_weapon == "pistol" and !PISTOL_ORIG_NODE.reloadnig and ammo9_19.size() > 1:
+				deleting = false
+				delate_ammo_9_19()
 				state = states.RELOADING_P
 				PISTOL_ORIG_NODE.ammo_reload()
 				
@@ -282,6 +312,17 @@ func take_it(_body):
 				weapons.push_back(object.gun_name)
 				_body.activation(false, 0)
 				weapon_in_hand = true
+			elif object.is_in_group("ammo"):
+				if object.gun_name == "ammo-5.45":
+					if ammo5_45.size() < 5:
+						ammo5_45.push_back(object.gun_name)
+						_body.activation(false, 0)
+				elif object.gun_name == "ammo-9.19":
+					if ammo9_19.size() < 5:
+						ammo9_19.push_back(object.gun_name)
+						_body.activation(false, 0)
+						
+				
 				
 func shoot_func(_body):
 	if current_weapon == "AK-74":
@@ -324,11 +365,11 @@ func _input(event):
 	if Input.is_action_just_pressed("e"):
 		take_it("_body")
 		
-	if Input.is_action_just_pressed("1") and current_weapon != weapons[0]:
+	if Input.is_action_just_pressed("1") and current_weapon != weapons[0] and !AK_ORIG_NODE.reloadnig and !PISTOL_ORIG_NODE.reloadnig:
 		switch_weapon(0)
-	elif Input.is_action_just_pressed("2") and weapons.size() > 1 and current_weapon != weapons[1]:
+	elif Input.is_action_just_pressed("2") and weapons.size() > 1 and current_weapon != weapons[1] and !AK_ORIG_NODE.reloadnig and !PISTOL_ORIG_NODE.reloadnig:
 		switch_weapon(1)
-	elif Input.is_action_just_pressed("3") and weapons.size() > 2 and current_weapon != weapons[2]:
+	elif Input.is_action_just_pressed("3") and weapons.size() > 2 and current_weapon != weapons[2] and !AK_ORIG_NODE.reloadnig and !PISTOL_ORIG_NODE.reloadnig:
 		switch_weapon(2)
 	
 		
@@ -343,6 +384,7 @@ func switch_weapon(weapon_index):
 		pass
 	else:
 		current_weapon = weapons[weapon_index]
+		player_2d.control_vis()
 		update_weapon_visuals()
 	
 func update_weapon_visuals():
@@ -358,6 +400,19 @@ func update_weapon_visuals():
 		pistol_animator.play("Armature|FPS_Pistol_Reload_easy")
 	elif current_weapon == "":
 		AK_ARMS_CAM_POS.hide()
+		
+func camera_shake_func(shake_value : int):
+	for i in range(3):
+		if !shaking:
+			shaking = true
+			var shake_offset = Vector3(
+			randf_range(-shake_value, shake_value), # Случайное смещение вдоль оси X
+			randf_range(-shake_value, shake_value), # Случайное смещение вдоль оси Y
+			randf_range(-shake_value, shake_value) # Случайное смещение вдоль оси Z
+			)
+			await get_tree().create_timer(0.03, false).timeout
+			camera.global_transform.origin += shake_offset
+			shaking = false
 	
 	
 	

@@ -5,6 +5,7 @@ extends CharacterBody3D
 @export var speed: float = 1.0
 @export var jump: float = 2.0
 
+var HP = 100
 
 var cam_down_limit = 50
 var cam_up_limit = -50
@@ -13,7 +14,9 @@ var cam_up_limit = -50
 @onready var AK_ARMS_CAM_POS_AIM = $ARMS_CAM_POS/ak_aim_pos
 @onready var PISTOL_ARMS_CAM_POS = $ARMS_CAM_POS/pistol_cam_pos
 @onready var PISTOL_CAM_POS_AIM = $ARMS_CAM_POS/pistol_cam_pos/pistol_aim_pos
+@onready var GEYGER_CAM_POS = $ARMS_CAM_POS/geyger_cam_pos
 @onready var ARMS = $ARMS_CAM_POS/ak_aim_pos/ARMS
+@onready var GEYGER_ORIG_NODE = $ARMS_CAM_POS/geyger_cam_pos/geiger_arms
 @onready var AK_ORIG_NODE = $"ARMS_CAM_POS/ak_aim_pos/ARMS/ak-74_arms"
 @onready var PISTOL_ORIG_NODE = $ARMS_CAM_POS/pistol_cam_pos/pistol_aim_pos/pistol_arms
 @onready var AK_74 = $"ARMS_CAM_POS/ak_aim_pos/ARMS/ak-74_arms/Sketchfab_model/810f0276179d4425a118b331d5f38189_fbx/Object_2/RootNode/Rig/Object_8/Skeleton3D/AK-74"
@@ -21,6 +24,7 @@ var cam_up_limit = -50
 @onready var animator = $AnimationPlayer
 @onready var ak_animator = $"ARMS_CAM_POS/ak_aim_pos/ARMS/ak-74_arms/AnimationPlayer"
 @onready var pistol_animator = $ARMS_CAM_POS/pistol_cam_pos/pistol_aim_pos/pistol_arms/AnimationPlayer
+@onready var geyger_animator = $ARMS_CAM_POS/geyger_cam_pos/geiger_arms/AnimationPlayer
 @onready var collider = $camera_node/Camera3D/RayCast3D
 @onready var AK_collider = $camera_node/Camera3D/AK_SHOOT_RAYCAST
 
@@ -36,16 +40,18 @@ var cycle_aim_anim = false
 var new_gun = null
 var weapon_in_hand = false
 var weapons = [""]
+var items = []
 var ammo5_45 = []
 var ammo9_19 = []
 var can_run = true
 var shaking = false
 var deleting = false
+var take_geyger_anim_cd = false
 @onready var player_2d = $SubViewportContainer
 
 var object = null
 
-enum states {IDLE, WALK, RUN, AIM_A, IDLE_A, WALK_A, RUN_A, SHOOT_A, RELOADING_A, AIM_P, IDLE_P, WALK_P, RUN_P, SHOOT_P, RELOADING_P}
+enum states {IDLE, WALK, RUN, AIM_A, IDLE_A, WALK_A, RUN_A, SHOOT_A, RELOADING_A, AIM_P, IDLE_P, WALK_P, RUN_P, SHOOT_P, RELOADING_P, IDLE_GE, WALK_GE, RUN_GE}
 
 @export var state : states = states.IDLE
 
@@ -56,6 +62,7 @@ var shoot_cd
 var moving = false
 var is_run = false
 var is_aim = false
+var can_skip_weapon = false
 var current_weapon
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
@@ -96,6 +103,7 @@ func state_change():
 		camera.global_position= lerp(camera.global_position, cam_origin[6].global_position, 0.1)
 	elif state == states.RELOADING_A:
 		if AK_ORIG_NODE.reloadnig:
+			skip_weapon_cd(1)
 			speed = 1.0
 			ak_animator.play("Rig|AK_Reload_full")
 			camera.global_position= lerp(camera.global_position, cam_origin[0].global_position, 0.1)
@@ -115,9 +123,24 @@ func state_change():
 		camera.global_position= lerp(camera.global_position, cam_origin[10].global_position, 0.1)
 		pistol_animator.play("Armature|FPS_Pistol_Idle")
 	elif state == states.RELOADING_P:
+		skip_weapon_cd(1)
 		speed = 1.0
 		pistol_animator.play("Armature|FPS_Pistol_Reload_full")
 		camera.global_position= lerp(camera.global_position, cam_origin[0].global_position, 0.1)
+	elif state == states.IDLE_GE:
+		camera.global_position= lerp(camera.global_position, cam_origin[0].global_position, 0.1)
+		geyger_animator.play("geiger_idle")
+	elif state == states.WALK_GE:
+		camera.global_position= lerp(camera.global_position, cam_origin[1].global_position, 0.1)
+		geyger_animator.play("geyger_walk")
+		speed = 1.0
+		
+		
+func skip_weapon_cd(time : float):
+	if !can_skip_weapon:
+		can_skip_weapon = true
+		await get_tree().create_timer(time, false).timeout
+		can_skip_weapon = false
 		
 func can_run_func():
 	if !shooting:
@@ -135,13 +158,9 @@ func delate_ammo_9_19():
 		deleting = true
 
 func _process(delta):
-	print(states)
-	print(ammo5_45.size())
-	print(ammo5_45)
-	print(ammo9_19)
+	$fps.text = str(Engine.get_frames_per_second())
 	can_run_func()
 	state_change()
-	print(state)
 	
 	if Input.is_action_pressed("lc"):
 		if weapon_in_hand and !shooting:
@@ -154,7 +173,6 @@ func _process(delta):
 					AK_ORIG_NODE.ammo -= 1
 					ak_animator.play("Rig|AK_Shot")
 					ak_animator.play("gilza")
-					print(AK_ORIG_NODE.ammo)
 					shoot_cd = 0.1
 					kickback()
 					camera_shake_func(0.003)
@@ -215,7 +233,7 @@ func _physics_process(delta):
 	if not is_on_floor():
 		velocity.y -= gravity * delta
 				
-	if Input.is_action_pressed("rc") and !cycle_aim_anim and !current_weapon == "" and !AK_ORIG_NODE.reloadnig and !PISTOL_ORIG_NODE.reloadnig:
+	if Input.is_action_pressed("rc") and !cycle_aim_anim and !current_weapon == "" and !AK_ORIG_NODE.reloadnig and !PISTOL_ORIG_NODE.reloadnig and !current_weapon == "geyger":
 		is_aim = true
 		if current_weapon == "AK-74":
 			state = states.AIM_A
@@ -249,7 +267,7 @@ func _physics_process(delta):
 				await get_tree().create_timer(0.15, false).timeout
 				cycle_aim_anim = false
 	
-	if Input.is_action_pressed("shift") and Input.is_action_pressed("w") and state != states.RELOADING_A and can_run:
+	if Input.is_action_pressed("shift") and Input.is_action_pressed("w") and state != states.RELOADING_A and can_run and current_weapon != "geyger":
 		is_run = true
 	else:
 		is_run = false
@@ -270,6 +288,8 @@ func _physics_process(delta):
 			state = states.WALK_A
 		elif current_weapon == "pistol" and !PISTOL_ORIG_NODE.reloadnig:
 			state = states.WALK_P
+		elif current_weapon == "geyger":
+			state = states.WALK_GE
 		if is_run and !shooting:
 			if !current_weapon:
 				state = states.RUN
@@ -299,6 +319,8 @@ func _physics_process(delta):
 			else:
 				if !PISTOL_ORIG_NODE.reloadnig:
 					state = states.AIM_P
+		elif current_weapon == "geyger":
+			state = states.IDLE_GE
 		
 		
 	move_and_slide()
@@ -308,10 +330,18 @@ func take_it(_body):
 		if collider.get_collider() is Hitbox:
 			_body = collider.get_collider()
 			object = _body.get_parent()
+			$sounds/big_item_take.play()
 			if object.is_in_group("weapon"):
 				weapons.push_back(object.gun_name)
 				_body.activation(false, 0)
 				weapon_in_hand = true
+				if object.gun_name == "AK-74":
+					ammo5_45.push_back("ammo-5.45")
+				elif object.gun_name == "pistol":
+					ammo9_19.push_back("ammo-9.19")
+			elif object.is_in_group("item"):
+				items.push_back(object.item_name)
+				_body.activation(false, 0)
 			elif object.is_in_group("ammo"):
 				if object.gun_name == "ammo-5.45":
 					if ammo5_45.size() < 5:
@@ -340,16 +370,24 @@ func states_logics():
 	if weapon_in_hand and !is_aim and current_weapon == "AK-74":
 		AK_ARMS_CAM_POS.rotation.x = camera.rotation.x
 		AK_ARMS_CAM_POS_AIM.rotation.x = 0
+		GEYGER_CAM_POS.rotation.x = 0
 	elif weapon_in_hand and is_aim and current_weapon == "AK-74":
 		AK_ARMS_CAM_POS_AIM.rotation.x = camera.rotation.x
 		AK_ARMS_CAM_POS.rotation.x = 0
+		GEYGER_CAM_POS.rotation.x = 0
 	elif weapon_in_hand and !is_aim and current_weapon == "pistol":
 		AK_ARMS_CAM_POS.rotation.x = 0
 		PISTOL_CAM_POS_AIM.rotation.x = 0
+		GEYGER_CAM_POS.rotation.x = 0
 		PISTOL_ARMS_CAM_POS.rotation.x = camera.rotation.x
 	elif weapon_in_hand and is_aim and current_weapon == "pistol":
 		PISTOL_ARMS_CAM_POS.rotation.x = 0
+		GEYGER_CAM_POS.rotation.x = 0
 		PISTOL_CAM_POS_AIM.rotation.x = camera.rotation.x
+	elif current_weapon == "geyger":
+		AK_ARMS_CAM_POS.rotation.x = 0
+		PISTOL_ARMS_CAM_POS.rotation.x = 0
+		GEYGER_CAM_POS.rotation.x = camera.rotation.x
 		
 	elif !is_aim and current_weapon != "AK-74":
 		ARMS.rotation.x = 0
@@ -364,12 +402,18 @@ func _input(event):
 		camera.rotation.x = clamp(camera.rotation.x, deg_to_rad(-50), deg_to_rad(50))
 	if Input.is_action_just_pressed("e"):
 		take_it("_body")
+	if Input.is_action_just_pressed("c"):
+		for i in items:
+			if i == "geyger" and !current_weapon == "geyger":
+				current_weapon = "geyger"
+				geyger_animator.play("geiger draw")
+				switch_item()
 		
-	if Input.is_action_just_pressed("1") and current_weapon != weapons[0] and !AK_ORIG_NODE.reloadnig and !PISTOL_ORIG_NODE.reloadnig:
+	if Input.is_action_just_pressed("1") and current_weapon != weapons[0] and !AK_ORIG_NODE.reloadnig and !PISTOL_ORIG_NODE.reloadnig and !can_skip_weapon:
 		switch_weapon(0)
-	elif Input.is_action_just_pressed("2") and weapons.size() > 1 and current_weapon != weapons[1] and !AK_ORIG_NODE.reloadnig and !PISTOL_ORIG_NODE.reloadnig:
+	elif Input.is_action_just_pressed("2") and weapons.size() > 1 and current_weapon != weapons[1] and !AK_ORIG_NODE.reloadnig and !PISTOL_ORIG_NODE.reloadnig and !can_skip_weapon:
 		switch_weapon(1)
-	elif Input.is_action_just_pressed("3") and weapons.size() > 2 and current_weapon != weapons[2] and !AK_ORIG_NODE.reloadnig and !PISTOL_ORIG_NODE.reloadnig:
+	elif Input.is_action_just_pressed("3") and weapons.size() > 2 and current_weapon != weapons[2] and !AK_ORIG_NODE.reloadnig and !PISTOL_ORIG_NODE.reloadnig and !can_skip_weapon:
 		switch_weapon(2)
 	
 		
@@ -386,20 +430,35 @@ func switch_weapon(weapon_index):
 		current_weapon = weapons[weapon_index]
 		player_2d.control_vis()
 		update_weapon_visuals()
+func switch_item():
+	update_weapon_visuals()
 	
 func update_weapon_visuals():
 	if current_weapon == "AK-74":
+		skip_weapon_cd(0.3)
 		AK_ARMS_CAM_POS.show()
 		AK_ORIG_NODE.show()
 		PISTOL_ORIG_NODE.hide()
+		GEYGER_ORIG_NODE.hide()
 		ak_animator.play("Rig|AK_Draw")
 	elif current_weapon == "pistol":
+		skip_weapon_cd(0.2)
 		AK_ARMS_CAM_POS.show()
 		PISTOL_ORIG_NODE.show()
 		AK_ORIG_NODE.hide()
+		GEYGER_ORIG_NODE.hide()
 		pistol_animator.play("Armature|FPS_Pistol_Reload_easy")
 	elif current_weapon == "":
-		AK_ARMS_CAM_POS.hide()
+		skip_weapon_cd(0.1)
+		AK_ORIG_NODE.hide()
+		PISTOL_ORIG_NODE.hide()
+		GEYGER_ORIG_NODE.hide()
+	elif current_weapon == "geyger":
+		AK_ORIG_NODE.hide()
+		PISTOL_ORIG_NODE.hide()
+		GEYGER_ORIG_NODE.show()
+		skip_weapon_cd(0.2)
+		
 		
 func camera_shake_func(shake_value : int):
 	for i in range(3):

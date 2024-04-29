@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://bvmh21x80d73e"
+path="res://.godot/imported/zvuk-schetchik-geygera (mp3cut.net) (6).mp3-db25de96ca191aad77cbcf7989bce09e.mp3str"
+
+[deps]
+
+source_file="res://Sounds/geyger_sound/zvuk-schetchik-geygera (mp3cut.net) (6).mp3"
+dest_files=["res://.godot/imported/zvuk-schetchik-geygera (mp3cut.net) (6).mp3-db25de96ca191aad77cbcf7989bce09e.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

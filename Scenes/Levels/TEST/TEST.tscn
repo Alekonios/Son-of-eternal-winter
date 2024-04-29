@@ -1,7 +1,7 @@
-[gd_scene load_steps=20 format=3 uid="uid://c3dhuwu7hivmq"]
+[gd_scene load_steps=23 format=3 uid="uid://c3dhuwu7hivmq"]
 
 [ext_resource type="Material" uid="uid://dj65m8b8qvbut" path="res://tres-materials/grid.tres" id="1_bnopc"]
-[ext_resource type="Texture2D" uid="uid://bimbbar8mmyde" path="res://Textures/Sky/evermotion_nr_00221.jpg" id="3_qtkbj"]
+[ext_resource type="Texture2D" uid="uid://bimbbar8mmyde" path="res://Textures/Sky/evermotion_nr_00221.jpg" id="2_pxvgb"]
 [ext_resource type="PackedScene" uid="uid://b3fk84gudx7q5" path="res://Load-Asstets/wooden_table.glb" id="4_sl635"]
 [ext_resource type="PackedScene" uid="uid://hf3sjkmvyipt" path="res://Scenes/Objects/table.tscn" id="5_uacpm"]
 [ext_resource type="PackedScene" uid="uid://d1re2v1u6yut5" path="res://Scenes/Charapters/humans/player/main_player_betaV5.tscn" id="6_iey66"]
@@ -13,57 +13,34 @@
 [ext_resource type="PackedScene" uid="uid://bo5cshyfoalf5" path="res://Scenes/Objects/static/bak_with_fire.tscn" id="12_33byx"]
 [ext_resource type="PackedScene" uid="uid://b7gdynmltkdfu" path="res://Scenes/Guns/ammo/9_19_ammo.tscn" id="12_f2x7l"]
 [ext_resource type="ArrayOccluder3D" uid="uid://8s7cj3jrx2xu" path="res://Scenes/Levels/TEST/TEST.occ" id="13_0ecuv"]
+[ext_resource type="PackedScene" uid="uid://cwegijnjfu5w5" path="res://Scenes/Objects/usable/geiger.tscn" id="14_j5f66"]
+[ext_resource type="PackedScene" uid="uid://dyl0i5ahx3my3" path="res://Scenes/Objects/other/radiation.tscn" id="15_egxix"]
+[ext_resource type="AudioStream" uid="uid://bf1134olif5hi" path="res://Sounds/nature_sound/day_snow.mp3" id="16_vqrkc"]
 
-[sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_7lstj"]
-rayleigh_coefficient = 32.39
-rayleigh_color = Color(0.145098, 0.203922, 0.27451, 1)
-mie_coefficient = 1.0
-mie_eccentricity = 0.38
-mie_color = Color(0.243137, 0.0313726, 0, 1)
-turbidity = 0.0
-sun_disk_scale = 0.0
-ground_color = Color(0.211765, 0.156863, 0.0980392, 1)
-night_sky = ExtResource("3_qtkbj")
+[sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_k7v8g"]
+rayleigh_color = Color(1, 1, 1, 1)
+mie_color = Color(0.482353, 0.533333, 0.643137, 1)
+turbidity = 193.91
+ground_color = Color(0.87451, 0.87451, 0.87451, 1)
+night_sky = ExtResource("2_pxvgb")
 
-[sub_resource type="Sky" id="Sky_5c8is"]
-sky_material = SubResource("PhysicalSkyMaterial_7lstj")
+[sub_resource type="Sky" id="Sky_50aho"]
+sky_material = SubResource("PhysicalSkyMaterial_k7v8g")
+process_mode = 2
 
-[sub_resource type="Environment" id="Environment_xmct3"]
+[sub_resource type="Environment" id="Environment_v278u"]
 background_mode = 2
-sky = SubResource("Sky_5c8is")
-sky_rotation = Vector3(0, 1.82736, 0)
+sky = SubResource("Sky_50aho")
 ambient_light_source = 3
-ambient_light_color = Color(0.211765, 0.192157, 0.192157, 1)
-ambient_light_energy = 8.41
-reflected_light_source = 2
 tonemap_mode = 3
-tonemap_exposure = 1.51
 tonemap_white = 16.0
-ssr_fade_in = 0.0955921
-ssr_fade_out = 1.23115
-ssao_radius = 5.38
-ssao_intensity = 4.36
-ssao_power = 12.9095
-ssao_detail = 3.68
-ssao_horizon = 1.0
-ssao_sharpness = 0.0
 sdfgi_enabled = true
-sdfgi_use_occlusion = true
-sdfgi_y_scale = 2
-sdfgi_energy = 0.5
-glow_intensity = 8.0
-glow_strength = 0.35
-glow_bloom = 0.16
-glow_blend_mode = 1
-glow_hdr_threshold = 2.18
-glow_hdr_scale = 4.0
-glow_map_strength = 1.0
-volumetric_fog_enabled = true
-volumetric_fog_albedo = Color(0.309804, 0.309804, 0.309804, 1)
-volumetric_fog_emission = Color(0.168627, 0.168627, 0.168627, 1)
-volumetric_fog_gi_inject = 2.14
-volumetric_fog_anisotropy = 0.9
-volumetric_fog_detail_spread = 0.5
+sdfgi_bounce_feedback = 0.0
+sdfgi_cascades = 8
+fog_enabled = true
+fog_light_color = Color(0.286275, 0.313726, 0.352941, 1)
+fog_sun_scatter = 0.56
+fog_sky_affect = 0.032
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ky1j1"]
 
@@ -112,14 +89,14 @@ material = ExtResource("1_bnopc")
 [node name="graphic" type="Node3D" parent="."]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="graphic"]
-transform = Transform3D(-0.990393, -0.02403, 0.136181, 0.0609904, 0.807923, 0.586124, -0.124108, 0.588799, -0.798695, 0, 4.72751, 0)
-light_color = Color(0.384314, 0.384314, 0.384314, 1)
-light_energy = 2.777
-light_indirect_energy = 16.0
+transform = Transform3D(1, 0, 0, 0, -0.843897, 0.536505, 0, -0.536505, -0.843897, 0, 2.79477, 0)
+light_color = Color(0.509804, 0.509804, 0.509804, 1)
+light_energy = 0.515
+light_cull_mask = 4294967039
 shadow_enabled = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="graphic"]
-environment = SubResource("Environment_xmct3")
+environment = SubResource("Environment_v278u")
 
 [node name="Sketchfab_Scene" parent="." instance=ExtResource("4_sl635")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.74469, 0.5, 3.44493)
@@ -155,6 +132,9 @@ transform = Transform3D(0.0075116, -0.467769, 0.206737, 0.511407, 0.00821236, 0,
 
 [node name="bak_with_fire" parent="." instance=ExtResource("12_33byx")]
 transform = Transform3D(0.380136, 0, 0, 0, 0.380136, 0, 0, 0, 0.380136, 10.4342, 0.509839, 1.12964)
+
+[node name="AudioStreamPlayer3D" parent="bak_with_fire" index="4"]
+stream_paused = false
 
 [node name="bak_with_fire3" parent="." instance=ExtResource("12_33byx")]
 transform = Transform3D(0.380136, 0, 0, 0, 0.380136, 0, 0, 0, 0.380136, 9.01, 0.509839, 6.84943)
@@ -196,3 +176,16 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.09941, 1.05921, 6.08504)
 
 [node name="OccluderInstance3D" type="OccluderInstance3D" parent="."]
 occluder = ExtResource("13_0ecuv")
+
+[node name="geiger" parent="." instance=ExtResource("14_j5f66")]
+transform = Transform3D(-9.40378e-10, -0.0215133, 0.00717155, 0.0226772, -9.91251e-10, 0, 3.13478e-10, 0.00717155, 0.0215133, 0.747852, 1.07766, 6.04971)
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("16_vqrkc")
+volume_db = -3.747
+autoplay = true
+
+[node name="radiation" parent="." instance=ExtResource("15_egxix")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.7004, 0.5, 19.3579)
+
+[editable path="bak_with_fire"]

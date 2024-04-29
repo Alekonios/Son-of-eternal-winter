@@ -34,9 +34,9 @@ sky = SubResource("Sky_50aho")
 ambient_light_source = 3
 tonemap_mode = 3
 tonemap_white = 16.0
-sdfgi_enabled = true
 sdfgi_bounce_feedback = 0.0
 sdfgi_cascades = 8
+sdfgi_max_distance = 3276.8
 fog_enabled = true
 fog_light_color = Color(0.286275, 0.313726, 0.352941, 1)
 fog_sun_scatter = 0.56
@@ -132,9 +132,6 @@ transform = Transform3D(0.0075116, -0.467769, 0.206737, 0.511407, 0.00821236, 0,
 
 [node name="bak_with_fire" parent="." instance=ExtResource("12_33byx")]
 transform = Transform3D(0.380136, 0, 0, 0, 0.380136, 0, 0, 0, 0.380136, 10.4342, 0.509839, 1.12964)
-
-[node name="AudioStreamPlayer3D" parent="bak_with_fire" index="4"]
-stream_paused = false
 
 [node name="bak_with_fire3" parent="." instance=ExtResource("12_33byx")]
 transform = Transform3D(0.380136, 0, 0, 0, 0.380136, 0, 0, 0, 0.380136, 9.01, 0.509839, 6.84943)

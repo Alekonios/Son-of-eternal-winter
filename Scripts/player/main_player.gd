@@ -26,7 +26,8 @@ var cam_up_limit = -50
 @onready var pistol_animator = $ARMS_CAM_POS/pistol_cam_pos/pistol_aim_pos/pistol_arms/AnimationPlayer
 @onready var geyger_animator = $ARMS_CAM_POS/geyger_cam_pos/geiger_arms/AnimationPlayer
 @onready var collider = $camera_node/Camera3D/RayCast3D
-@onready var AK_collider = $camera_node/Camera3D/AK_SHOOT_RAYCAST
+@onready var AK_collider = $"ARMS_CAM_POS/ak_aim_pos/ARMS/ak-74_arms/RayCast3D"
+@onready var PISTOL_collider = $"ARMS_CAM_POS/pistol_cam_pos/pistol_aim_pos/pistol_arms/Sketchfab_model/3ab9f780f2294ec8ba398c31f25c6b54_fbx/Object_2/RootNode/Armature/Object_6/Skeleton3D/Object_91/RayCast3D"
 
 @onready var fires_AK = [$"ARMS_CAM_POS/ak_aim_pos/ARMS/ak-74_arms/Sketchfab_model/810f0276179d4425a118b331d5f38189_fbx/Object_2/RootNode/Rig/Object_8/Skeleton3D/fires/fire", $"ARMS_CAM_POS/ak_aim_pos/ARMS/ak-74_arms/Sketchfab_model/810f0276179d4425a118b331d5f38189_fbx/Object_2/RootNode/Rig/Object_8/Skeleton3D/fires/fire2", $"ARMS_CAM_POS/ak_aim_pos/ARMS/ak-74_arms/Sketchfab_model/810f0276179d4425a118b331d5f38189_fbx/Object_2/RootNode/Rig/Object_8/Skeleton3D/fires/fire3", $"ARMS_CAM_POS/ak_aim_pos/ARMS/ak-74_arms/Sketchfab_model/810f0276179d4425a118b331d5f38189_fbx/Object_2/RootNode/Rig/Object_8/Skeleton3D/fires/fire4", $"ARMS_CAM_POS/ak_aim_pos/ARMS/ak-74_arms/Sketchfab_model/810f0276179d4425a118b331d5f38189_fbx/Object_2/RootNode/Rig/Object_8/Skeleton3D/fires/fire5", $"ARMS_CAM_POS/ak_aim_pos/ARMS/ak-74_arms/Sketchfab_model/810f0276179d4425a118b331d5f38189_fbx/Object_2/RootNode/Rig/Object_8/Skeleton3D/fires/fire6", $"ARMS_CAM_POS/ak_aim_pos/ARMS/ak-74_arms/Sketchfab_model/810f0276179d4425a118b331d5f38189_fbx/Object_2/RootNode/Rig/Object_8/Skeleton3D/fires/fire7", $"ARMS_CAM_POS/ak_aim_pos/ARMS/ak-74_arms/Sketchfab_model/810f0276179d4425a118b331d5f38189_fbx/Object_2/RootNode/Rig/Object_8/Skeleton3D/fires/fire8", $"ARMS_CAM_POS/ak_aim_pos/ARMS/ak-74_arms/Sketchfab_model/810f0276179d4425a118b331d5f38189_fbx/Object_2/RootNode/Rig/Object_8/Skeleton3D/fires/fire9", $"ARMS_CAM_POS/ak_aim_pos/ARMS/ak-74_arms/Sketchfab_model/810f0276179d4425a118b331d5f38189_fbx/Object_2/RootNode/Rig/Object_8/Skeleton3D/fires/fire10"]
 @onready var fires_pistol = [$"ARMS_CAM_POS/pistol_cam_pos/pistol_aim_pos/pistol_arms/Sketchfab_model/3ab9f780f2294ec8ba398c31f25c6b54_fbx/Object_2/RootNode/Armature/Object_6/fires/fire", $"ARMS_CAM_POS/pistol_cam_pos/pistol_aim_pos/pistol_arms/Sketchfab_model/3ab9f780f2294ec8ba398c31f25c6b54_fbx/Object_2/RootNode/Armature/Object_6/fires/fire2", $"ARMS_CAM_POS/pistol_cam_pos/pistol_aim_pos/pistol_arms/Sketchfab_model/3ab9f780f2294ec8ba398c31f25c6b54_fbx/Object_2/RootNode/Armature/Object_6/fires/fire3", $"ARMS_CAM_POS/pistol_cam_pos/pistol_aim_pos/pistol_arms/Sketchfab_model/3ab9f780f2294ec8ba398c31f25c6b54_fbx/Object_2/RootNode/Armature/Object_6/fires/fire4", $"ARMS_CAM_POS/pistol_cam_pos/pistol_aim_pos/pistol_arms/Sketchfab_model/3ab9f780f2294ec8ba398c31f25c6b54_fbx/Object_2/RootNode/Armature/Object_6/fires/fire5", $"ARMS_CAM_POS/pistol_cam_pos/pistol_aim_pos/pistol_arms/Sketchfab_model/3ab9f780f2294ec8ba398c31f25c6b54_fbx/Object_2/RootNode/Armature/Object_6/fires/fire6", $"ARMS_CAM_POS/pistol_cam_pos/pistol_aim_pos/pistol_arms/Sketchfab_model/3ab9f780f2294ec8ba398c31f25c6b54_fbx/Object_2/RootNode/Armature/Object_6/fires/fire7", $"ARMS_CAM_POS/pistol_cam_pos/pistol_aim_pos/pistol_arms/Sketchfab_model/3ab9f780f2294ec8ba398c31f25c6b54_fbx/Object_2/RootNode/Armature/Object_6/fires/fire8", $"ARMS_CAM_POS/pistol_cam_pos/pistol_aim_pos/pistol_arms/Sketchfab_model/3ab9f780f2294ec8ba398c31f25c6b54_fbx/Object_2/RootNode/Armature/Object_6/fires/fire9", $"ARMS_CAM_POS/pistol_cam_pos/pistol_aim_pos/pistol_arms/Sketchfab_model/3ab9f780f2294ec8ba398c31f25c6b54_fbx/Object_2/RootNode/Armature/Object_6/fires/fire10"]
@@ -361,9 +362,9 @@ func shoot_func(_body):
 				_body = AK_collider.get_collider()
 				_body.activation(true, 5)
 	elif current_weapon == "pistol":
-		if AK_collider.is_colliding():
-			if AK_collider.get_collider() is Hitbox:
-				_body = AK_collider.get_collider()
+		if PISTOL_collider.is_colliding():
+			if PISTOL_collider.get_collider() is Hitbox:
+				_body = PISTOL_collider.get_collider()
 				_body.activation(true, 2)
 			
 func states_logics():

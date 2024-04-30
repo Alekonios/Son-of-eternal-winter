@@ -6,6 +6,9 @@ enum states { WARDER, IDLE, RUN, ATTACK }
 @export var speed: float = 0.5
 @export var idle_time: float = 2
 
+var targed_area: Hitbox
+var last_visible_position: Vector3
+
 var local_waypoints: Array[Marker3D] = []
 var amount_of_way: int = 0
 var get_way: Vector3
@@ -75,3 +78,11 @@ func _on_idle_timer_timeout():
 	if number_way > amount_of_way:
 		number_way = 0
 	state = states.WARDER
+
+
+func _on_wardering_area_3d_area_entered(area: Hitbox):
+	targed_area = area
+
+
+func _on_wardering_area_3d_area_exited(_area: Hitbox):
+	targed_area = null

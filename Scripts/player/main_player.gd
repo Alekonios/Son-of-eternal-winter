@@ -24,6 +24,7 @@ var cam_up_limit = -50
 @onready var SNIPER_ORIG_NODE = $ARMS_CAM_POS/sniper_cam_pos/sniper_aim_position/sniper_samopal_arms
 @onready var AK_74 = $"ARMS_CAM_POS/ak_aim_pos/ARMS/ak-74_arms/Sketchfab_model/810f0276179d4425a118b331d5f38189_fbx/Object_2/RootNode/Rig/Object_8/Skeleton3D/AK-74"
 @onready var camera = $camera_node/Camera3D
+@onready var viewport_camera = $SubViewportContainer/SubViewport/ViewCamera
 @onready var sniper_animator = $ARMS_CAM_POS/sniper_cam_pos/sniper_aim_position/sniper_samopal_arms/AnimationPlayer
 @onready var animator = $AnimationPlayer
 @onready var ak_animator = $"ARMS_CAM_POS/ak_aim_pos/ARMS/ak-74_arms/AnimationPlayer"
@@ -32,7 +33,7 @@ var cam_up_limit = -50
 @onready var collider = $camera_node/Camera3D/RayCast3D
 @onready var AK_collider = $"ARMS_CAM_POS/ak_aim_pos/ARMS/ak-74_arms/RayCast3D"
 @onready var PISTOL_collider = $"ARMS_CAM_POS/pistol_cam_pos/pistol_aim_pos/pistol_arms/Sketchfab_model/3ab9f780f2294ec8ba398c31f25c6b54_fbx/Object_2/RootNode/Armature/Object_6/Skeleton3D/Object_91/RayCast3D"
-@onready var SNIPER_collider = $SubViewportContainer/SubViewport/ViewCamera/nice_scope/RayCast3D
+@onready var SNIPER_collider = $camera_node/Camera3D/sniper_raycasy
 
 @onready var fires_AK = [$"ARMS_CAM_POS/ak_aim_pos/ARMS/ak-74_arms/Sketchfab_model/810f0276179d4425a118b331d5f38189_fbx/Object_2/RootNode/Rig/Object_8/Skeleton3D/fires/fire", $"ARMS_CAM_POS/ak_aim_pos/ARMS/ak-74_arms/Sketchfab_model/810f0276179d4425a118b331d5f38189_fbx/Object_2/RootNode/Rig/Object_8/Skeleton3D/fires/fire2", $"ARMS_CAM_POS/ak_aim_pos/ARMS/ak-74_arms/Sketchfab_model/810f0276179d4425a118b331d5f38189_fbx/Object_2/RootNode/Rig/Object_8/Skeleton3D/fires/fire3", $"ARMS_CAM_POS/ak_aim_pos/ARMS/ak-74_arms/Sketchfab_model/810f0276179d4425a118b331d5f38189_fbx/Object_2/RootNode/Rig/Object_8/Skeleton3D/fires/fire4", $"ARMS_CAM_POS/ak_aim_pos/ARMS/ak-74_arms/Sketchfab_model/810f0276179d4425a118b331d5f38189_fbx/Object_2/RootNode/Rig/Object_8/Skeleton3D/fires/fire5", $"ARMS_CAM_POS/ak_aim_pos/ARMS/ak-74_arms/Sketchfab_model/810f0276179d4425a118b331d5f38189_fbx/Object_2/RootNode/Rig/Object_8/Skeleton3D/fires/fire6", $"ARMS_CAM_POS/ak_aim_pos/ARMS/ak-74_arms/Sketchfab_model/810f0276179d4425a118b331d5f38189_fbx/Object_2/RootNode/Rig/Object_8/Skeleton3D/fires/fire7", $"ARMS_CAM_POS/ak_aim_pos/ARMS/ak-74_arms/Sketchfab_model/810f0276179d4425a118b331d5f38189_fbx/Object_2/RootNode/Rig/Object_8/Skeleton3D/fires/fire8", $"ARMS_CAM_POS/ak_aim_pos/ARMS/ak-74_arms/Sketchfab_model/810f0276179d4425a118b331d5f38189_fbx/Object_2/RootNode/Rig/Object_8/Skeleton3D/fires/fire9", $"ARMS_CAM_POS/ak_aim_pos/ARMS/ak-74_arms/Sketchfab_model/810f0276179d4425a118b331d5f38189_fbx/Object_2/RootNode/Rig/Object_8/Skeleton3D/fires/fire10"]
 @onready var fires_pistol = [$"ARMS_CAM_POS/pistol_cam_pos/pistol_aim_pos/pistol_arms/Sketchfab_model/3ab9f780f2294ec8ba398c31f25c6b54_fbx/Object_2/RootNode/Armature/Object_6/fires/fire", $"ARMS_CAM_POS/pistol_cam_pos/pistol_aim_pos/pistol_arms/Sketchfab_model/3ab9f780f2294ec8ba398c31f25c6b54_fbx/Object_2/RootNode/Armature/Object_6/fires/fire2", $"ARMS_CAM_POS/pistol_cam_pos/pistol_aim_pos/pistol_arms/Sketchfab_model/3ab9f780f2294ec8ba398c31f25c6b54_fbx/Object_2/RootNode/Armature/Object_6/fires/fire3", $"ARMS_CAM_POS/pistol_cam_pos/pistol_aim_pos/pistol_arms/Sketchfab_model/3ab9f780f2294ec8ba398c31f25c6b54_fbx/Object_2/RootNode/Armature/Object_6/fires/fire4", $"ARMS_CAM_POS/pistol_cam_pos/pistol_aim_pos/pistol_arms/Sketchfab_model/3ab9f780f2294ec8ba398c31f25c6b54_fbx/Object_2/RootNode/Armature/Object_6/fires/fire5", $"ARMS_CAM_POS/pistol_cam_pos/pistol_aim_pos/pistol_arms/Sketchfab_model/3ab9f780f2294ec8ba398c31f25c6b54_fbx/Object_2/RootNode/Armature/Object_6/fires/fire6", $"ARMS_CAM_POS/pistol_cam_pos/pistol_aim_pos/pistol_arms/Sketchfab_model/3ab9f780f2294ec8ba398c31f25c6b54_fbx/Object_2/RootNode/Armature/Object_6/fires/fire7", $"ARMS_CAM_POS/pistol_cam_pos/pistol_aim_pos/pistol_arms/Sketchfab_model/3ab9f780f2294ec8ba398c31f25c6b54_fbx/Object_2/RootNode/Armature/Object_6/fires/fire8", $"ARMS_CAM_POS/pistol_cam_pos/pistol_aim_pos/pistol_arms/Sketchfab_model/3ab9f780f2294ec8ba398c31f25c6b54_fbx/Object_2/RootNode/Armature/Object_6/fires/fire9", $"ARMS_CAM_POS/pistol_cam_pos/pistol_aim_pos/pistol_arms/Sketchfab_model/3ab9f780f2294ec8ba398c31f25c6b54_fbx/Object_2/RootNode/Armature/Object_6/fires/fire10"]
@@ -76,6 +77,7 @@ var current_weapon
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 func _ready():
+	SNIPER_collider.global_transform = camera.global_transform
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	$SubViewportContainer/SubViewport.size = DisplayServer.window_get_size()
 	current_weapon = ""
@@ -145,10 +147,11 @@ func state_change():
 		speed = 1.0
 	elif state == states.IDLE_S:
 		camera.global_position= lerp(camera.global_position, cam_origin[11].global_position, 0.1)
-		sniper_animator.play("Rig|SRifle_Idle")
+		if !sniper_animator.current_animation == "Rig|SRifle_Shot_nosight":
+			sniper_animator.play("Rig|SRifle_Idle")
 	elif state == states.WALK_S:
 		speed = 1.0
-		if !is_aim:
+		if state != states.AIM_S:
 			camera.global_position= lerp(camera.global_position, cam_origin[12].global_position, 0.1)
 		else:
 			camera.global_position= lerp(camera.global_position, cam_origin[14].global_position, 0.1)
@@ -158,11 +161,13 @@ func state_change():
 		camera.global_position= lerp(camera.global_position, cam_origin[13].global_position, 0.1)
 		sniper_animator.play("Rig|SRifle_Walk")
 	elif state == states.AIM_S:
-		if state != states.RELOADING_S:
-			camera.global_position= lerp(camera.global_position, cam_origin[14].global_position, 0.1)
+		#if state != states.RELOADING_S and sniper_animator.current_animation != "Rig|SRifle_Shot_nosight":
+		camera.global_position= lerp(camera.global_position, cam_origin[14].global_position, 0.1)
+		#elif sniper_animator.current_animation == "Rig|SRifle_Shot_nosight":
+			#camera.global_position= lerp(camera.global_position, cam_origin[11].global_position, 0.1)
 	elif state == states.RELOADING_S:
+		camera.global_position= lerp(camera.global_position, cam_origin[11].global_position, 0.1)
 		sniper_animator.play("Rig|SRifle_Reload_Full")
-		camera.global_position= lerp(camera.global_position, cam_origin[12].global_position, 0.1)
 		
 		
 func skip_weapon_cd(time : float):
@@ -191,6 +196,7 @@ func delate_ammo_7_62():
 		deleting = true
 
 func _process(delta):
+	
 	print(ammo7_62)
 	$fps.text = str(Engine.get_frames_per_second())
 	can_run_func()
@@ -297,7 +303,7 @@ func _physics_process(delta):
 	if not is_on_floor():
 		velocity.y -= gravity * delta
 				
-	if Input.is_action_pressed("rc") and !cycle_aim_anim and !current_weapon == "" and !AK_ORIG_NODE.reloadnig and !PISTOL_ORIG_NODE.reloadnig and !current_weapon == "geyger" and !SNIPER_ORIG_NODE.reloadnig:
+	if Input.is_action_pressed("rc") and !cycle_aim_anim and !current_weapon == "" and !AK_ORIG_NODE.reloadnig and !PISTOL_ORIG_NODE.reloadnig and !current_weapon == "geyger" and !SNIPER_ORIG_NODE.reloadnig and !moving:
 		is_aim = true
 		if current_weapon == "AK-74":
 			state = states.AIM_A
@@ -305,9 +311,6 @@ func _physics_process(delta):
 			state = states.AIM_P
 		elif  current_weapon == "sniper-samopal":
 			state = states.AIM_S
-			await get_tree().create_timer(0.1, false).timeout
-			sniper_scope.show()
-			SNIPER_ORIG_NODE.hide()
 		mouse_sens = 0.02
 		#if camera.fov == 60:
 			#for i in range(15):
@@ -325,9 +328,6 @@ func _physics_process(delta):
 	elif !Input.is_action_pressed("rc") and cycle_aim_anim:
 		if is_aim:
 			is_aim = false
-			if  current_weapon == "sniper-samopal":
-				sniper_scope.hide()
-				SNIPER_ORIG_NODE.show()
 			mouse_sens = 0.05
 			#if camera.fov == 30:
 				#for i in range(15):
@@ -336,7 +336,6 @@ func _physics_process(delta):
 						#camera.fov += 2
 					#else:
 						#break
-				#camera.fov = 60
 			await get_tree().create_timer(0.15, false).timeout
 			cycle_aim_anim = false
 	
@@ -459,7 +458,7 @@ func shoot_func(_body):
 		if SNIPER_collider.is_colliding():
 			if SNIPER_collider.get_collider() is Hitbox:
 				_body = SNIPER_collider.get_collider()
-				_body.activation(true, 30)
+				_body.activation(true, 50)
 			
 func states_logics():
 	if weapon_in_hand and !is_aim and current_weapon == "AK-74":

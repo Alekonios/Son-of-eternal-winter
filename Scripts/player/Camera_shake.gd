@@ -28,10 +28,10 @@ func camera_shake_on_walk():
 		
 func camera_shake_on_run():
 	if shake:
-		self.global_position.y -= 0.004
-		await get_tree().create_timer(0.15, false).timeout
+		self.global_position.y -= 0.002
+		await get_tree().create_timer(0.2, false).timeout
 		shake = false
 	if !shake:
-		self.global_position.y += 0.004
-		await get_tree().create_timer(0.15, false).timeout
+		self.global_position.y += 0.002
+		await get_tree().create_timer(0.2, false).timeout
 		shake = true

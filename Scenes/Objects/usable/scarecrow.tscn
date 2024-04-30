@@ -160,6 +160,7 @@ autostart = true
 
 [node name="Object_2" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.0112991, 0, 0, 0, -4.93899e-10, 0.0112991, 0, -0.0112991, -4.93899e-10, 0, 0, 0)
+layers = 3
 mesh = SubResource("ArrayMesh_tvaf5")
 skeleton = NodePath("")
 

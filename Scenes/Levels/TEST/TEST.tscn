@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://c3dhuwu7hivmq"]
+[gd_scene load_steps=25 format=3 uid="uid://c3dhuwu7hivmq"]
 
 [ext_resource type="Material" uid="uid://dj65m8b8qvbut" path="res://tres-materials/grid.tres" id="1_bnopc"]
 [ext_resource type="Texture2D" uid="uid://bimbbar8mmyde" path="res://Textures/Sky/evermotion_nr_00221.jpg" id="2_pxvgb"]
@@ -16,6 +16,8 @@
 [ext_resource type="PackedScene" uid="uid://cwegijnjfu5w5" path="res://Scenes/Objects/usable/geiger.tscn" id="14_j5f66"]
 [ext_resource type="PackedScene" uid="uid://dyl0i5ahx3my3" path="res://Scenes/Objects/other/radiation.tscn" id="15_egxix"]
 [ext_resource type="AudioStream" uid="uid://bf1134olif5hi" path="res://Sounds/nature_sound/day_snow.mp3" id="16_vqrkc"]
+[ext_resource type="PackedScene" uid="uid://fek8uaxu6jxu" path="res://Scenes/Guns/sniper_samopal.tscn" id="17_dtthm"]
+[ext_resource type="PackedScene" uid="uid://cf337arquk1ol" path="res://Scenes/Guns/ammo/7_62_ammo.tscn" id="18_nvny8"]
 
 [sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_k7v8g"]
 rayleigh_color = Color(1, 1, 1, 1)
@@ -54,37 +56,44 @@ material = ExtResource("1_bnopc")
 [node name="Node3D" type="Node3D"]
 
 [node name="CSG" type="CSGCombiner3D" parent="."]
+layers = 3
 use_collision = true
 collision_layer = 2
 collision_mask = 0
 
 [node name="CSGBox3D" type="CSGBox3D" parent="CSG"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.23394, 0, 7.81156)
+layers = 3
 size = Vector3(160.211, 1, 165.392)
 material = ExtResource("1_bnopc")
 
 [node name="CSGBox3D2" type="CSGBox3D" parent="CSG"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.971994, 1.92133, 7.78994)
+layers = 3
 size = Vector3(6.03406, 2.83411, 0.0874023)
 material = ExtResource("1_bnopc")
 
 [node name="CSGBox3D3" type="CSGBox3D" parent="CSG"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.90468, 1.92133, 5.24087)
+layers = 3
 size = Vector3(0.280701, 2.83411, 4.96643)
 material = ExtResource("1_bnopc")
 
 [node name="CSGPolygon3D" type="CSGPolygon3D" parent="CSG"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.505513, 0.381575)
+layers = 3
 polygon = PackedVector2Array(0, 0, -1.53535, 1.82927, 1, 0)
 material = ExtResource("1_bnopc")
 
 [node name="CSGPolygon3D2" type="CSGPolygon3D" parent="CSG"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.505513, -1.28976)
+layers = 3
 polygon = PackedVector2Array(0, 0, -2.59737, 1.80268, 1, 0)
 material = ExtResource("1_bnopc")
 
 [node name="CSGPolygon3D3" type="CSGPolygon3D" parent="CSG"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.505513, -2.9649)
+layers = 3
 polygon = PackedVector2Array(0, 0, -1.39367, 2.64009, 1, 0)
 material = ExtResource("1_bnopc")
 
@@ -186,5 +195,11 @@ autoplay = true
 
 [node name="radiation" parent="." instance=ExtResource("15_egxix")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.7004, 0.5, 19.3579)
+
+[node name="sniper_samopal" parent="." instance=ExtResource("17_dtthm")]
+transform = Transform3D(0.971027, 0.0742736, -0.227136, 0.11147, 0.699957, 0.705433, 0.21138, -0.710313, 0.671397, -1.56618, 0.805147, 5.02599)
+
+[node name="7_62_amm0" parent="." instance=ExtResource("18_nvny8")]
+transform = Transform3D(0.543566, 0, 0, 0, 0.543566, 0, 0, 0, 0.543566, -1.294, 0.5, 4.13738)
 
 [editable path="bak_with_fire"]

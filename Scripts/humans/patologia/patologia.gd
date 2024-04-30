@@ -1,13 +1,15 @@
+class_name Patologia
 extends CharacterBody3D
 
-enum states { WARDER, IDLE, RUN, ATTACK }
+enum states { WALK, IDLE, ATTACK }
 
 @export var waypoints: Array[Marker3D]
-@export var speed: float = 0.5
+@export var warder_speed: float = 0.5
+@export var run_speed: float = 1.5
 @export var idle_time: float = 2
 
+var speed: float
 var targed_area: Hitbox
-var last_visible_position: Vector3
 
 var local_waypoints: Array[Marker3D] = []
 var amount_of_way: int = 0
@@ -24,8 +26,7 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 
 func _ready():
-	for ways in waypoints:
-		local_waypoints.push_back(ways)
+	for ways in waypoints: local_waypoints.push_back(ways)
 	amount_of_way = len(local_waypoints) - 1
 	idle_timer.wait_time = idle_time
 	if amount_of_way < 0:
@@ -34,7 +35,7 @@ func _ready():
 
 
 func state_function(direction, delta):
-	if state == states.WARDER:
+	if state == states.WALK:
 		animator.play("walk")
 		navigation_agent.target_position = get_way
 		var position_point = navigation_agent.get_next_path_position()
@@ -46,23 +47,26 @@ func state_function(direction, delta):
 		velocity = velocity.lerp(direction * speed, accel * delta)
 
 		if self.global_position.distance_to(get_way) < 1.5:
-			state = states.IDLE
+			if targed_area == null: state = states.IDLE
+			else: state = states.ATTACK
 
 	elif state == states.IDLE:
 		velocity = Vector3.ZERO
 		animator.play("Armature_001|mixamo_com|Layer0_001")
-		if idle_timer.is_stopped():
-			idle_timer.start()
-
-	elif state == states.RUN:
-		pass
+		if idle_timer.is_stopped(): idle_timer.start()
 
 	elif state == states.ATTACK:
 		pass
 
 
 func _physics_process(delta):
-	get_way = local_waypoints[number_way].global_position
+	if targed_area != null: 
+		get_way = targed_area.global_position
+		speed = run_speed
+		
+	else: 
+		get_way = local_waypoints[number_way].global_position
+		speed = warder_speed
 
 	velocity.y -= gravity * delta
 
@@ -75,13 +79,14 @@ func _physics_process(delta):
 
 func _on_idle_timer_timeout():
 	number_way += 1
-	if number_way > amount_of_way:
-		number_way = 0
-	state = states.WARDER
+	if number_way > amount_of_way: number_way = 0
+	state = states.WALK
 
 
 func _on_wardering_area_3d_area_entered(area: Hitbox):
 	targed_area = area
+	state = states.WALK
+	idle_timer.stop()
 
 
 func _on_wardering_area_3d_area_exited(_area: Hitbox):

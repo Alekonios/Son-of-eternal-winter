@@ -222,5 +222,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.21752, 0.601595, -2.5145)
 [node name="Patologia" parent="." node_paths=PackedStringArray("waypoints") instance=ExtResource("19_njuo6")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.57306, 0.500004, -2.74229)
 waypoints = [NodePath("../Marker3D"), NodePath("../Marker3D2"), NodePath("../Marker3D3")]
+warder_speed = null
+run_speed = null
+idle_time = null
 
 [editable path="bak_with_fire"]

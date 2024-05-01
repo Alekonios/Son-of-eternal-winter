@@ -153,7 +153,8 @@ func state_change():
 			camera.global_position= lerp(camera.global_position, cam_origin[12].global_position, 0.1)
 		else:
 			camera.global_position= lerp(camera.global_position, cam_origin[14].global_position, 0.1)
-		sniper_animator.play("Rig|SRifle_Walk")
+		if sniper_animator.current_animation != "Rig|SRifle_Shot_nosight":
+			sniper_animator.play("Rig|SRifle_Walk")
 	elif state == states.RUN_S:
 		speed = 1.2
 		camera.global_position= lerp(camera.global_position, cam_origin[13].global_position, 0.1)

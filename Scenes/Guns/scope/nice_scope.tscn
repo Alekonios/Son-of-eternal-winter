@@ -1,14 +1,14 @@
 [gd_scene load_steps=20 format=3 uid="uid://dntq4v22jbfxq"]
 
 [ext_resource type="Script" path="res://Scripts/other/nice_scope.gd" id="1_5r5hs"]
-[ext_resource type="Texture2D" uid="uid://bhxjxrtvmky5b" path="res://Textures/other/scope_PNG13017 (1) (1).png" id="2_2er4m"]
+[ext_resource type="Texture2D" uid="uid://c3c1jmoi4a6dd" path="res://Textures/other/scope_PNG13017 (1sdsd) (1).png" id="2_ksy3d"]
 [ext_resource type="Texture2D" uid="uid://bundfh0pccu7l" path="res://Load-Asstets/nice_scope_Image_0.png" id="3_em4fs"]
 [ext_resource type="Texture2D" uid="uid://ckwxte5amllek" path="res://Load-Asstets/nice_scope_Image_1.png" id="4_4xvap"]
 [ext_resource type="Texture2D" uid="uid://t5acg5rqp507" path="res://Load-Asstets/nice_scope_Image_2.png" id="5_khkyt"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mccpv"]
 transparency = 1
-albedo_texture = ExtResource("2_2er4m")
+albedo_texture = ExtResource("2_ksy3d")
 
 [sub_resource type="QuadMesh" id="QuadMesh_tw6bp"]
 material = SubResource("StandardMaterial3D_mccpv")
@@ -173,7 +173,7 @@ height = 0.02
 script = ExtResource("1_5r5hs")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(-1, 2.01948e-28, -1.50996e-07, 1.481e-28, 1, 1.00974e-28, 1.50996e-07, -1.92327e-35, -1, 0.00105903, -0.000515886, -0.853591)
+transform = Transform3D(-1.87773, 3.79204e-28, -2.8353e-07, 2.78092e-28, 1.87773, 1.89602e-28, 2.8353e-07, -3.61138e-35, -1.87773, 0.00105903, -0.000515886, -0.853591)
 layers = 512
 mesh = SubResource("QuadMesh_tw6bp")
 

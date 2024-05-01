@@ -3,12 +3,14 @@ extends CharacterBody3D
 enum states { WARDER, IDLE, RUN, ATTACK }
 
 @export var waypoints: Array[Marker3D]
-@export var speed: float = 0.5
+@export var run_speed: float = 1.5
+@export var warder_speed: float = 0.5
 @export var idle_time: float = 2
 
 var targed_area: Hitbox
 var last_visible_position: Vector3
 
+var speed: float
 var HP = 100
 var died = false
 
@@ -49,7 +51,8 @@ func state_function(direction, delta):
 		velocity = velocity.lerp(direction * speed, accel * delta)
 
 		if self.global_position.distance_to(get_way) < 1.5:
-			state = states.IDLE
+			if targed_area == null: state = states.IDLE
+			elif targed_area != null: pass
 
 	elif state == states.IDLE and !died:
 		velocity = Vector3.ZERO
@@ -65,12 +68,20 @@ func state_function(direction, delta):
 
 
 func _physics_process(delta):
-	if !died:
+	if died: return
+	if targed_area != null: 
+		get_way = targed_area.global_position
+		speed = run_speed
+	else: 
 		get_way = local_waypoints[number_way].global_position
-		var direction = Vector3()
-		state_function(direction, delta)
-		move_and_slide()
+		speed = warder_speed
+
 	velocity.y -= gravity * delta
+	var direction = Vector3()
+
+	state_function(direction, delta)
+	move_and_slide()
+
 
 func _on_idle_timer_timeout():
 	number_way += 1

@@ -41,8 +41,6 @@ var cam_up_limit = -50
 
 @onready var cam_origin = [$cam_positions/AK_positions/ak_def_position, $cam_positions/AK_positions/ak_walk_position, $cam_positions/AK_positions/ak_run_position, $cam_positions/def_positions/def_position, $cam_positions/def_positions/walk_position, $cam_positions/def_positions/run_position, $cam_positions/AK_positions/ak_aim, $cam_positions/pistol_positions/pistol_def_position, $cam_positions/pistol_positions/pistol_walk, $cam_positions/pistol_positions/pistol_run, $cam_positions/pistol_positions/pistol_aim, $cam_positions/sniper_positions/sniper_def_position, $cam_positions/sniper_positions/sniper_walk_position, $cam_positions/sniper_positions/sniper_run_position, $cam_positions/sniper_positions/sniper_aim_position]
 @onready var ak_sounds = [$"ARMS_CAM_POS/ak_aim_pos/ARMS/ak-74_arms/sounds/shoot_sound"]
-@onready var sniper_scope = $SubViewportContainer/SubViewport/ViewCamera/nice_scope
-@onready var sniper_scope_orig = $"ARMS_CAM_POS/sniper_cam_pos/sniper_aim_position/sniper_samopal_arms/Sketchfab_model/60e5ab10f37245dcb4931676588d48d0_fbx/Object_2/RootNode/Rig/Object_6/Skeleton3D/Object_90"
 
 var cycle_aim_logic = 0
 var cycle_aim_anim = false
@@ -195,9 +193,12 @@ func delate_ammo_7_62():
 		ammo7_62.pop_back()
 		deleting = true
 
-func _process(delta):
+func sniper_shoot_sound_func():
+	$ARMS_CAM_POS/sniper_cam_pos/sniper_aim_position/sniper_samopal_arms/shoot_sound.play()
+	await get_tree().create_timer(0.2, false).timeout
+	$ARMS_CAM_POS/sniper_cam_pos/sniper_aim_position/sniper_samopal_arms/zatvor_sound.play()
 	
-	print(ammo7_62)
+func _process(delta):
 	$fps.text = str(Engine.get_frames_per_second())
 	can_run_func()
 	state_change()
@@ -259,7 +260,7 @@ func _process(delta):
 					deleting = false
 					can_run = false
 					shooting = true
-					$"ARMS_CAM_POS/pistol_cam_pos/pistol_aim_pos/pistol_arms/Sketchfab_model/3ab9f780f2294ec8ba398c31f25c6b54_fbx/Object_2/RootNode/Armature/sound/shoot".play()
+					sniper_shoot_sound_func()
 					SNIPER_ORIG_NODE.ammo -= 1
 					sniper_animator.play("Rig|SRifle_Shot_nosight")
 					shoot_cd = 1.8
@@ -459,6 +460,7 @@ func shoot_func(_body):
 			if SNIPER_collider.get_collider() is Hitbox:
 				_body = SNIPER_collider.get_collider()
 				_body.activation(true, 50)
+				
 			
 func states_logics():
 	if weapon_in_hand and !is_aim and current_weapon == "AK-74":

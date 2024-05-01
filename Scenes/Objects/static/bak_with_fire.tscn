@@ -1,6 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://bo5cshyfoalf5"]
+[gd_scene load_steps=12 format=3 uid="uid://bo5cshyfoalf5"]
 
 [ext_resource type="Texture2D" uid="uid://2hgj5rj2jgb" path="res://Load-Asstets/bak_Image_0.jpg" id="1_bceh3"]
+[ext_resource type="Script" path="res://Scripts/other/bak_with_fire.gd" id="1_f1dri"]
 [ext_resource type="Texture2D" uid="uid://b0k4rxwuncrh6" path="res://Load-Asstets/bak_Image_1.png" id="2_5grws"]
 [ext_resource type="Texture2D" uid="uid://cdbedyqdm0ud" path="res://Load-Asstets/bak_Image_2.png" id="3_4xbhf"]
 [ext_resource type="AudioStream" uid="uid://cuveu78tfltgf" path="res://Sounds/fire_sound/zvuk-ognya-zvuk-ognya.mp3" id="5_wy021"]
@@ -41,8 +42,46 @@ _surfaces = [{
 height = 2.15311
 radius = 0.741867
 
+[sub_resource type="Animation" id="Animation_anklt"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("OmniLight3D:light_energy")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [3.909]
+}
+
+[sub_resource type="Animation" id="Animation_xkvfe"]
+resource_name = "flame_merc"
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("OmniLight3D:light_energy")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [3.909, 2.752, 3.33, 2.944, 3.137, 3.523, 2.559, 3.137, 2.173, 3.137, 3.909]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_q205g"]
+_data = {
+"RESET": SubResource("Animation_anklt"),
+"flame_merc": SubResource("Animation_xkvfe")
+}
+
 [node name="bak_with_fire" type="StaticBody3D"]
 transform = Transform3D(0.277104, 0, 0, 0, 0.277104, 0, 0, 0, 0.277104, 0, 0, 0)
+script = ExtResource("1_f1dri")
 
 [node name="Aset_other_various_M_ui1maewga_LOD0__0" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.0258052, 0, 0, 0, 0.0258052, 0, 0, 0, 0.0258052, 0, 0, 0)
@@ -73,3 +112,8 @@ pitch_scale = 0.62
 autoplay = true
 emission_angle_enabled = true
 emission_angle_degrees = 50.5
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_q205g")
+}

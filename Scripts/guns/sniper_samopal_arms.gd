@@ -15,4 +15,13 @@ func ammo_reload():
 
 func play_reload_sound():
 	await get_tree().create_timer(0.3, false).timeout
-	#$sounds/reload_sound.play()
+	$zatvor_out.play()
+	await get_tree().create_timer(1.3, false).timeout
+	$magaz_out.play()
+	await get_tree().create_timer(1.5, false).timeout
+	$magaz_up.play()
+	await get_tree().create_timer(0.9, false).timeout
+	$zatvor_up.play()
+	
+	
+	

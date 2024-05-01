@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://c3dhuwu7hivmq"]
+[gd_scene load_steps=26 format=3 uid="uid://c3dhuwu7hivmq"]
 
 [ext_resource type="Material" uid="uid://dj65m8b8qvbut" path="res://tres-materials/grid.tres" id="1_bnopc"]
 [ext_resource type="Texture2D" uid="uid://bimbbar8mmyde" path="res://Textures/Sky/evermotion_nr_00221.jpg" id="2_pxvgb"]
@@ -18,6 +18,7 @@
 [ext_resource type="AudioStream" uid="uid://bf1134olif5hi" path="res://Sounds/nature_sound/day_snow.mp3" id="16_vqrkc"]
 [ext_resource type="PackedScene" uid="uid://fek8uaxu6jxu" path="res://Scenes/Guns/sniper_samopal.tscn" id="17_dtthm"]
 [ext_resource type="PackedScene" uid="uid://cf337arquk1ol" path="res://Scenes/Guns/ammo/7_62_ammo.tscn" id="18_nvny8"]
+[ext_resource type="PackedScene" uid="uid://dtusuuampx7an" path="res://Scenes/Objects/static/rad_sign.tscn" id="19_emtad"]
 
 [sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_k7v8g"]
 rayleigh_color = Color(1, 1, 1, 1)
@@ -40,11 +41,12 @@ sdfgi_bounce_feedback = 0.0
 sdfgi_cascades = 8
 sdfgi_max_distance = 3276.8
 glow_normalized = true
-glow_strength = 1.44
+glow_blend_mode = 1
 fog_enabled = true
 fog_light_color = Color(0.286275, 0.313726, 0.352941, 1)
 fog_sun_scatter = 0.56
 fog_sky_affect = 0.032
+volumetric_fog_sky_affect = 0.0
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ky1j1"]
 
@@ -100,9 +102,9 @@ material = ExtResource("1_bnopc")
 [node name="graphic" type="Node3D" parent="."]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="graphic"]
-transform = Transform3D(1, 0, 0, 0, -0.843897, 0.536505, 0, -0.536505, -0.843897, 0, 2.79477, 0)
-light_color = Color(0.509804, 0.509804, 0.509804, 1)
-light_energy = 0.515
+transform = Transform3D(0.380734, 0.314521, 0.869551, -0.0781604, -0.926064, 0.369185, 0.921375, -0.208525, -0.328001, 0, 2.79477, 0)
+light_color = Color(0.298039, 0.298039, 0.298039, 1)
+light_energy = 1.485
 light_cull_mask = 4294967039
 shadow_enabled = true
 
@@ -196,10 +198,19 @@ autoplay = true
 [node name="radiation" parent="." instance=ExtResource("15_egxix")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.7004, 0.5, 19.3579)
 
+[node name="radiation2" parent="." instance=ExtResource("15_egxix")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.1358, 0.5, -10.1918)
+
 [node name="sniper_samopal" parent="." instance=ExtResource("17_dtthm")]
 transform = Transform3D(0.971027, 0.0742736, -0.227136, 0.11147, 0.699957, 0.705433, 0.21138, -0.710313, 0.671397, -1.56618, 0.805147, 5.02599)
 
 [node name="7_62_amm0" parent="." instance=ExtResource("18_nvny8")]
 transform = Transform3D(0.543566, 0, 0, 0, 0.543566, 0, 0, 0, 0.543566, -1.294, 0.5, 4.13738)
+
+[node name="rad_sign" parent="." instance=ExtResource("19_emtad")]
+transform = Transform3D(-0.46881, 0, -0.376502, 0, 0.60128, 0, 0.376502, 0, -0.46881, 5.45886, 0.5, 7.96435)
+
+[node name="rad_sign2" parent="." instance=ExtResource("19_emtad")]
+transform = Transform3D(0.319635, 0, -0.509285, 0, 0.60128, 0, 0.509285, 0, 0.319635, 10.9116, 0.5, -1.97822)
 
 [editable path="bak_with_fire"]

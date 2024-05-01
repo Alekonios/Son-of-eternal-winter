@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://bd647cj483wog"
+path="res://.godot/imported/cc2f401846324dd (1) (mp3cut.net) (3).mp3-81b988b4fd69e758da01dd354cf2ec3c.mp3str"
+
+[deps]
+
+source_file="res://Sounds/sniper_samopal/cc2f401846324dd (1) (mp3cut.net) (3).mp3"
+dest_files=["res://.godot/imported/cc2f401846324dd (1) (mp3cut.net) (3).mp3-81b988b4fd69e758da01dd354cf2ec3c.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

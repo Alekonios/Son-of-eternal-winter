@@ -16,7 +16,7 @@ func _process(delta):
 		camera_shake_on_run()
 	
 
-func camera_shake_on_walk():
+func camera_shake_on_run():
 	if shake:
 		self.global_position.y -= 0.0015
 		await get_tree().create_timer(0.2, false).timeout
@@ -26,7 +26,7 @@ func camera_shake_on_walk():
 		await get_tree().create_timer(0.2, false).timeout
 		shake = true
 		
-func camera_shake_on_run():
+func camera_shake_on_walk():
 	if shake:
 		self.global_position.y -= 0.002
 		await get_tree().create_timer(0.2, false).timeout

@@ -18,7 +18,7 @@
 [ext_resource type="AudioStream" uid="uid://bf1134olif5hi" path="res://Sounds/nature_sound/day_snow.mp3" id="16_vqrkc"]
 [ext_resource type="PackedScene" uid="uid://fek8uaxu6jxu" path="res://Scenes/Guns/sniper_samopal.tscn" id="17_dtthm"]
 [ext_resource type="PackedScene" uid="uid://cf337arquk1ol" path="res://Scenes/Guns/ammo/7_62_ammo.tscn" id="18_nvny8"]
-[ext_resource type="PackedScene" path="res://Scenes/Objects/static/rad_sign.tscn" id="19_emtad"]
+[ext_resource type="PackedScene" uid="uid://dtusuuampx7an" path="res://Scenes/Objects/static/rad_sign.tscn" id="19_emtad"]
 [ext_resource type="PackedScene" uid="uid://by854pvrtu78w" path="res://Scenes/Charapters/mutants/patologia/patologia.tscn" id="20_smpjc"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_8bcpu"]

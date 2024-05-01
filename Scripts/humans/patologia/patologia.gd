@@ -9,6 +9,9 @@ enum states { WARDER, IDLE, RUN, ATTACK }
 var targed_area: Hitbox
 var last_visible_position: Vector3
 
+var HP = 100
+var died = false
+
 var local_waypoints: Array[Marker3D] = []
 var amount_of_way: int = 0
 var get_way: Vector3
@@ -34,7 +37,7 @@ func _ready():
 
 
 func state_function(direction, delta):
-	if state == states.WARDER:
+	if state == states.WARDER and !died:
 		animator.play("walk")
 		navigation_agent.target_position = get_way
 		var position_point = navigation_agent.get_next_path_position()
@@ -48,7 +51,7 @@ func state_function(direction, delta):
 		if self.global_position.distance_to(get_way) < 1.5:
 			state = states.IDLE
 
-	elif state == states.IDLE:
+	elif state == states.IDLE and !died:
 		velocity = Vector3.ZERO
 		animator.play("Armature_001|mixamo_com|Layer0_001")
 		if idle_timer.is_stopped():
@@ -62,16 +65,12 @@ func state_function(direction, delta):
 
 
 func _physics_process(delta):
-	get_way = local_waypoints[number_way].global_position
-
+	if !died:
+		get_way = local_waypoints[number_way].global_position
+		var direction = Vector3()
+		state_function(direction, delta)
+		move_and_slide()
 	velocity.y -= gravity * delta
-
-	var direction = Vector3()
-
-	state_function(direction, delta)
-
-	move_and_slide()
-
 
 func _on_idle_timer_timeout():
 	number_way += 1
@@ -86,3 +85,13 @@ func _on_wardering_area_3d_area_entered(area: Hitbox):
 
 func _on_wardering_area_3d_area_exited(_area: Hitbox):
 	targed_area = null
+	
+func hit():
+	if !died:
+		animator.play("wizg")
+	
+func _on_died_timer_timeout():
+	if HP <= 0:
+		$DiedTimer.stop()
+		animator.play("died")
+		died = true

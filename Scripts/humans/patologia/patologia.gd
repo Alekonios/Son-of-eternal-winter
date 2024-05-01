@@ -40,7 +40,8 @@ func _ready():
 
 func state_function(direction, delta):
 	if state == states.WARDER and !died:
-		animator.play("walk")
+		if targed_area == null: animator.play("walk")
+		else: animator.play("run")
 		navigation_agent.target_position = get_way
 		var position_point = navigation_agent.get_next_path_position()
 		look_at(position_point)

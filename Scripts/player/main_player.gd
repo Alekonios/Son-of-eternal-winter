@@ -80,92 +80,92 @@ func _ready():
 	$SubViewportContainer/SubViewport.size = DisplayServer.window_get_size()
 	current_weapon = ""
 
-func state_change():
+func state_change(delta):
 	if state == states.IDLE:
 		animator.play("stat_idle")
-		camera.global_position = lerp(camera.global_position, cam_origin[3].global_position, 0.1)
+		camera.global_position = lerp(camera.global_position, cam_origin[3].global_position, delta * 5)
 	elif state == states.WALK:
 		animator.play("STAT-idle")
 		speed = 1.0
-		camera.global_position = lerp(camera.global_position, cam_origin[4].global_position, 0.1)
+		camera.global_position = lerp(camera.global_position, cam_origin[4].global_position, delta * 5)
 	elif state == states.RUN: 
 		animator.play("run")
 		speed = 2.0
-		camera.global_position= lerp(camera.global_position, cam_origin[5].global_position, 0.1)
+		camera.global_position= lerp(camera.global_position, cam_origin[5].global_position, delta * 5)
 	elif state == states.IDLE_A:
 		animator.play("idle with automat")
 		ak_animator.play("Rig|AK_Idle")
-		camera.global_position= lerp(camera.global_position, cam_origin[0].global_position, 0.1)
+		camera.global_position= lerp(camera.global_position, cam_origin[0].global_position, delta * 5)
 	elif state == states.WALK_A:
 		animator.play("walk with automat")
 		ak_animator.play("Rig|AK_Walk")
-		camera.global_position= lerp(camera.global_position, cam_origin[1].global_position, 0.1)
+		camera.global_position= lerp(camera.global_position, cam_origin[1].global_position, delta * 5)
 		speed = 1.0
 	elif state == states.RUN_A:
 		speed = 2.0
 		animator.play("run with automat 2")
 		ak_animator.play("Rig|AK_Run")
-		camera.global_position= lerp(camera.global_position, cam_origin[2].global_position, 0.1)
+		camera.global_position= lerp(camera.global_position, cam_origin[2].global_position, delta * 5)
 	elif state == states.AIM_A:
 		animator.play("idle with automat")
 		ak_animator.play("Rig|AK_Idle")
-		camera.global_position= lerp(camera.global_position, cam_origin[6].global_position, 0.1)
+		camera.global_position= lerp(camera.global_position, cam_origin[6].global_position, delta * 5)
 	elif state == states.RELOADING_A:
 		if AK_ORIG_NODE.reloadnig:
 			skip_weapon_cd(1)
 			speed = 1.0
 			ak_animator.play("Rig|AK_Reload_full")
-			camera.global_position= lerp(camera.global_position, cam_origin[0].global_position, 0.1)
+			camera.global_position= lerp(camera.global_position, cam_origin[0].global_position, delta * 5)
 	elif state == states.WALK_P:
-		camera.global_position= lerp(camera.global_position, cam_origin[0].global_position, 0.1)
+		camera.global_position= lerp(camera.global_position, cam_origin[0].global_position, delta * 5)
 		speed = 1.0
 		pistol_animator.play("Armature|FPS_Pistol_Walk")
-		camera.global_position= lerp(camera.global_position, cam_origin[8].global_position, 0.1)
+		camera.global_position= lerp(camera.global_position, cam_origin[8].global_position, delta * 5)
 	elif state == states.RUN_P:
 		speed = 2.0
-		camera.global_position= lerp(camera.global_position, cam_origin[9].global_position, 0.1)
+		camera.global_position= lerp(camera.global_position, cam_origin[9].global_position, delta * 5)
 		pistol_animator.play("Armature|FPS_Pistol_Walk")
 	elif state == states.IDLE_P:
-		camera.global_position= lerp(camera.global_position, cam_origin[7].global_position, 0.1)
+		camera.global_position= lerp(camera.global_position, cam_origin[7].global_position, delta * 5)
 		pistol_animator.play("Armature|FPS_Pistol_Idle")
 	elif state == states.AIM_P:
-		camera.global_position= lerp(camera.global_position, cam_origin[10].global_position, 0.1)
+		camera.global_position= lerp(camera.global_position, cam_origin[10].global_position, delta * 5)
 		pistol_animator.play("Armature|FPS_Pistol_Idle")
 	elif state == states.RELOADING_P:
 		skip_weapon_cd(1)
 		speed = 1.0
 		pistol_animator.play("Armature|FPS_Pistol_Reload_full")
-		camera.global_position= lerp(camera.global_position, cam_origin[0].global_position, 0.1)
+		camera.global_position= lerp(camera.global_position, cam_origin[0].global_position, delta * 5)
 	elif state == states.IDLE_GE:
-		camera.global_position= lerp(camera.global_position, cam_origin[0].global_position, 0.1)
+		camera.global_position= lerp(camera.global_position, cam_origin[0].global_position, delta * 5)
 		geyger_animator.play("geiger_idle")
 	elif state == states.WALK_GE:
-		camera.global_position= lerp(camera.global_position, cam_origin[1].global_position, 0.1)
+		camera.global_position= lerp(camera.global_position, cam_origin[1].global_position, delta * 5)
 		geyger_animator.play("geyger_walk")
 		speed = 1.0
 	elif state == states.IDLE_S:
-		camera.global_position= lerp(camera.global_position, cam_origin[11].global_position, 0.1)
+		camera.global_position= lerp(camera.global_position, cam_origin[11].global_position, delta * 5)
 		if !sniper_animator.current_animation == "Rig|SRifle_Shot_nosight":
 			sniper_animator.play("Rig|SRifle_Idle")
 	elif state == states.WALK_S:
 		speed = 1.0
 		if state != states.AIM_S:
-			camera.global_position= lerp(camera.global_position, cam_origin[12].global_position, 0.1)
+			camera.global_position= lerp(camera.global_position, cam_origin[12].global_position, delta * 5)
 		else:
-			camera.global_position= lerp(camera.global_position, cam_origin[14].global_position, 0.1)
+			camera.global_position= lerp(camera.global_position, cam_origin[14].global_position, delta * 5)
 		if sniper_animator.current_animation != "Rig|SRifle_Shot_nosight":
 			sniper_animator.play("Rig|SRifle_Walk")
 	elif state == states.RUN_S:
 		speed = 1.2
-		camera.global_position= lerp(camera.global_position, cam_origin[13].global_position, 0.1)
+		camera.global_position= lerp(camera.global_position, cam_origin[13].global_position, delta * 5)
 		sniper_animator.play("Rig|SRifle_Walk")
 	elif state == states.AIM_S:
 		#if state != states.RELOADING_S and sniper_animator.current_animation != "Rig|SRifle_Shot_nosight":
-		camera.global_position= lerp(camera.global_position, cam_origin[14].global_position, 0.1)
+		camera.global_position= lerp(camera.global_position, cam_origin[14].global_position, delta * 5)
 		#elif sniper_animator.current_animation == "Rig|SRifle_Shot_nosight":
 			#camera.global_position= lerp(camera.global_position, cam_origin[11].global_position, 0.1)
 	elif state == states.RELOADING_S:
-		camera.global_position= lerp(camera.global_position, cam_origin[11].global_position, 0.1)
+		camera.global_position= lerp(camera.global_position, cam_origin[11].global_position, delta * 5)
 		sniper_animator.play("Rig|SRifle_Reload_Full")
 		
 		
@@ -202,7 +202,7 @@ func sniper_shoot_sound_func():
 func _process(delta):
 	$fps.text = str(Engine.get_frames_per_second())
 	can_run_func()
-	state_change()
+	state_change(delta)
 	
 	if Input.is_action_pressed("lc"):
 		if weapon_in_hand and !shooting:
@@ -512,6 +512,7 @@ func _input(event):
 		rotate_y(deg_to_rad(-event.relative.x * mouse_sens))
 		camera.rotate_x(deg_to_rad(event.relative.y * -mouse_sens))
 		camera.rotation.x = clamp(camera.rotation.x, deg_to_rad(-50), deg_to_rad(50))
+		viewport_camera.sway(Vector2(event.relative.x, event.relative.y))
 	if Input.is_action_just_pressed("e"):
 		take_it("_body")
 	if Input.is_action_just_pressed("c"):

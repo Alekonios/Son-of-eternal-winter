@@ -448,6 +448,7 @@ func take_it(_body):
 func shoot_func(_body):
 	if current_weapon == "AK-74":
 		if AK_collider.is_colliding():
+			print(AK_collider.get_collider())
 			if AK_collider.get_collider() is Hitbox:
 				_body = AK_collider.get_collider()
 				_body.activation(true, 5)

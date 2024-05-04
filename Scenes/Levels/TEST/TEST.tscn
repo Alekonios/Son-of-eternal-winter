@@ -215,11 +215,6 @@ transform = Transform3D(0.730887, -0.538713, 0.419038, 0.11147, 0.699957, 0.7054
 [node name="7_62_amm0" parent="." instance=ExtResource("18_nvny8")]
 transform = Transform3D(0.312289, 0, 0.444904, 0, 0.543566, 0, -0.444904, 0, 0.312289, -2.68093, 0.5, 7.88106)
 
-[node name="Patologia" parent="." node_paths=PackedStringArray("waypoints") instance=ExtResource("20_smpjc")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.97992, 0.5, 8.04132)
-waypoints = [NodePath("../patologia_paths/Marker3D"), NodePath("../patologia_paths/Marker3D2")]
-idle_time = 5.0
-
 [node name="patologia_paths" type="Node3D" parent="."]
 
 [node name="Marker3D" type="Marker3D" parent="patologia_paths"]
@@ -227,5 +222,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.39089, 0, 0)
 
 [node name="Marker3D2" type="Marker3D" parent="patologia_paths"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.0912, 0, 11.8794)
+
+[node name="Patologia" parent="." instance=ExtResource("20_smpjc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.3438, 0.5, 7.42032)
 
 [editable path="Enviroment/objects/bak_with_fire"]

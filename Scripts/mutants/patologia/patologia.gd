@@ -1,6 +1,6 @@
 extends CharacterBody3D
 
-enum states { WARDER, IDLE, RUN, ATTACK }
+enum states { WARDER, IDLE, RUN, ATTACK, AGRESOR }
 
 @export var waypoints: Array[Marker3D]
 @export var run_speed: float = 1.5
@@ -13,8 +13,11 @@ var last_visible_position: Vector3
 var speed: float
 var HP = 100
 var died = false
+var action = false
+var agresor_anim = false
 
 var local_waypoints: Array[Marker3D] = []
+
 var amount_of_way: int = 0
 var get_way: Vector3
 var number_way: int = 0
@@ -61,11 +64,16 @@ func state_function(direction, delta):
 		if idle_timer.is_stopped():
 			idle_timer.start()
 
-	elif state == states.RUN:
-		pass
-
-	elif state == states.ATTACK:
-		pass
+	elif state == states.AGRESOR and !died and !agresor_anim:
+		velocity = Vector3.ZERO
+		looked_at()
+		if !animator.current_animation == "wizg":
+			animator.play("wizg")
+			await get_tree().create_timer(3, false).timeout
+			state = states.WARDER
+			agresor_anim = true
+			
+			
 
 func looked_at():
 	var a = Quaternion(transform.basis)
@@ -99,11 +107,14 @@ func _on_idle_timer_timeout():
 
 
 func _on_wardering_area_3d_area_entered(area: Hitbox):
-	targed_area = area
+	if !targed_area:
+		$WarderingBigArea3D2.monitoring = true
+		targed_area = area
+		state = states.AGRESOR
 
 
 func _on_wardering_area_3d_area_exited(_area: Hitbox):
-	targed_area = null
+	pass
 	
 func hit():
 	if !died:
@@ -114,3 +125,13 @@ func _on_died_timer_timeout():
 		$DiedTimer.stop()
 		animator.play("died")
 		died = true
+
+
+func _on_wardering_big_area_3d_2_area_entered(_area : Hitbox):
+	pass # Replace with function body.
+
+
+func _on_wardering_big_area_3d_2_area_exited(_area : Hitbox):
+	$WarderingBigArea3D2.monitoring = false
+	agresor_anim = false
+	targed_area = null

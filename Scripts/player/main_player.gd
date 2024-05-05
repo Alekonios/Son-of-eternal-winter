@@ -355,6 +355,7 @@ func _physics_process(delta):
 	if input_direction:
 		velocity.x = direction.x * speed
 		velocity.z = direction.z * speed
+		viewport_camera.sway(Vector2(velocity.x, velocity.y))
 		moving = true
 		if !is_run and !current_weapon:
 			state = states.WALK
@@ -585,8 +586,6 @@ func update_weapon_visuals():
 		GEYGER_ORIG_NODE.hide()
 		SNIPER_ORIG_NODE.show()
 		skip_weapon_cd(0.2)
-		
-		
 		
 func camera_shake_func(shake_value : int):
 	for i in range(3):

@@ -17,5 +17,5 @@ func _process(delta):
 	
 	
 func sway(sway_amount):
-	fps_rig.position.x += sway_amount.x * 0.0005
-	fps_rig.position.y += sway_amount.y * 0.0005
+	fps_rig.position.x += sway_amount.x * 0.0009
+	fps_rig.position.y += sway_amount.y * 0.0009

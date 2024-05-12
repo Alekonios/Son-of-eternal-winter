@@ -3,10 +3,10 @@ extends CharacterBody3D
 enum states { WARDER, IDLE, RUN, ATTACK, AGRESOR }
 
 @export var waypoints: Array[Marker3D]
-@export var run_speed: float = 1.5
-@export var warder_speed: float = 0.5
+@export var run_speed: float = 5.0
+@export var warder_speed: float = 1.0
 @export var idle_time: float = 2
-@export var max_walk_time: float = 5
+@export var max_walk_time: float = 20
 
 @onready var blood_part = $GPUParticles3D
 @onready var attack_collider = $RayCast3D
@@ -14,6 +14,7 @@ enum states { WARDER, IDLE, RUN, ATTACK, AGRESOR }
 var targed_area: Hitbox
 var last_visible_position: Vector3
 
+var current_attack_num = 0
 var scary = false
 var speed: float
 var HP = 100
@@ -26,6 +27,7 @@ var get_way: Vector3
 var number_way: int = 0
 var accel: float = 10.0
 var attacking = false
+var damage_enemy = false
 
 var state: states = states.IDLE
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
@@ -42,7 +44,6 @@ func _ready():
 	amount_of_way = len(local_waypoints) - 1
 	idle_timer.wait_time = idle_time
 	if amount_of_way < 0:
-		print("ADD PATH!")
 		self.queue_free()
 
 func _physics_process(delta):
@@ -66,7 +67,8 @@ func _physics_process(delta):
 
 func state_function(direction, delta):
 	if state == states.WARDER:
-		if !died and !attacking:
+		if !died and !attacking and animator.current_animation != "attack1" and animator.current_animation != "wizg" and animator.current_animation != "attack3" and !animator.current_animation == "attack4":
+			attack_collider.target_position.z = -1
 			if targed_area == null and !scary:
 				animator.play("walk_new")
 				if walk_timer.is_stopped():
@@ -103,19 +105,41 @@ func state_function(direction, delta):
 			looked_at()
 			if !animator.current_animation == "wizg":
 				animator.play("wizg")
+				$wizg.play()
 				await get_tree().create_timer(2.5, false).timeout
 				state = states.WARDER
 				agresor_anim = true
 	elif state == states.ATTACK:
-		if !died and attacking:
-			velocity = Vector3.ZERO
-			animator.play("attack1")
-			await get_tree().create_timer(1.8, false).timeout
-			if attacking:
-				attacking = false
-				state = states.WARDER
-			
-			
+		if current_attack_num == 0 and !animator.current_animation == "attack3":
+			if !died and attacking:
+				attack_collider.target_position.z = -1.5
+				velocity = Vector3.ZERO
+				animator.play("attack1")
+				if animator.current_animation == "attack1":
+					await get_tree().create_timer(1.8, false).timeout
+					current_attack_num = 1
+					attacking = false
+					state = states.WARDER
+		elif current_attack_num == 1 and !animator.current_animation == "attack1":
+			if !died and attacking:
+					attack_collider.target_position.z = -1.5
+					velocity = Vector3.ZERO
+					animator.play("attack3")
+					if animator.current_animation == "attack3":
+						await get_tree().create_timer(1.8, false).timeout
+						current_attack_num = 2
+						attacking = false
+						state = states.WARDER
+		elif current_attack_num == 2 and !animator.current_animation == "attack4":
+			if !died and attacking:
+					attack_collider.target_position.z = -2.0
+					velocity = Vector3.ZERO
+					animator.play("attack4")
+					if animator.current_animation == "attack4":
+						await get_tree().create_timer(2.9, false).timeout
+						current_attack_num = 0
+						attacking = false
+						state = states.WARDER
 
 func looked_at():
 	if !attacking:
@@ -181,10 +205,19 @@ func random_dir():
 	state = states.WARDER
 	
 func check_attack_collider(enemy):
-	if attack_collider.is_colliding() and attack_collider.get_collider() is Hitbox:
+	if attack_collider.is_colliding() and attack_collider.get_collider() is Hitbox and !attacking:
 		enemy = attack_collider.get_collider()
 		attacking = true
 		state = states.ATTACK
+
+func damage_enemy_func(enemy):
+	if attack_collider.is_colliding() and attack_collider.get_collider() is Hitbox and !damage_enemy:
+		damage_enemy = true
+		enemy = attack_collider.get_collider()
+		enemy.activation(true, 20)
+		await get_tree().create_timer(0.1, false).timeout
+		damage_enemy = false
+	
 		
 	
 	

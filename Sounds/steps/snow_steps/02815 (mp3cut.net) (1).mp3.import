@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://dj7mk8a6a621r"
+path="res://.godot/imported/02815 (mp3cut.net) (1).mp3-77bbd0e63780eb861ad761b36a765eca.mp3str"
+
+[deps]
+
+source_file="res://Sounds/steps/snow_steps/02815 (mp3cut.net) (1).mp3"
+dest_files=["res://.godot/imported/02815 (mp3cut.net) (1).mp3-77bbd0e63780eb861ad761b36a765eca.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

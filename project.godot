@@ -12,12 +12,18 @@ config_version=5
 
 config/name="Son of eternal winter"
 config/features=PackedStringArray("4.2", "Mobile")
+run/max_fps=60
+boot_splash/bg_color=Color(0, 0, 0, 0.619608)
+boot_splash/image="res://generated_image_04ac2286104611ef.png"
+boot_splash/fullsize=false
+boot_splash/minimum_display_time=1000
 
 [display]
 
 window/size/viewport_width=1980
 window/size/viewport_height=1920
 window/size/mode=3
+window/size/borderless=true
 
 [file_customization]
 

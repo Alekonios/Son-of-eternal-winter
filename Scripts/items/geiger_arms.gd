@@ -1,9 +1,11 @@
 extends Node3D
 
+@export var _Inventory_Manager : Inventory_Manager
+
 @onready var strelka = $"Sketchfab_model/810f0276179d4425a118b331d5f38189_fbx/Object_2/RootNode/Rig/Object_8/Skeleton3D/BoneAttachment3D/geiger/Cube_002"
 @onready var player = $"../../.."
 
-var not_have_rad = true
+var not_have_Drad = true
 var high_rad = false
 var middle_rad = false
 var low_rad = false
@@ -13,7 +15,7 @@ var low_rad = false
 @onready var strelka_anim = $AnimationPlayer2
 
 func geyger_state_change():
-	if player.current_weapon == "geyger":
+	if _Inventory_Manager.current_weapon == "geyger":
 		if high_rad and middle_rad and low_rad:
 			high_rad_sound_func()
 			strelka_anim.play("high_rad")

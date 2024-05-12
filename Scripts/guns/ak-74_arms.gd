@@ -7,12 +7,10 @@ var ammo = 30
 func ammo_reload():
 	if !reloadnig:
 		reloadnig = true
-		print("начал перезарядку")
 		play_reload_sound()
 		await get_tree().create_timer(3.5, false).timeout
 		ammo = 30
 		reloadnig = false
-		print("закончил перезарядку")
 
 func play_reload_sound():
 	await get_tree().create_timer(0.3, false).timeout

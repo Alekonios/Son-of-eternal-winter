@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://u2njj82mcvx5"
+path="res://.godot/imported/gurgling-monster_fjnwdr4u (1).mp3-3e65584c1fd6469b251f6f304f0ffab1.mp3str"
+
+[deps]
+
+source_file="res://Sounds/monsters/patologia/gurgling-monster_fjnwdr4u (1).mp3"
+dest_files=["res://.godot/imported/gurgling-monster_fjnwdr4u (1).mp3-3e65584c1fd6469b251f6f304f0ffab1.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

@@ -29,6 +29,7 @@ var weapon_in_hand = false #эта пеменная отвечает так же
 var current_weapon = ""
 var deleting = false
 var can_skip_weapon = false
+var gas_mask_on_helmet = false
 
 var object = null
 var weapons = [""]
@@ -63,6 +64,15 @@ func _input(event):
 				current_weapon = "geyger"
 				geyger_animator.play("geiger draw")
 				switch_item()
+	if Input.is_action_just_pressed("z"):
+		for i in items:
+			if i == "gas-mask":
+				if !gas_mask_on_helmet:
+					gas_mask_on_helmet = true
+					$"../gas_mask_text".show()
+				else:
+					gas_mask_on_helmet = false
+					$"../gas_mask_text".hide()
 		
 	if Input.is_action_just_pressed("1") and current_weapon != weapons[0] and !AK_ORIG_NODE.reloadnig and !PISTOL_ORIG_NODE.reloadnig and !can_skip_weapon:
 		switch_weapon(0)

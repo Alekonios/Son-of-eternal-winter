@@ -5,13 +5,15 @@ extends Node3D
 var HP = 100
 
 @onready var blood_levels = [$level, $level2, $level3, $level4, $level5, $level6, $level7, $level8, $level9]
+@export var sound_component : Sound_Component
 
 func hit():
+	$AnimationPlayer2.play("hit")
 	player.camera_shake_func(0.03)
 
 func _on_health_timer_update_timeout():
 	if HP < 90:
-		$AnimationPlayer.play("blood_merc")
+		$AnimationPlayer2.play("blood_merc")
 		blood_levels[0].show()
 	if HP < 80:
 		blood_levels[1].show()
@@ -30,6 +32,7 @@ func _on_health_timer_update_timeout():
 	if HP < 10:
 		blood_levels[8].show()
 	if HP < 0:
+		sound_component.say_sounds[0].play()
 		$Health_Timer_update.stop()
-		$AnimationPlayer.play("died")
+		$AnimationPlayer2.play("died")
 		Engine.time_scale = 0.1

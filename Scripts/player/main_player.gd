@@ -40,15 +40,16 @@ func _ready():
 	$SubViewportContainer/SubViewport.size = DisplayServer.window_get_size()
 		
 func can_run_func():
-	if !shooting:
+	if _Weapon_Manager.shooting == false:
 		await get_tree().create_timer(1, false).timeout
-		if !shooting:
+		if _Weapon_Manager.shooting == false:
 			can_run = true
 	
 func _process(delta):
 	$fps.text = str(Engine.get_frames_per_second())
 	can_run_func()
-				
+	$camera_node/Camera3D/sniper_raycasy.global_transform = $"ARMS_CAM_POS/sniper_cam_pos/sniper_aim_position/sniper_samopal_arms/Sketchfab_model/60e5ab10f37245dcb4931676588d48d0_fbx/Object_2/RootNode/Rig/Object_6/Skeleton3D/BoneAttachment3D/nice_scope/SubViewport/Camera3D".global_transform
+
 func _physics_process(delta):
 	if not is_on_floor():
 		velocity.y -= gravity * delta

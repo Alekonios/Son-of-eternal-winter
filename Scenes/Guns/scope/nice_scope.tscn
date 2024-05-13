@@ -65,14 +65,16 @@ shadow_mesh = SubResource("ArrayMesh_ablv5")
 resource_name = "02_-_Default"
 cull_mode = 2
 shading_mode = 2
-albedo_color = Color(0.733333, 0.964706, 0.901961, 1)
+albedo_color = Color(0.439216, 0.854902, 0.760784, 1)
 albedo_texture = ExtResource("3_em4fs")
+metallic_specular = 1.0
 metallic_texture = ExtResource("4_4xvap")
 metallic_texture_channel = 2
 roughness = 0.0
 roughness_texture = ExtResource("4_4xvap")
 roughness_texture_channel = 1
 ao_enabled = true
+ao_light_affect = 1.0
 ao_texture = ExtResource("4_4xvap")
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_50my7"]

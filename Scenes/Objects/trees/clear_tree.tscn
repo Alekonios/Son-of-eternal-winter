@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://bbs5w2px2da5o"]
+[gd_scene load_steps=13 format=3 uid="uid://bbs5w2px2da5o"]
 
 [ext_resource type="Texture2D" uid="uid://23nw75ap0y5p" path="res://Load-Asstets/tree (2)_0.png" id="1_5b5u2"]
 [ext_resource type="Texture2D" uid="uid://cmd4q50xnsriw" path="res://Load-Asstets/tree (2)_1.png" id="2_nmp2t"]
@@ -14,6 +14,7 @@ metallic_texture_channel = 2
 roughness_texture = ExtResource("2_nmp2t")
 roughness_texture_channel = 1
 normal_enabled = true
+normal_scale = 2.81
 normal_texture = ExtResource("3_ae7gl")
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_ocrep"]
@@ -95,8 +96,13 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_j3rpl")
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_l5peb"]
+size = Vector3(103.796, 339.633, 83.186)
+
 [node name="clear_tree" type="StaticBody3D"]
 transform = Transform3D(0.0140598, 0, 0, 0, 0.0140598, 0, 0, 0, 0.0140598, 0, 0, 0)
+collision_layer = 2
+collision_mask = 0
 
 [node name="tree2_tree2_0" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.646247, 0, 0, 0, 0.646247, -1.43496e-16, 0, 1.43496e-16, 0.646247, 0.39633, 63.6218, 3.50066)
@@ -107,3 +113,7 @@ skeleton = NodePath("")
 transform = Transform3D(0.646247, 0, 0, 0, 0.646247, -1.43496e-16, 0, 1.43496e-16, 0.646247, 1.84439, 274.795, 16.2909)
 mesh = SubResource("ArrayMesh_1jmug")
 skeleton = NodePath("")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.999975, 0, 0, 0, 0.999975, 0, 0, 0, 0.999975, 3.50144, 169.315, 13.7014)
+shape = SubResource("BoxShape3D_l5peb")

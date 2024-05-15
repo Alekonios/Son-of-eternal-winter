@@ -2,6 +2,8 @@ class_name Inventory_Manager
 
 extends Node3D
 
+@export var Sound_component : Sound_Component
+
 @onready var collider = $"../camera_node/Camera3D/RayCast3D"
 @onready var player_2d = $"../SubViewportContainer"
 
@@ -100,6 +102,7 @@ func take_it(_body):
 				elif object.gun_name == "sniper-samopal":
 					ammo7_62.push_back("ammo-7.62")
 			elif object.is_in_group("item"):
+				$"../sounds/big_item_take".play()
 				items.push_back(object.item_name)
 				_body.activation(false, 0)
 			elif object.is_in_group("ammo"):

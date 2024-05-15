@@ -8,6 +8,7 @@ extends CharacterBody3D
 @export var _Weapon_Manager : Weapon_Manager
 @export var _Inventory_Manager : Inventory_Manager
 @export var _State_Machine_Component : State_Machine_Component
+@export var _Sounds_Component : Sound_Component
 
 var adddf 
 
@@ -67,6 +68,7 @@ func _physics_process(delta):
 	var direction = (transform.basis * Vector3(input_direction.x, 0, input_direction.y)).normalized()
 
 	if input_direction:
+		snow_steps_logic()
 		velocity.x = direction.x * speed
 		velocity.z = direction.z * speed
 		moving = true
@@ -147,4 +149,10 @@ func camera_shake_func(shake_value : float):
 			await get_tree().create_timer(0.03, false).timeout
 			camera.global_transform.origin -= shake_offset
 			shaking = false
+
+func snow_steps_logic():
+	if !is_run:
+		_Sounds_Component.step_snow_sounds_walk()
+	else:
+		_Sounds_Component.step_snow_sounds_run()
 

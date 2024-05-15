@@ -14,13 +14,13 @@
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_6tbis"]
 frequency = 0.0135
 
-[sub_resource type="NoiseTexture3D" id="NoiseTexture3D_clvc2"]
+[sub_resource type="NoiseTexture3D" id="NoiseTexture3D_v5we0"]
 noise = SubResource("FastNoiseLite_6tbis")
 
 [sub_resource type="FogMaterial" id="FogMaterial_s7mms"]
 albedo = Color(0.513726, 0.513726, 0.513726, 1)
 emission = Color(0.345098, 0.345098, 0.345098, 1)
-density_texture = SubResource("NoiseTexture3D_clvc2")
+density_texture = SubResource("NoiseTexture3D_v5we0")
 
 [sub_resource type="Curve" id="Curve_c4o52"]
 min_value = -360.0

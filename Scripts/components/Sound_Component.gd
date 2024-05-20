@@ -13,6 +13,7 @@ var step_sound_playing = false
 @onready var say_sounds = [$"../sounds/voice_sound/pisk"]
 @onready var step_sounds = [$"../sounds/steps_sound/snow_steps/step_sound", $"../sounds/steps_sound/snow_steps/step_sound2", $"../sounds/steps_sound/snow_steps/step_sound3", $"../sounds/steps_sound/snow_steps/step_sound4"]
 @onready var player_env_sounds = [$"../sounds/voice_sound/gas_vzdoh"]
+@onready var damage_sounds = [$"../sounds/voice_sound/damage_sound", $"../sounds/voice_sound/damage_sound2", $"../sounds/voice_sound/damage_sound3"]
 
 func step_snow_sounds_walk():
 	if !step_sound_playing:
@@ -33,8 +34,10 @@ func step_snow_sounds_run():
 func anti_gas_sound():
 	if !player_env_sounds[0].playing:
 		player_env_sounds[0].play()
-	
-
+		
+func damage_sounds_func():
+	var random_index = randi() % damage_sounds.size()
+	damage_sounds[random_index].play()
 
 func _on_timer_timeout():
 	if _Imventory_manager.gas_mask_on_helmet:

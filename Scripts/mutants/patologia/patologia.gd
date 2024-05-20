@@ -28,6 +28,8 @@ var number_way: int = 0
 var accel: float = 10.0
 var attacking = false
 var damage_enemy = false
+var step_sound_playing = false
+@onready var step_sounds = [$snow_steps/step_sound, $snow_steps/step_sound2, $snow_steps/step_sound3, $snow_steps/step_sound4]
 
 var state: states = states.IDLE
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
@@ -68,16 +70,19 @@ func _physics_process(delta):
 func state_function(direction, delta):
 	if state == states.WARDER:
 		if !died and !attacking and animator.current_animation != "attack1" and animator.current_animation != "wizg" and animator.current_animation != "attack3" and !animator.current_animation == "attack4":
-			attack_collider.target_position.z = -1
+			attack_collider.target_position.z = -0.3
 			if targed_area == null and !scary:
 				animator.play("walk_new")
+				step_snow_sounds_walk()
 				if walk_timer.is_stopped():
 					walk_timer.start()
 			elif targed_area == null and scary:
 				animator.play("new_run")
+				step_snow_sounds_run()
 				if walk_timer.is_stopped():
 					walk_timer.start()
 			elif targed_area != null:
+				step_snow_sounds_run()
 				animator.play("new_run")
 			navigation_agent.target_position = get_way
 			var position_point = navigation_agent.get_next_path_position()
@@ -218,6 +223,20 @@ func damage_enemy_func(enemy):
 		await get_tree().create_timer(0.1, false).timeout
 		damage_enemy = false
 	
+func step_snow_sounds_walk():
+	if !step_sound_playing:
+		step_sound_playing = true
+		var random_index = randi() % step_sounds.size()
+		step_sounds[random_index].play()
+		await get_tree().create_timer(0.5, false).timeout
+		step_sound_playing = false
 		
+func step_snow_sounds_run():
+	if !step_sound_playing:
+		step_sound_playing = true
+		var random_index = randi() % step_sounds.size()
+		step_sounds[random_index].play()
+		await get_tree().create_timer(0.3, false).timeout
+		step_sound_playing = false
 	
 	

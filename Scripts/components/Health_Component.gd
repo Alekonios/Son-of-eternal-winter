@@ -9,6 +9,7 @@ var HP = 100
 
 func hit():
 	$AnimationPlayer2.play("hit")
+	sound_component.damage_sounds_func()
 	player.camera_shake_func(0.03)
 
 func _on_health_timer_update_timeout():
@@ -34,5 +35,7 @@ func _on_health_timer_update_timeout():
 	if HP < 0:
 		sound_component.say_sounds[0].play()
 		$Health_Timer_update.stop()
+		$Control.show()
+		$Control2.show()
 		$AnimationPlayer2.play("died")
 		Engine.time_scale = 0.1

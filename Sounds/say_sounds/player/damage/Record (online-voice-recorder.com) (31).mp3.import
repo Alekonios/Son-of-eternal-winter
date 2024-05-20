@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://cobtadxcj4usb"
+path="res://.godot/imported/Record (online-voice-recorder.com) (31).mp3-bfecc6e852969629f4d57b425bf68d68.mp3str"
+
+[deps]
+
+source_file="res://Sounds/say_sounds/player/damage/Record (online-voice-recorder.com) (31).mp3"
+dest_files=["res://.godot/imported/Record (online-voice-recorder.com) (31).mp3-bfecc6e852969629f4d57b425bf68d68.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

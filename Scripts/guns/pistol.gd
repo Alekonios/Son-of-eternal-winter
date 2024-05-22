@@ -1,4 +1,4 @@
-extends StaticBody3D
+extends RigidBody3D
 
 @export var gun_name = ""
 

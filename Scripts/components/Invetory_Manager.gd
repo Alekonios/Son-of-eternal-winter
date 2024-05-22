@@ -25,7 +25,9 @@ extends Node3D
 @onready var GEYGER_CAM_POS = $"../ARMS_CAM_POS/geyger_cam_pos"
 @onready var ARMS = $"../ARMS_CAM_POS/ak_aim_pos/ARMS"
 
-
+var ak_path = load("res://Scenes/Guns/AK-74.tscn")
+var pistol_path = load("res://Scenes/Guns/pistol.tscn")
+var sniper_path = load("res://Scenes/Guns/sniper_samopal.tscn")
 
 var weapon_in_hand = false #эта пеменная отвечает так же и за предметы, не только оружия
 var current_weapon = ""
@@ -75,6 +77,8 @@ func _input(event):
 				else:
 					gas_mask_on_helmet = false
 					$"../gas_mask_text".hide()
+	if Input.is_action_just_pressed("q"):
+		drop()
 		
 	if Input.is_action_just_pressed("1") and current_weapon != weapons[0] and !AK_ORIG_NODE.reloadnig and !PISTOL_ORIG_NODE.reloadnig and !can_skip_weapon:
 		switch_weapon(0)
@@ -95,12 +99,6 @@ func take_it(_body):
 				weapons.push_back(object.gun_name)
 				_body.activation(false, 0)
 				weapon_in_hand = true
-				if object.gun_name == "AK-74":
-					ammo5_45.push_back("ammo-5.45")
-				elif object.gun_name == "pistol":
-					ammo9_19.push_back("ammo-9.19")
-				elif object.gun_name == "sniper-samopal":
-					ammo7_62.push_back("ammo-7.62")
 			elif object.is_in_group("item"):
 				$"../sounds/big_item_take".play()
 				items.push_back(object.item_name)
@@ -171,4 +169,43 @@ func skip_weapon_cd(time : float):
 		can_skip_weapon = true
 		await get_tree().create_timer(time, false).timeout
 		can_skip_weapon = false
+		
+func drop():
+	if current_weapon == "AK-74":
+		var scene = get_tree().root
+		weapons.find("AK-74")
+		weapons.erase("AK-74")
+		current_weapon = ""
+		update_weapon_visuals()
+		var ak_node = ak_path.instantiate()
+		add_child(ak_node)
+		ak_node.global_position = self.global_position
+		ak_node.global_position.y += 0.5
+		ak_node.global_rotation.z = 26
+		ak_node.reparent(scene)
+	elif current_weapon == "pistol":
+		var scene = get_tree().root
+		weapons.find("pistol")
+		weapons.erase("pistol")
+		current_weapon = ""
+		update_weapon_visuals()
+		var pistol_node = pistol_path.instantiate()
+		add_child(pistol_node)
+		pistol_node.global_position = self.global_position
+		pistol_node.global_position.y += 0.5
+		pistol_node.global_rotation.z = 26
+		pistol_node.reparent(scene)
+	elif current_weapon == "sniper-samopal":
+		var scene = get_tree().root
+		weapons.find("sniper-samopal")
+		weapons.erase("sniper-samopal")
+		current_weapon = ""
+		update_weapon_visuals()
+		var sniper_node = sniper_path.instantiate()
+		add_child(sniper_node)
+		sniper_node.global_position = self.global_position
+		sniper_node.global_position.y += 0.5
+		sniper_node.global_rotation.z = 26
+		sniper_node.reparent(scene)
+		
 	

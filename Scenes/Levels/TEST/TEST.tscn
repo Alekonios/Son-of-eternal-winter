@@ -1,5 +1,6 @@
-[gd_scene load_steps=30 format=3 uid="uid://c3dhuwu7hivmq"]
+[gd_scene load_steps=31 format=3 uid="uid://c3dhuwu7hivmq"]
 
+[ext_resource type="Script" path="res://Scenes/Levels/TEST/TEST.gd" id="1_aunva"]
 [ext_resource type="Material" uid="uid://dj65m8b8qvbut" path="res://tres-materials/grid.tres" id="1_bnopc"]
 [ext_resource type="Texture2D" uid="uid://bimbbar8mmyde" path="res://Textures/Sky/evermotion_nr_00221.jpg" id="2_pxvgb"]
 [ext_resource type="PackedScene" uid="uid://b3fk84gudx7q5" path="res://Load-Asstets/wooden_table.glb" id="4_sl635"]
@@ -65,6 +66,7 @@ fog_sky_affect = 0.032
 volumetric_fog_sky_affect = 0.0
 
 [node name="Node3D" type="Node3D"]
+script = ExtResource("1_aunva")
 
 [node name="Enviroment" type="NavigationRegion3D" parent="."]
 navigation_mesh = SubResource("NavigationMesh_8bcpu")
@@ -175,14 +177,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.74469, 0.5, 3.44493)
 [node name="table" parent="." instance=ExtResource("5_uacpm")]
 transform = Transform3D(-0.416739, 0, -0.562431, 0, 0.7, 0, 0.562431, 0, -0.416739, -4.4745, 0.661679, 9.165)
 
-[node name="AK-74" parent="." instance=ExtResource("6_rj6g3")]
-transform = Transform3D(4.05541e-09, -0.0927769, -0.0419216, -0.101809, -4.45019e-09, -1.57948e-16, -1.83246e-09, 0.0419216, -0.0927769, -4.31088, 1.23631, 9.03294)
-
 [node name="charapter" parent="." instance=ExtResource("6_iey66")]
 transform = Transform3D(0.006, 0, 0, 0, 0.006, 0, 0, 0, 0.006, 5.53957, 0.500001, 0.757267)
-
-[node name="pistol" parent="." instance=ExtResource("8_0kpvb")]
-transform = Transform3D(-0.0018049, 0.112396, -0.498968, 0.511407, 0.00821236, -2.53114e-11, 0.00801156, -0.498903, -0.112411, -4.06783, 1.24123, 8.98012)
 
 [node name="StaticBody3D" parent="." instance=ExtResource("11_jqt6d")]
 transform = Transform3D(-0.166616, 0, 0.0450126, 0, 0.172589, 0, -0.0450126, 0, -0.166616, -4.48468, 1.2214, 9.60565)
@@ -210,9 +206,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.7004, 0.5, 19.3579)
 [node name="radiation2" parent="." instance=ExtResource("15_egxix")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.1358, 0.5, -10.1918)
 
-[node name="sniper_samopal" parent="." instance=ExtResource("17_dtthm")]
-transform = Transform3D(0.730887, -0.538713, 0.419038, 0.11147, 0.699957, 0.705433, -0.673335, -0.468881, 0.571639, -2.10999, 0.805147, 8.61436)
-
 [node name="7_62_amm0" parent="." instance=ExtResource("18_nvny8")]
 transform = Transform3D(0.312289, 0, 0.444904, 0, 0.543566, 0, -0.444904, 0, 0.312289, -2.68093, 0.5, 7.88106)
 
@@ -231,5 +224,19 @@ run_speed = 2.3
 
 [node name="Sketchfab_Scene2" parent="." instance=ExtResource("22_bjuvh")]
 transform = Transform3D(-0.00179952, -0.0435344, 0.0884907, -0.0983515, -0.00573171, -0.00481985, 0.00726947, -0.0883233, -0.0433042, -4.55674, 1.27528, 9.22492)
+
+[node name="Label" type="Label" parent="."]
+offset_top = 61.0
+offset_right = 40.0
+offset_bottom = 84.0
+
+[node name="pistol" parent="." instance=ExtResource("8_0kpvb")]
+transform = Transform3D(0.0713925, 0.997448, 0, -0.997448, 0.0713925, 0, 0, 0, 1, -4.10265, 1.31093, 8.99385)
+
+[node name="AK-74" parent="." instance=ExtResource("6_rj6g3")]
+transform = Transform3D(0.761742, 0.647881, 0, -0.647881, 0.761742, 0, 0, 0, 1, -4.32405, 1.34358, 9.17329)
+
+[node name="sniper_samopal" parent="." instance=ExtResource("17_dtthm")]
+transform = Transform3D(0.976788, -0.17246, -0.127051, 0.214207, 0.786423, 0.579356, 0, -0.593124, 0.805111, -2.3244, 1.05389, 7.90828)
 
 [editable path="Enviroment/objects/bak_with_fire"]

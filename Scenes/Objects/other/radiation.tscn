@@ -54,9 +54,14 @@ shape = SubResource("BoxShape3D_7c5h1")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.376312, 1.0042, 0)
 mesh = SubResource("SphereMesh_5oucv")
 
+[node name="damage_timer" type="Timer" parent="."]
+process_callback = 0
+one_shot = true
+
 [connection signal="area_entered" from="high_radiation" to="." method="_on_high_radiation_area_entered"]
 [connection signal="area_exited" from="high_radiation" to="." method="_on_high_radiation_area_exited"]
 [connection signal="area_entered" from="middle_radiation" to="." method="_on_middle_radiation_area_entered"]
 [connection signal="area_exited" from="middle_radiation" to="." method="_on_middle_radiation_area_exited"]
 [connection signal="area_entered" from="small_radiation" to="." method="_on_small_radiation_area_entered"]
 [connection signal="area_exited" from="small_radiation" to="." method="_on_small_radiation_area_exited"]
+[connection signal="timeout" from="damage_timer" to="." method="_on_damage_timer_timeout"]

@@ -4,6 +4,8 @@ extends Node3D
 
 var step_sound_playing = false
 
+var damage_sound_plauing = false
+
 @export var _Imventory_manager : Inventory_Manager
 
 @onready var ak_sounds = [$"../ARMS_CAM_POS/ak_aim_pos/ARMS/ak-74_arms/sounds/shoot_sound", $"../ARMS_CAM_POS/ak_aim_pos/ARMS/ak-74_arms/sounds/reload_sound"]
@@ -36,8 +38,12 @@ func anti_gas_sound():
 		player_env_sounds[0].play()
 		
 func damage_sounds_func():
-	var random_index = randi() % damage_sounds.size()
-	damage_sounds[random_index].play()
+	if !damage_sound_plauing:
+		damage_sound_plauing = true
+		var random_index = randi() % damage_sounds.size()
+		damage_sounds[random_index].play()
+		await get_tree().create_timer(0.25)
+		damage_sound_plauing = false
 
 func _on_timer_timeout():
 	if _Imventory_manager.gas_mask_on_helmet:

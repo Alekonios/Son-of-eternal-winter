@@ -57,7 +57,7 @@ size = Vector3(1.99982, 0.200195, 1)
 [node name="table" type="StaticBody3D"]
 transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, 0, 0, 0)
 collision_layer = 2
-collision_mask = 0
+collision_mask = 2
 
 [node name="Desk_LP_01 - Default_0" type="MeshInstance3D" parent="."]
 transform = Transform3D(-3.13913e-09, -4.73988e-05, -0.00999988, 1.48798e-11, -0.00999988, 4.73988e-05, -0.01, -5.48482e-16, 3.13916e-09, 0.726378, 0.516693, -6.76058e-14)

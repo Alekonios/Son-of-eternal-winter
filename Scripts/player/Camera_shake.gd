@@ -34,5 +34,6 @@ func _process(delta):
 			self.global_position.y += 0.01 * delta * 5
 			await get_tree().create_timer(0.15, false).timeout
 			shake = true
+
 			
 	

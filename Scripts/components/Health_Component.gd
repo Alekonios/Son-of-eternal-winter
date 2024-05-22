@@ -2,8 +2,11 @@ extends Node3D
 
 @export var player : Player
 
+
+
 var HP = 100
 
+@export var _Inventory_Manager = Inventory_Manager
 @onready var blood_levels = [$level, $level2, $level3, $level4, $level5, $level6, $level7, $level8, $level9]
 @export var sound_component : Sound_Component
 
@@ -11,6 +14,7 @@ func hit():
 	$AnimationPlayer2.play("hit")
 	sound_component.damage_sounds_func()
 	player.camera_shake_func(0.03)
+	
 
 func _on_health_timer_update_timeout():
 	if HP < 90:

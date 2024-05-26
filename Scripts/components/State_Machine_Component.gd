@@ -2,7 +2,7 @@ class_name State_Machine_Component
 
 extends Node3D
 
-enum states {IDLE, WALK, RUN, AIM_A, IDLE_A, WALK_A, RUN_A, SHOOT_A, RELOADING_A, AIM_P, IDLE_P, WALK_P, RUN_P, SHOOT_P, RELOADING_P, IDLE_GE, WALK_GE, RUN_GE, IDLE_S, WALK_S, RUN_S, AIM_S, SHOOT_S, RELOADING_S}
+enum states {IDLE, WALK, RUN, AIM_A, IDLE_A, WALK_A, RUN_A, SHOOT_A, RELOADING_A, AIM_P, IDLE_P, WALK_P, RUN_P, SHOOT_P, RELOADING_P, IDLE_GE, WALK_GE, RUN_GE, IDLE_S, WALK_S, RUN_S, AIM_S, SHOOT_S, RELOADING_S, IDLE_SAI, WALK_SAI, RUN_SAI, AIM_SAI, SHOOT_SAI, RELOADING_SAI}
 
 @export var _Weapon_Manager : Weapon_Manager
 @export var _Inventory_Manager : Inventory_Manager
@@ -12,6 +12,7 @@ enum states {IDLE, WALK, RUN, AIM_A, IDLE_A, WALK_A, RUN_A, SHOOT_A, RELOADING_A
 @export var pistol_animator : AnimationPlayer
 @export var sniper_animator : AnimationPlayer
 @export var geyger_animator : AnimationPlayer
+@export var saiga_animator : AnimationPlayer
 
 @onready var camera = $"../camera_node"
 
@@ -20,6 +21,7 @@ enum states {IDLE, WALK, RUN, AIM_A, IDLE_A, WALK_A, RUN_A, SHOOT_A, RELOADING_A
 @onready var PISTOL_ORIG_NODE = $"../ARMS_CAM_POS/pistol_cam_pos/pistol_aim_pos/pistol_arms"
 @onready var GEYGER_ORIG_NODE = $"../ARMS_CAM_POS/geyger_cam_pos/geiger_arms"
 @onready var SNIPER_ORIG_NODE = $"../ARMS_CAM_POS/sniper_cam_pos/sniper_aim_position/sniper_samopal_arms"
+@onready var SAIGA_ORIG_NODE =$"../ARMS_CAM_POS/saiga_cam_pos/saiga_aim_pos/saiga_arms"
 
 @onready var AK_ARMS_CAM_POS_AIM = $"../ARMS_CAM_POS/ak_aim_pos"
 @onready var PISTOL_ARMS_CAM_POS = $"../ARMS_CAM_POS/pistol_cam_pos"
@@ -27,6 +29,8 @@ enum states {IDLE, WALK, RUN, AIM_A, IDLE_A, WALK_A, RUN_A, SHOOT_A, RELOADING_A
 @onready var SNIPER_ARMS_CAM_POS = $"../ARMS_CAM_POS/sniper_cam_pos"
 @onready var SNIPER_CAM_POS_AIM = $"../ARMS_CAM_POS/sniper_cam_pos/sniper_aim_position"
 @onready var GEYGER_CAM_POS = $"../ARMS_CAM_POS/geyger_cam_pos"
+@onready var SAIGA_ARMS_CAM_POS = $"../ARMS_CAM_POS/saiga_cam_pos"
+@onready var SAIGA_CAM_POS_AIM = $"../ARMS_CAM_POS/saiga_cam_pos/saiga_aim_pos"
 @onready var ARMS = $"../ARMS_CAM_POS/ak_aim_pos/ARMS"
 
 var speed
@@ -35,7 +39,7 @@ var speed
 
 		
 func _process(delta):
-	states_logics()
+	print(saiga_animator.current_animation)
 	speed = player.speed
 	match state:
 		states.IDLE:
@@ -111,7 +115,27 @@ func _process(delta):
 		
 		states.RELOADING_S:
 			sniper_animator.play("Rig|SRifle_Reload_Full")
-	
+			
+		states.IDLE_SAI:
+			if saiga_animator.current_animation != "Rig|Saiga_Fire":
+				saiga_animator.play("Rig|Saiga_Idle")
+			
+		states.WALK_SAI:
+			player.speed = 0.9
+			if saiga_animator.current_animation != "Rig|Saiga_Fire":
+				saiga_animator.play("Rig|Saiga_Walk")
+		
+		states.RUN_SAI:
+			player.speed = 1.8
+			saiga_animator.play("Rig|Saiga_Run")
+		
+		states.AIM_SAI:
+			saiga_animator.play("Rig|Saiga_Idle")
+		
+		states.RELOADING_SAI:
+			saiga_animator.play("Rig|Saiga_Reload_Full")
+			
+	states_logics()
 
 func states_logics():
 	if _Weapon_Manager.is_aim == false and _Inventory_Manager.current_weapon == "AK-74":
@@ -119,6 +143,7 @@ func states_logics():
 		AK_ARMS_CAM_POS_AIM.rotation.x = 0
 		GEYGER_CAM_POS.rotation.x = 0
 		SNIPER_ARMS_CAM_POS.rotation.x = 0
+		SAIGA_ARMS_CAM_POS.rotation.x = 0
 		SNIPER_CAM_POS_AIM.rotation.x = 0
 	elif _Weapon_Manager.is_aim == true and _Inventory_Manager.current_weapon == "AK-74":
 		AK_ARMS_CAM_POS_AIM.rotation.x = -camera.rotation.x
@@ -130,6 +155,7 @@ func states_logics():
 		PISTOL_CAM_POS_AIM.rotation.x = 0
 		GEYGER_CAM_POS.rotation.x = 0
 		SNIPER_ARMS_CAM_POS.rotation.x = 0
+		SAIGA_ARMS_CAM_POS.rotation.x = 0
 		PISTOL_ARMS_CAM_POS.rotation.x = -camera.rotation.x
 	elif _Weapon_Manager.is_aim == true and _Inventory_Manager.current_weapon == "pistol":
 		PISTOL_ARMS_CAM_POS.rotation.x = 0
@@ -141,6 +167,7 @@ func states_logics():
 		GEYGER_CAM_POS.rotation.x = 0
 		PISTOL_ARMS_CAM_POS.rotation.x = 0
 		SNIPER_CAM_POS_AIM.rotation.x = 0
+		SAIGA_ARMS_CAM_POS.rotation.x = 0
 		SNIPER_ARMS_CAM_POS.rotation.x = -camera.rotation.x
 	elif _Weapon_Manager.is_aim and _Inventory_Manager.current_weapon == "sniper-samopal":
 		SNIPER_ARMS_CAM_POS.rotation.x = 0
@@ -149,11 +176,20 @@ func states_logics():
 		SNIPER_ARMS_CAM_POS.rotation.x = 0
 		AK_ARMS_CAM_POS.rotation.x = 0
 		PISTOL_ARMS_CAM_POS.rotation.x = 0
+		SAIGA_ARMS_CAM_POS.rotation.x = 0
 		GEYGER_CAM_POS.rotation.x = -camera.rotation.x
+	elif _Weapon_Manager.is_aim == false and _Inventory_Manager.current_weapon == "saiga":
+		SNIPER_ARMS_CAM_POS.rotation.x = 0
+		AK_ARMS_CAM_POS.rotation.x = 0
+		PISTOL_ARMS_CAM_POS.rotation.x = 0
+		SAIGA_CAM_POS_AIM.rotation.x = 0
+		SAIGA_ARMS_CAM_POS.rotation.x = -camera.rotation.x
+	elif _Weapon_Manager.is_aim and _Inventory_Manager.current_weapon == "saiga":
+		SAIGA_ARMS_CAM_POS.rotation.x = 0
+		SAIGA_CAM_POS_AIM.rotation.x = -camera.rotation.x
 		
 	elif _Weapon_Manager.is_aim == false and _Inventory_Manager.current_weapon != "AK-74":
 		ARMS.rotation.x = 0
 	elif _Weapon_Manager.is_aim == false and _Inventory_Manager.current_weapon != "pistol":
 		ARMS.rotation.x = 0
-		
 

@@ -16,9 +16,12 @@ extends Node3D
 @onready var PISTOL_ORIG_NODE = $"../ARMS_CAM_POS/pistol_cam_pos/pistol_aim_pos/pistol_arms"
 @onready var GEYGER_ORIG_NODE = $"../ARMS_CAM_POS/geyger_cam_pos/geiger_arms"
 @onready var SNIPER_ORIG_NODE = $"../ARMS_CAM_POS/sniper_cam_pos/sniper_aim_position/sniper_samopal_arms"
+@onready var SAIGA_ORIG_NODE = $"../ARMS_CAM_POS/saiga_cam_pos/saiga_aim_pos/saiga_arms"
 
 @onready var AK_ARMS_CAM_POS_AIM = $"../ARMS_CAM_POS/ak_aim_pos"
 @onready var PISTOL_ARMS_CAM_POS = $"../ARMS_CAM_POS/pistol_cam_pos"
+@onready var SAIGA_ARMS_CAM_POS = $"../ARMS_CAM_POS/saiga_cam_pos"
+@onready var SAIGA_AIM_POS = $"../ARMS_CAM_POS/saiga_cam_pos/saiga_aim_pos"
 @onready var PISTOL_CAM_POS_AIM = $"../ARMS_CAM_POS/pistol_cam_pos/pistol_aim_pos"
 @onready var SNIPER_ARMS_CAM_POS = $"../ARMS_CAM_POS/sniper_cam_pos"
 @onready var SNIPER_CAM_POS_AIM = $"../ARMS_CAM_POS/sniper_cam_pos/sniper_aim_position"
@@ -28,6 +31,7 @@ extends Node3D
 var ak_path = load("res://Scenes/Guns/AK-74.tscn")
 var pistol_path = load("res://Scenes/Guns/pistol.tscn")
 var sniper_path = load("res://Scenes/Guns/sniper_samopal.tscn")
+var saiga_path = load("res://Scenes/Guns/saiga.tscn")
 
 var weapon_in_hand = false #эта пеменная отвечает так же и за предметы, не только оружия
 var current_weapon = ""
@@ -41,6 +45,7 @@ var items = []
 var ammo5_45 = []
 var ammo9_19 = []
 var ammo7_62 = []
+
 
 func delate_ammo_5_45():
 	if !deleting:
@@ -95,10 +100,11 @@ func take_it(_body):
 			_body = collider.get_collider()
 			object = _body.get_parent()
 			if object.is_in_group("weapon"):
-				$"../sounds/big_item_take".play()
-				weapons.push_back(object.gun_name)
-				_body.activation(false, 0)
-				weapon_in_hand = true
+				if weapons.size() < 4:
+					$"../sounds/big_item_take".play()
+					weapons.push_back(object.gun_name)
+					_body.activation(false, 0)
+					weapon_in_hand = true
 			elif object.is_in_group("item"):
 				$"../sounds/big_item_take".play()
 				items.push_back(object.item_name)
@@ -133,12 +139,14 @@ func update_weapon_visuals():
 		skip_weapon_cd(0.3)
 		AK_ARMS_CAM_POS.show()
 		AK_ORIG_NODE.show()
+		SAIGA_ORIG_NODE.hide()
 		PISTOL_ORIG_NODE.hide()
 		GEYGER_ORIG_NODE.hide()
 		SNIPER_ORIG_NODE.hide()
 		ak_animator.play("Rig|AK_Draw")
 	elif current_weapon == "pistol":
 		skip_weapon_cd(0.2)
+		SAIGA_ORIG_NODE.hide()
 		AK_ARMS_CAM_POS.show()
 		PISTOL_ORIG_NODE.show()
 		AK_ORIG_NODE.hide()
@@ -148,20 +156,30 @@ func update_weapon_visuals():
 	elif current_weapon == "":
 		skip_weapon_cd(0.1)
 		AK_ORIG_NODE.hide()
+		SAIGA_ORIG_NODE.hide()
 		PISTOL_ORIG_NODE.hide()
 		GEYGER_ORIG_NODE.hide()
 		SNIPER_ORIG_NODE.hide()
 	elif current_weapon == "geyger":
 		AK_ORIG_NODE.hide()
+		SAIGA_ORIG_NODE.hide()
 		PISTOL_ORIG_NODE.hide()
 		GEYGER_ORIG_NODE.show()
 		SNIPER_ORIG_NODE.hide()
 		skip_weapon_cd(0.2)
 	elif current_weapon == "sniper-samopal":
 		AK_ORIG_NODE.hide()
+		SAIGA_ORIG_NODE.hide()
 		PISTOL_ORIG_NODE.hide()
 		GEYGER_ORIG_NODE.hide()
 		SNIPER_ORIG_NODE.show()
+		skip_weapon_cd(0.2)
+	elif current_weapon == "saiga":
+		AK_ORIG_NODE.hide()
+		PISTOL_ORIG_NODE.hide()
+		GEYGER_ORIG_NODE.hide()
+		SNIPER_ORIG_NODE.hide()
+		SAIGA_ORIG_NODE.show()
 		skip_weapon_cd(0.2)
 		
 func skip_weapon_cd(time : float):
@@ -207,5 +225,17 @@ func drop():
 		sniper_node.global_position.y += 0.5
 		sniper_node.global_rotation.z = 26
 		sniper_node.reparent(scene)
+	elif current_weapon == "saiga":
+		var scene = get_tree().root
+		weapons.find("saiga")
+		weapons.erase("saiga")
+		current_weapon = ""
+		update_weapon_visuals()
+		var saiga_node = saiga_path.instantiate()
+		add_child(saiga_node)
+		saiga_node.global_position = self.global_position
+		saiga_node.global_position.y += 0.5
+		saiga_node.global_rotation.z = 26
+		saiga_node.reparent(scene)
 		
 	

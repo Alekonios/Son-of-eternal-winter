@@ -6,8 +6,8 @@ extends Node3D
 var state
 var states
 @export var camera : Camera3D
-@onready var cam_origin = [$"../cam_positions/def_positions/def_position", $"../cam_positions/def_positions/walk_position", $"../cam_positions/def_positions/run_position", $"../cam_positions/AK_positions/ak_def_position", $"../cam_positions/AK_positions/ak_walk_position", $"../cam_positions/AK_positions/ak_run_position", $"../cam_positions/AK_positions/ak_aim", $"../cam_positions/pistol_positions/pistol_def_position", $"../cam_positions/pistol_positions/pistol_walk", $"../cam_positions/pistol_positions/pistol_run", $"../cam_positions/pistol_positions/pistol_aim", $"../cam_positions/sniper_positions/sniper_def_position", $"../cam_positions/sniper_positions/sniper_walk_position", $"../cam_positions/sniper_positions/sniper_run_position", $"../cam_positions/sniper_positions/sniper_aim_position"]
-												#0												#1										#2												#3													#4												#5												#6										#7														#8														#9													#10												#11																#12														#13														#14									
+@onready var cam_origin = [$"../cam_positions/def_positions/def_position", $"../cam_positions/def_positions/walk_position", $"../cam_positions/def_positions/run_position", $"../cam_positions/AK_positions/ak_def_position", $"../cam_positions/AK_positions/ak_walk_position", $"../cam_positions/AK_positions/ak_run_position", $"../cam_positions/AK_positions/ak_aim", $"../cam_positions/pistol_positions/pistol_def_position", $"../cam_positions/pistol_positions/pistol_walk", $"../cam_positions/pistol_positions/pistol_run", $"../cam_positions/pistol_positions/pistol_aim", $"../cam_positions/sniper_positions/sniper_def_position", $"../cam_positions/sniper_positions/sniper_walk_position", $"../cam_positions/sniper_positions/sniper_run_position", $"../cam_positions/sniper_positions/sniper_aim_position", $"../cam_positions/saiga_positions/saiga_cam_pos", $"../cam_positions/saiga_positions/saiga_aim_pos", $"../cam_positions/saiga_positions/saiga_walk_position", $"../cam_positions/saiga_positions/saiga_run_position"]
+												#0												#1										#2												#3													#4												#5												#6										#7														#8														#9													#10												#11																#12														#13														#14														#15														#16												#17															#18								
 func _process(delta):
 	state = State_Machine.state
 	states = State_Machine.states
@@ -54,5 +54,13 @@ func _process(delta):
 		camera.global_position= lerp(camera.global_position, cam_origin[14].global_position, delta * 5)
 	elif state == states.RELOADING_S:
 		camera.global_position= lerp(camera.global_position, cam_origin[11].global_position, delta * 5)
-
-	
+	elif state == states.IDLE_SAI:
+		camera.global_position= lerp(camera.global_position, cam_origin[15].global_position, delta * 5)
+	elif state == states.WALK_SAI:
+		camera.global_position= lerp(camera.global_position, cam_origin[17].global_position, delta * 5)
+	elif state == states.RUN_SAI:
+		camera.global_position= lerp(camera.global_position, cam_origin[18].global_position, delta * 5)
+	elif state == states.AIM_SAI:
+		camera.global_position= lerp(camera.global_position, cam_origin[16].global_position, delta * 8)
+	elif state == states.RELOADING_SAI:
+		camera.global_position= lerp(camera.global_position, cam_origin[15].global_position, delta * 5)

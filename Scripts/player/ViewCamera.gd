@@ -13,9 +13,9 @@ func _ready():
 func _process(delta):
 	self.global_transform = main_cam.global_transform
 	fps_rig.position.x = lerp(fps_rig.position.x, fps_rig_start_pos_x.x, delta * 5)
-	fps_rig.position.y = lerp(fps_rig.position.y, fps_rig_start_pos_y.y, delta * -5)
+	fps_rig.position.y = lerp(fps_rig.position.y, fps_rig_start_pos_y.y, delta * 5)
 	
 	
 func sway(sway_amount):
 	fps_rig.position.x -= sway_amount.x * 0.0009
-	fps_rig.position.y -= sway_amount.y * 0.000000000000000000000000000005
+	fps_rig.position.y += sway_amount.y * 0.000001

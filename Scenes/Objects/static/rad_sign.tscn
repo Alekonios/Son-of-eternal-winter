@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://dtusuuampx7an"]
+[gd_scene load_steps=9 format=3 uid="uid://dtusuuampx7an"]
 
 [ext_resource type="Texture2D" uid="uid://cxrf1pqn8jpn1" path="res://Load-Asstets/radiation_sign_dirty_destroyed_0.png" id="1_r063a"]
 [ext_resource type="Texture2D" uid="uid://wfd0xtqrng3g" path="res://Load-Asstets/radiation_sign_dirty_destroyed_1.png" id="2_v07xq"]
@@ -54,14 +54,23 @@ blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_wx8o3")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_rhnml"]
-size = Vector3(0.299835, 2.15283, 0.345703)
+size = Vector3(0.299835, 1.52185, 0.0441894)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_unywm"]
+size = Vector3(0.921143, 0.813965, 0.0754395)
 
 [node name="rad_sign" type="StaticBody3D"]
+collision_layer = 2
+collision_mask = 2
 
 [node name="Cylinder_RoadSign_0" type="MeshInstance3D" parent="."]
 transform = Transform3D(-2.22045e-16, 1, 1.62921e-07, -2.22045e-16, -1.62921e-07, 1, 1, 2.22045e-16, 2.22045e-16, 0, 0, 0)
 mesh = SubResource("ArrayMesh_u5kaq")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0230255, 1.07917, 0.0175781)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0230255, 0.76368, -0.00183109)
 shape = SubResource("BoxShape3D_rhnml")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00793457, 1.95002, 0.00769043)
+shape = SubResource("BoxShape3D_unywm")

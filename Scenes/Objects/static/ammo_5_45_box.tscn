@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://dud1goxy1tps7"]
+[gd_scene load_steps=10 format=3 uid="uid://dud1goxy1tps7"]
 
 [ext_resource type="Texture2D" uid="uid://cec34pe8ih7la" path="res://Load-Asstets/dfdfd_Image_0.png" id="1_qvfa0"]
 [ext_resource type="Texture2D" uid="uid://bpo3yncymfdwa" path="res://Load-Asstets/dfdfd_Image_1.png" id="2_4efoj"]
@@ -83,7 +83,12 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_y1e01")
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_rhpw0"]
+size = Vector3(0.0930176, 0.464081, 2.72705)
+
 [node name="ammo_5_45_box" type="StaticBody3D"]
+collision_layer = 2
+collision_mask = 2
 
 [node name="AmmoBox04_001" type="Node3D" parent="."]
 transform = Transform3D(0.01, 0, 0, 0, 0.01, 0, 0, 0, 0.01, 0, 0, 0)
@@ -114,3 +119,11 @@ transform = Transform3D(1.64692, 0, 0, 0, 1.64692, 0, 0, 0, 1.64692, -0.0358054,
 
 [node name="5_45 ammo5" parent="." instance=ExtResource("3_2feau")]
 transform = Transform3D(1.64692, 0, 0, 0, 1.64692, 0, 0, 0, 1.64692, -0.0358054, 0.151088, -0.910697)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.453491, 0.239334, -0.000732422)
+shape = SubResource("BoxShape3D_rhpw0")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.42327, 0.239334, -0.000732422)
+shape = SubResource("BoxShape3D_rhpw0")

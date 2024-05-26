@@ -16,6 +16,7 @@ var damage_sound_plauing = false
 @onready var step_sounds = [$"../sounds/steps_sound/snow_steps/step_sound", $"../sounds/steps_sound/snow_steps/step_sound2", $"../sounds/steps_sound/snow_steps/step_sound3", $"../sounds/steps_sound/snow_steps/step_sound4"]
 @onready var player_env_sounds = [$"../sounds/voice_sound/gas_vzdoh"]
 @onready var damage_sounds = [$"../sounds/voice_sound/damage_sound", $"../sounds/voice_sound/damage_sound2", $"../sounds/voice_sound/damage_sound3"]
+@onready var saiga_sounds = [$"../ARMS_CAM_POS/saiga_cam_pos/saiga_aim_pos/saiga_arms/sounds/shoot_sound", $"../ARMS_CAM_POS/saiga_cam_pos/saiga_aim_pos/saiga_arms/sounds/mag_out", $"../ARMS_CAM_POS/saiga_cam_pos/saiga_aim_pos/saiga_arms/sounds/mag_on", $"../ARMS_CAM_POS/saiga_cam_pos/saiga_aim_pos/saiga_arms/sounds/zatik_back", $"../ARMS_CAM_POS/saiga_cam_pos/saiga_aim_pos/saiga_arms/sounds/zatik_forward"]
 
 func step_snow_sounds_walk():
 	if !step_sound_playing:

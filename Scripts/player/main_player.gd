@@ -21,8 +21,10 @@ var cam_up_limit = -50
 @onready var AK_ORIG_NODE = $"ARMS_CAM_POS/ak_aim_pos/ARMS/ak-74_arms"
 @onready var PISTOL_ORIG_NODE = $ARMS_CAM_POS/pistol_cam_pos/pistol_aim_pos/pistol_arms
 @onready var SNIPER_ORIG_NODE = $ARMS_CAM_POS/sniper_cam_pos/sniper_aim_position/sniper_samopal_arms
+@onready var SAIGA_ORIG_NODE = $ARMS_CAM_POS/saiga_cam_pos/saiga_aim_pos/saiga_arms
 
 @onready var camera = $camera_node
+@onready var camera_orig = $camera_node/Camera3D
 @onready var viewport_camera = $SubViewportContainer/SubViewport/ViewCamera
 @onready var sniper_animator = $ARMS_CAM_POS/sniper_cam_pos/sniper_aim_position/sniper_samopal_arms/AnimationPlayer
 
@@ -82,6 +84,8 @@ func _physics_process(delta):
 			_State_Machine_Component.state = _State_Machine_Component.states.WALK_GE
 		elif _Inventory_Manager.current_weapon == "sniper-samopal" and !SNIPER_ORIG_NODE.reloadnig:
 			_State_Machine_Component.state = _State_Machine_Component.states.WALK_S
+		elif _Inventory_Manager.current_weapon == "saiga" and !SAIGA_ORIG_NODE.reloadnig:
+			_State_Machine_Component.state = _State_Machine_Component.states.WALK_SAI
 		if is_run and _Weapon_Manager.shooting == false:
 			if _Inventory_Manager.current_weapon == "":
 				_State_Machine_Component.state = _State_Machine_Component.states.RUN
@@ -94,6 +98,9 @@ func _physics_process(delta):
 			elif _Inventory_Manager.current_weapon == "sniper-samopal":
 				if !SNIPER_ORIG_NODE.reloadnig:
 					_State_Machine_Component.state = _State_Machine_Component.states.RUN_S
+			elif _Inventory_Manager.current_weapon == "saiga":
+				if !SAIGA_ORIG_NODE.reloadnig:
+					_State_Machine_Component.state = _State_Machine_Component.states.RUN_SAI
 			
 				
 	else:
@@ -108,6 +115,12 @@ func _physics_process(delta):
 			else:
 				if !AK_ORIG_NODE.reloadnig:
 					_State_Machine_Component.state = _State_Machine_Component.states.AIM_A
+		elif _Inventory_Manager.current_weapon == "saiga":
+			if _Weapon_Manager.is_aim == false and !SAIGA_ORIG_NODE.reloadnig:
+				_State_Machine_Component.state = _State_Machine_Component.states.IDLE_SAI
+			else:
+				if !SAIGA_ORIG_NODE.reloadnig:
+					_State_Machine_Component.state = _State_Machine_Component.states.AIM_SAI
 		elif _Inventory_Manager.current_weapon == "pistol":
 			if _Weapon_Manager.is_aim == false and !PISTOL_ORIG_NODE.reloadnig:
 				_State_Machine_Component.state = _State_Machine_Component.states.IDLE_P
@@ -131,10 +144,9 @@ func _input(event):
 		camera.rotation.x = clamp(camera.rotation.x, deg_to_rad(-60), deg_to_rad(60))
 		viewport_camera.sway(Vector2(-event.relative.x, -event.relative.y))
 		
-func kickback():
-	var random_x = randfn(0.001, -0.002)
-	var random_y = randfn(0.02, 0.001)
-	camera.global_position.x -= random_x
+func kickback(max_amount_x : float, min_amount_x : float , max_amount_y : float, min_amount_y : float):
+	var random_x = randfn(max_amount_x, min_amount_x)
+	var random_y = randfn(max_amount_y, min_amount_y)
 	camera.rotation.x -= random_y
 		
 func camera_shake_func(shake_value : float):
@@ -144,10 +156,10 @@ func camera_shake_func(shake_value : float):
 			var shake_offset = Vector3(
 			randf_range(-shake_value, shake_value), # Случайное смещение вдоль оси X
 			randf_range(-shake_value, shake_value), # Случайное смещение вдоль оси Y
-			randf_range(-shake_value, shake_value) # Случайное смещение вдоль оси Z
+			0
 			)
 			await get_tree().create_timer(0.03, false).timeout
-			camera.global_transform.origin -= shake_offset
+			camera_orig.global_transform.origin -= shake_offset
 			shaking = false
 
 func snow_steps_logic():

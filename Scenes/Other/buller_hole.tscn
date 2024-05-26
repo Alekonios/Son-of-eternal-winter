@@ -1,0 +1,64 @@
+[gd_scene load_steps=7 format=3 uid="uid://5cv75gcj5opb"]
+
+[ext_resource type="Texture2D" uid="uid://cw7mw2v2e0b34" path="res://Textures/other/5d0011edeb4f516b4846098c.png" id="1_re44i"]
+[ext_resource type="Script" path="res://Scripts/other/buller_hole.gd" id="2_lwsqq"]
+
+[sub_resource type="Animation" id="Animation_1u7j7"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_udia1"]
+resource_name = "visible_of"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_o5pex"]
+resource_name = "of"
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_bxpol"]
+_data = {
+"RESET": SubResource("Animation_1u7j7"),
+"of": SubResource("Animation_o5pex"),
+"visible_of": SubResource("Animation_udia1")
+}
+
+[node name="Decal" type="Decal"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, -0.02)
+size = Vector3(0.05, 0.05, 0.05)
+texture_albedo = ExtResource("1_re44i")
+texture_normal = ExtResource("1_re44i")
+script = ExtResource("2_lwsqq")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 8.0
+autostart = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_bxpol")
+}
+autoplay = "of"
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

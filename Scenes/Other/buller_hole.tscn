@@ -18,6 +18,9 @@ tracks/0/keys = {
 "values": [Color(1, 1, 1, 1)]
 }
 
+[sub_resource type="Animation" id="Animation_o5pex"]
+resource_name = "of"
+
 [sub_resource type="Animation" id="Animation_udia1"]
 resource_name = "visible_of"
 length = 3.0
@@ -33,9 +36,6 @@ tracks/0/keys = {
 "update": 0,
 "values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
 }
-
-[sub_resource type="Animation" id="Animation_o5pex"]
-resource_name = "of"
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_bxpol"]
 _data = {

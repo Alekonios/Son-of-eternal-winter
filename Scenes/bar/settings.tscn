@@ -1,0 +1,276 @@
+[gd_scene load_steps=2 format=3 uid="uid://cpyk6lbieah"]
+
+[ext_resource type="Script" path="res://Scripts/bar/settings.gd" id="1_rgfl4"]
+
+[node name="settings" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_rgfl4")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -106.0
+offset_top = 93.0
+offset_right = 107.0
+offset_bottom = 170.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 56
+text = "settings
+"
+
+[node name="choice_set" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="choice_set"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -112.0
+offset_top = -151.5
+offset_right = 112.0
+offset_bottom = 151.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 15
+alignment = 1
+
+[node name="graphic" type="Button" parent="choice_set/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 60
+text = "graphic"
+flat = true
+
+[node name="sounds" type="Button" parent="choice_set/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 60
+text = "sounds
+"
+flat = true
+
+[node name="exit" type="Button" parent="choice_set/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 60
+text = "exit
+"
+flat = true
+
+[node name="graphic_set" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="set_cont" type="VBoxContainer" parent="graphic_set"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -729.5
+offset_top = -111.0
+offset_right = 729.5
+offset_bottom = 111.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="graphic_set/set_cont"]
+layout_mode = 2
+theme_override_constants/separation = 77
+alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="graphic_set/set_cont/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Label" type="Label" parent="graphic_set/set_cont/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 37
+text = "MSAA:"
+horizontal_alignment = 1
+
+[node name="OptionButton" type="OptionButton" parent="graphic_set/set_cont/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+item_count = 4
+selected = 0
+popup/item_0/text = "disabled"
+popup/item_0/id = 0
+popup/item_1/text = "2X"
+popup/item_1/id = 1
+popup/item_2/text = "4X"
+popup/item_2/id = 2
+popup/item_3/text = "8X"
+popup/item_3/id = 3
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="graphic_set/set_cont/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Label" type="Label" parent="graphic_set/set_cont/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 37
+text = "texture filter:"
+horizontal_alignment = 1
+
+[node name="OptionButton" type="OptionButton" parent="graphic_set/set_cont/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+item_count = 2
+selected = 0
+popup/item_0/text = "Linear"
+popup/item_0/id = 0
+popup/item_1/text = "Nearst"
+popup/item_1/id = 2
+
+[node name="VBoxContainer3" type="VBoxContainer" parent="graphic_set/set_cont/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Label" type="Label" parent="graphic_set/set_cont/HBoxContainer/VBoxContainer3"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 37
+text = "texture quality:"
+horizontal_alignment = 1
+
+[node name="OptionButton" type="OptionButton" parent="graphic_set/set_cont/HBoxContainer/VBoxContainer3"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+item_count = 3
+selected = 0
+popup/item_0/text = "low"
+popup/item_0/id = 0
+popup/item_1/text = "middle"
+popup/item_1/id = 2
+popup/item_2/text = "high"
+popup/item_2/id = 2
+
+[node name="VBoxContainer4" type="VBoxContainer" parent="graphic_set/set_cont/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Label" type="Label" parent="graphic_set/set_cont/HBoxContainer/VBoxContainer4"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 37
+text = "shadows"
+horizontal_alignment = 1
+
+[node name="OptionButton" type="OptionButton" parent="graphic_set/set_cont/HBoxContainer/VBoxContainer4"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+item_count = 3
+selected = 0
+popup/item_0/text = "low"
+popup/item_0/id = 0
+popup/item_1/text = "middle"
+popup/item_1/id = 2
+popup/item_2/text = "high"
+popup/item_2/id = 2
+
+[node name="VBoxContainer5" type="VBoxContainer" parent="graphic_set/set_cont/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Label" type="Label" parent="graphic_set/set_cont/HBoxContainer/VBoxContainer5"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 37
+text = "roughness quality"
+horizontal_alignment = 1
+
+[node name="OptionButton" type="OptionButton" parent="graphic_set/set_cont/HBoxContainer/VBoxContainer5"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+item_count = 3
+selected = 0
+popup/item_0/text = "low"
+popup/item_0/id = 0
+popup/item_1/text = "middle"
+popup/item_1/id = 2
+popup/item_2/text = "high"
+popup/item_2/id = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="graphic_set/set_cont"]
+layout_mode = 2
+theme_override_constants/separation = 77
+alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="graphic_set/set_cont/HBoxContainer2"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Label" type="Label" parent="graphic_set/set_cont/HBoxContainer2/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 37
+text = "FXAA:"
+horizontal_alignment = 1
+
+[node name="OptionButton" type="CheckButton" parent="graphic_set/set_cont/HBoxContainer2/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 30
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="graphic_set/set_cont/HBoxContainer2"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Label" type="Label" parent="graphic_set/set_cont/HBoxContainer2/VBoxContainer2"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 37
+text = "TAA:"
+horizontal_alignment = 1
+
+[node name="OptionButton" type="CheckButton" parent="graphic_set/set_cont/HBoxContainer2/VBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 30
+
+[node name="VBoxContainer3" type="VBoxContainer" parent="graphic_set/set_cont/HBoxContainer2"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Label" type="Label" parent="graphic_set/set_cont/HBoxContainer2/VBoxContainer3"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 37
+text = "V-SYNC:"
+horizontal_alignment = 1
+
+[node name="OptionButton" type="CheckButton" parent="graphic_set/set_cont/HBoxContainer2/VBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 30
+
+[connection signal="pressed" from="choice_set/VBoxContainer/graphic" to="." method="_on_graphic_pressed"]
+[connection signal="item_selected" from="graphic_set/set_cont/HBoxContainer/VBoxContainer/OptionButton" to="." method="_on_option_button_item_selected"]

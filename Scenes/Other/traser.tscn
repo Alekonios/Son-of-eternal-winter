@@ -1,0 +1,61 @@
+[gd_scene load_steps=5 format=3 uid="uid://cup1sjhsmym0a"]
+
+[ext_resource type="Script" path="res://Scripts/other/traser.gd" id="1_g5og5"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kbiwd"]
+blend_mode = 1
+albedo_color = Color(0.356863, 0.352941, 0.364706, 1)
+rim_enabled = true
+grow = true
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_6mk3f"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_eq6rh"]
+size = Vector3(3.78826, 0.177277, 0.140381)
+
+[node name="Node3D" type="CharacterBody3D"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("1_g5og5")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(-9.52325e-18, 7.85245e-08, 0.00602839, 0.00596705, -7.85244e-08, 2.11395e-17, 2.60828e-10, 1.79643, -2.63509e-10, 2.12995e-09, 0, -0.0243638)
+material_override = SubResource("StandardMaterial3D_kbiwd")
+transparency = 0.99
+mesh = SubResource("CapsuleMesh_6mk3f")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(-2.70887e-17, 5.39309e-08, 0.0171476, 0.0169732, -5.39308e-08, 6.01308e-17, 7.41919e-10, 1.2338, -7.49545e-10, 1.11765e-07, 0, -1.27845)
+material_override = SubResource("StandardMaterial3D_kbiwd")
+transparency = 0.95
+mesh = SubResource("CapsuleMesh_6mk3f")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
+transform = Transform3D(-2.90471e-17, 4.16679e-08, 0.0183874, 0.0182003, -4.16679e-08, 6.44781e-17, 7.95558e-10, 0.953252, -8.03735e-10, 1.11765e-07, 0, -1.27845)
+material_override = SubResource("StandardMaterial3D_kbiwd")
+transparency = 0.95
+mesh = SubResource("CapsuleMesh_6mk3f")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="."]
+transform = Transform3D(-2.11405e-17, 3.03259e-08, 0.0133823, 0.0132462, -3.03259e-08, 4.69272e-17, 5.79007e-10, 0.693777, -5.84959e-10, 1.11765e-07, 0, -1.27845)
+material_override = SubResource("StandardMaterial3D_kbiwd")
+transparency = 0.95
+mesh = SubResource("CapsuleMesh_6mk3f")
+
+[node name="MeshInstance3D5" type="MeshInstance3D" parent="."]
+transform = Transform3D(-3.28456e-17, 2.1341e-08, 0.0207918, 0.0205803, -2.13409e-08, 7.29099e-17, 8.99592e-10, 0.488225, -9.08839e-10, 1.11765e-07, 0, -1.27845)
+material_override = SubResource("StandardMaterial3D_kbiwd")
+transparency = 0.95
+mesh = SubResource("CapsuleMesh_6mk3f")
+
+[node name="Area3D" type="Area3D" parent="."]
+transform = Transform3D(-1.10311e-08, 0, 0.252363, 0, 0.252363, 0, -0.252363, 0, -1.10311e-08, -7.11728e-07, 0, 8.14122)
+collision_layer = 6
+collision_mask = 6
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(0.0676184, 0, 1.77636e-15, 0, 0.0676184, 0, -1.77636e-15, 0, 0.0676184, -0.0361073, -0.00150688, 0.0029323)
+shape = SubResource("BoxShape3D_eq6rh")
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]

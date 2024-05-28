@@ -1,0 +1,321 @@
+[gd_scene load_steps=8 format=3 uid="uid://cood6g46s8eap"]
+
+[ext_resource type="Script" path="res://Scripts/bar/pause.gd" id="1_w1dnc"]
+[ext_resource type="Script" path="res://addons/EasyMenus/Scripts/options_menu_controller.gd" id="2_0yet1"]
+[ext_resource type="Script" path="res://addons/EasyMenus/Scripts/follow_focus_center.gd" id="3_by1qa"]
+[ext_resource type="PackedScene" uid="uid://dyfwp0vhgfjd7" path="res://addons/EasyMenus/Nodes/slider_w_labels.tscn" id="4_pvdhf"]
+[ext_resource type="Script" path="res://addons/EasyMenus/Scripts/option_button_input_propagator.gd" id="5_kxs6d"]
+[ext_resource type="PackedScene" uid="uid://cqniig2ks0xs2" path="res://addons/EasyMenus/Nodes/gamepad_closable.tscn" id="6_qabk6"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_x77mt"]
+
+[node name="pause" type="Control"]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_w1dnc")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.247059, 0.247059, 0.247059, 0.698039)
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -31.0
+offset_top = -396.0
+offset_right = 31.0
+offset_bottom = -373.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 96
+text = "PAUSED"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -116.0
+offset_top = -121.0
+offset_right = 116.0
+offset_bottom = 121.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RESUME" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 51
+text = "RESUME"
+flat = true
+
+[node name="OPTIONS" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 51
+text = "OPTIONS"
+flat = true
+
+[node name="QUIT" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 51
+text = "QUIT
+"
+flat = true
+
+[node name="OptionsMenu" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_0yet1")
+
+[node name="MarginContainer" type="MarginContainer" parent="OptionsMenu"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 25
+theme_override_constants/margin_top = 25
+theme_override_constants/margin_right = 25
+theme_override_constants/margin_bottom = 25
+
+[node name="ScrollContainer" type="ScrollContainer" parent="OptionsMenu/MarginContainer"]
+layout_mode = 2
+script = ExtResource("3_by1qa")
+transition_time = 0.15
+
+[node name="VBoxContainer" type="VBoxContainer" parent="OptionsMenu/MarginContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+theme_override_constants/separation = 15
+
+[node name="OptionsTitle" type="Label" parent="OptionsMenu/MarginContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 45
+text = "Options"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="OptionsMenu/MarginContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="MarginContainer" type="MarginContainer" parent="OptionsMenu/MarginContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 100
+theme_override_constants/margin_right = 100
+
+[node name="VBoxContainer" type="VBoxContainer" parent="OptionsMenu/MarginContainer/ScrollContainer/VBoxContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="SFXVolumeSlider" parent="OptionsMenu/MarginContainer/ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer" instance=ExtResource("4_pvdhf")]
+unique_name_in_owner = true
+layout_mode = 2
+title = "SFX Volume"
+
+[node name="Title" parent="OptionsMenu/MarginContainer/ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer/SFXVolumeSlider" index="0"]
+text = "SFX Volume"
+
+[node name="HSlider" parent="OptionsMenu/MarginContainer/ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer/SFXVolumeSlider" index="1"]
+max_value = 1.0
+step = 0.01
+
+[node name="MusicVolumeSlider" parent="OptionsMenu/MarginContainer/ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer" instance=ExtResource("4_pvdhf")]
+unique_name_in_owner = true
+layout_mode = 2
+title = "Music Volume"
+
+[node name="Title" parent="OptionsMenu/MarginContainer/ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer/MusicVolumeSlider" index="0"]
+text = "Music Volume"
+
+[node name="HSlider" parent="OptionsMenu/MarginContainer/ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer/MusicVolumeSlider" index="1"]
+max_value = 1.0
+step = 0.01
+
+[node name="HSeparator2" type="HSeparator" parent="OptionsMenu/MarginContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="MarginContainer4" type="MarginContainer" parent="OptionsMenu/MarginContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 100
+theme_override_constants/margin_right = 100
+
+[node name="VBoxContainer" type="VBoxContainer" parent="OptionsMenu/MarginContainer/ScrollContainer/VBoxContainer/MarginContainer4"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="OptionsMenu/MarginContainer/ScrollContainer/VBoxContainer/MarginContainer4/VBoxContainer"]
+layout_mode = 2
+alignment = 2
+
+[node name="Title" type="Label" parent="OptionsMenu/MarginContainer/ScrollContainer/VBoxContainer/MarginContainer4/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 25
+text = "Mouse sense"
+horizontal_alignment = 1
+
+[node name="MouseSenseSpinBox" type="SpinBox" parent="OptionsMenu/MarginContainer/ScrollContainer/VBoxContainer/MarginContainer4/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+min_value = -100.0
+step = 0.001
+value = 1.0
+alignment = 2
+
+[node name="HSeparator4" type="HSeparator" parent="OptionsMenu/MarginContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="FullscreenCheckButton" type="CheckButton" parent="OptionsMenu/MarginContainer/ScrollContainer/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 25
+text = "Fullscreen"
+
+[node name="VSyncCheckButton" type="CheckButton" parent="OptionsMenu/MarginContainer/ScrollContainer/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+tooltip_text = "Syncs Games Frame Rate with Displays Refresh Rate"
+theme_override_font_sizes/font_size = 25
+text = "V-Sync"
+
+[node name="MarginContainer2" type="MarginContainer" parent="OptionsMenu/MarginContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 100
+theme_override_constants/margin_right = 100
+
+[node name="VBoxContainer" type="VBoxContainer" parent="OptionsMenu/MarginContainer/ScrollContainer/VBoxContainer/MarginContainer2"]
+layout_mode = 2
+tooltip_text = "Scale Less than 1 to get performance improve. 
+Scale to more than 1 to improve image quality."
+
+[node name="RenderScaleLabel" type="Label" parent="OptionsMenu/MarginContainer/ScrollContainer/VBoxContainer/MarginContainer2/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 25
+text = "Render Scale"
+horizontal_alignment = 1
+
+[node name="RenderScaleSlider" type="HSlider" parent="OptionsMenu/MarginContainer/ScrollContainer/VBoxContainer/MarginContainer2/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_force_pass_scroll_events = false
+min_value = 0.25
+max_value = 2.0
+step = 0.05
+value = 1.0
+
+[node name="RenderScaleCurrentValueLabel" type="Label" parent="OptionsMenu/MarginContainer/ScrollContainer/VBoxContainer/MarginContainer2/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "1"
+horizontal_alignment = 1
+
+[node name="MarginContainer3" type="MarginContainer" parent="OptionsMenu/MarginContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 100
+theme_override_constants/margin_right = 100
+
+[node name="VBoxContainer" type="VBoxContainer" parent="OptionsMenu/MarginContainer/ScrollContainer/VBoxContainer/MarginContainer3"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="AntiAliasing2DLabel" type="Label" parent="OptionsMenu/MarginContainer/ScrollContainer/VBoxContainer/MarginContainer3/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 25
+text = "2D Anti Aliasing"
+horizontal_alignment = 1
+
+[node name="AntiAliasing2DOptionButton" type="OptionButton" parent="OptionsMenu/MarginContainer/ScrollContainer/VBoxContainer/MarginContainer3/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Smooth out edges of 2D objects"
+item_count = 4
+selected = 0
+popup/item_0/text = "Off"
+popup/item_0/id = 0
+popup/item_1/text = "2x"
+popup/item_1/id = 1
+popup/item_2/text = "4x"
+popup/item_2/id = 2
+popup/item_3/text = "8x"
+popup/item_3/id = 3
+script = ExtResource("5_kxs6d")
+
+[node name="GamepadClosable" parent="OptionsMenu/MarginContainer/ScrollContainer/VBoxContainer/MarginContainer3/VBoxContainer/AntiAliasing2DOptionButton" instance=ExtResource("6_qabk6")]
+
+[node name="AntiAliasing3DLabel" type="Label" parent="OptionsMenu/MarginContainer/ScrollContainer/VBoxContainer/MarginContainer3/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 25
+text = "3D Anti Aliasing"
+horizontal_alignment = 1
+
+[node name="AntiAliasing3DOptionButton" type="OptionButton" parent="OptionsMenu/MarginContainer/ScrollContainer/VBoxContainer/MarginContainer3/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Smooths out edges of 3D objects"
+item_count = 4
+selected = 0
+popup/item_0/text = "Off"
+popup/item_0/id = 0
+popup/item_1/text = "2x"
+popup/item_1/id = 1
+popup/item_2/text = "4x"
+popup/item_2/id = 2
+popup/item_3/text = "8x"
+popup/item_3/id = 3
+script = ExtResource("5_kxs6d")
+
+[node name="GamepadClosable" parent="OptionsMenu/MarginContainer/ScrollContainer/VBoxContainer/MarginContainer3/VBoxContainer/AntiAliasing3DOptionButton" instance=ExtResource("6_qabk6")]
+
+[node name="HSeparator3" type="HSeparator" parent="OptionsMenu/MarginContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 50
+theme_override_styles/separator = SubResource("StyleBoxEmpty_x77mt")
+
+[node name="BackButton" type="Button" parent="OptionsMenu/MarginContainer/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(350, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+theme_override_font_sizes/font_size = 25
+text = "Back"
+
+[connection signal="pressed" from="VBoxContainer/RESUME" to="." method="_on_resume_pressed"]
+[connection signal="pressed" from="VBoxContainer/OPTIONS" to="." method="_on_options_pressed"]
+[connection signal="value_changed" from="OptionsMenu/MarginContainer/ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer/SFXVolumeSlider" to="OptionsMenu" method="_on_sfx_volume_slider_value_changed"]
+[connection signal="value_changed" from="OptionsMenu/MarginContainer/ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer/MusicVolumeSlider" to="OptionsMenu" method="_on_music_volume_slider_value_changed"]
+[connection signal="value_changed" from="OptionsMenu/MarginContainer/ScrollContainer/VBoxContainer/MarginContainer4/VBoxContainer/HBoxContainer/MouseSenseSpinBox" to="OptionsMenu" method="_on_mouse_sense_value_changed"]
+[connection signal="toggled" from="OptionsMenu/MarginContainer/ScrollContainer/VBoxContainer/FullscreenCheckButton" to="OptionsMenu" method="_on_fullscreen_check_button_toggled"]
+[connection signal="toggled" from="OptionsMenu/MarginContainer/ScrollContainer/VBoxContainer/VSyncCheckButton" to="OptionsMenu" method="_on_v_sync_check_button_toggled"]
+[connection signal="value_changed" from="OptionsMenu/MarginContainer/ScrollContainer/VBoxContainer/MarginContainer2/VBoxContainer/RenderScaleSlider" to="OptionsMenu" method="_on_render_scale_slider_value_changed"]
+[connection signal="item_selected" from="OptionsMenu/MarginContainer/ScrollContainer/VBoxContainer/MarginContainer3/VBoxContainer/AntiAliasing2DOptionButton" to="OptionsMenu" method="_on_anti_aliasing_2d_option_button_item_selected"]
+[connection signal="item_selected" from="OptionsMenu/MarginContainer/ScrollContainer/VBoxContainer/MarginContainer3/VBoxContainer/AntiAliasing3DOptionButton" to="OptionsMenu" method="_on_anti_aliasing_3d_option_button_item_selected"]
+[connection signal="pressed" from="OptionsMenu/MarginContainer/ScrollContainer/VBoxContainer/BackButton" to="." method="_on_back_button_pressed"]
+[connection signal="pressed" from="OptionsMenu/MarginContainer/ScrollContainer/VBoxContainer/BackButton" to="OptionsMenu" method="go_back"]
+
+[editable path="OptionsMenu/MarginContainer/ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer/SFXVolumeSlider"]
+[editable path="OptionsMenu/MarginContainer/ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer/MusicVolumeSlider"]

@@ -6,6 +6,7 @@ extends Node3D
 @export var _Sound_Component : Sound_Component
 @export var _Inventory_Manager : Inventory_Manager
 @export var _State_Machine_Component : State_Machine_Component
+@onready var camera = $"../camera_node/Camera3D"
 
 var can_skip_weapon = false
 var shooting = false
@@ -14,8 +15,9 @@ var cycle_aim_anim = false
 var is_aim = false
 
 var bullet_hole = preload("res://Scenes/Other/buller_hole.tscn")
+var traser = preload("res://Scenes/Other/traser.tscn")
 
-@onready var AK_collider = $"../ARMS_CAM_POS/ak_aim_pos/ARMS/ak-74_arms/RayCast3D"
+@onready var AK_collider = $"../ARMS_CAM_POS/ak_aim_pos/ARMS/ak-74_arms/Sketchfab_model/810f0276179d4425a118b331d5f38189_fbx/Object_2/RootNode/Rig/Object_8/Skeleton3D/BoneAttachment3D/RayCast3D"
 @onready var saiga_collider = $"../ARMS_CAM_POS/saiga_cam_pos/saiga_aim_pos/saiga_arms/Sketchfab_model/95ac79517a844ea1b13875322aa37f27_fbx/Object_2/RootNode/Rig/Object_6/Skeleton3D/BoneAttachment3D/RayCast3D"
 @onready var PISTOL_collider = $"../ARMS_CAM_POS/pistol_cam_pos/pistol_aim_pos/pistol_arms/Sketchfab_model/3ab9f780f2294ec8ba398c31f25c6b54_fbx/Object_2/RootNode/Armature/Object_6/Skeleton3D/Object_91/RayCast3D"
 @onready var SNIPER_collider = $"../camera_node/Camera3D/sniper_raycasy"
@@ -164,6 +166,7 @@ func shoot():
 						
 func shoot_func(_body):
 	if _Inventory_Manager.current_weapon == "AK-74":
+		#add_traser(AK_collider)
 		if AK_collider.is_colliding():
 			if AK_collider.get_collider() is Hitbox:
 				_body = AK_collider.get_collider()
@@ -191,7 +194,15 @@ func shoot_func(_body):
 				_body.activation(true, 7)
 			else:
 				decal_add(saiga_collider)
-				
+
+#func add_traser(col : RayCast3D):
+	#var scene = get_tree().root
+	#var b = traser.instantiate()
+	#add_child(b)
+	#b.reparent(scene)
+	#b.global_position = col.global_position
+	#b.global_rotation = camera.global_rotation
+	
 func decal_add(raycast : RayCast3D):
 	var b = bullet_hole.instantiate()
 	raycast.get_collider().add_child(b)

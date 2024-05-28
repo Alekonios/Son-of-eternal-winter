@@ -11,12 +11,19 @@ config_version=5
 [application]
 
 config/name="Son of eternal winter"
+run/main_scene="res://Scenes/bar/main_menu.tscn"
 config/features=PackedStringArray("4.2", "Mobile")
 run/max_fps=60
 boot_splash/bg_color=Color(0, 0, 0, 0.619608)
 boot_splash/image="res://generated_image_04ac2286104611ef.png"
 boot_splash/fullsize=false
 boot_splash/minimum_display_time=1000
+
+[autoload]
+
+GGS="*res://addons/ggs/classes/global/ggs.tscn"
+SaveManager="*res://Components/save_manager/save_manager.gd"
+MenuTemplateManager="*res://addons/EasyMenus/Nodes/menu_template_manager.tscn"
 
 [display]
 
@@ -134,6 +141,11 @@ q={
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":81,"key_label":0,"unicode":113,"echo":false,"script":null)
 ]
 }
+esc={
+"deadzone": 0.5,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":4194305,"key_label":0,"unicode":0,"echo":false,"script":null)
+]
+}
 
 [layer_names]
 
@@ -145,5 +157,4 @@ q={
 [rendering]
 
 environment/ssao/quality=4
-scaling_3d/mode=1
-anti_aliasing/quality/msaa_3d=1
+textures/light_projectors/filter=4

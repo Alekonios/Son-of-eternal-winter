@@ -1,0 +1,52 @@
+[gd_scene load_steps=13 format=3 uid="uid://cry8ds8j3darm"]
+
+[ext_resource type="Script" path="res://addons/zylann.hterrain/hterrain.gd" id="1_j31rj"]
+[ext_resource type="Resource" path="res://terrarian/vorkut1/data.hterrain" id="2_473hk"]
+[ext_resource type="Script" path="res://addons/zylann.hterrain/hterrain_texture_set.gd" id="3_t81cg"]
+[ext_resource type="Texture2D" uid="uid://b1wev0xgx4wjc" path="res://Textures/snow_textures/slot0_albedo_bump.png" id="4_1stx2"]
+[ext_resource type="Texture2D" uid="uid://duapqj2rvt4wn" path="res://Textures/snow_textures/slot1_albedo_bump.png" id="5_wwhea"]
+[ext_resource type="Texture2D" uid="uid://dktgc7iwqcjc0" path="res://Textures/snow_textures/slot2_albedo_bump.png" id="6_lbyvg"]
+[ext_resource type="Texture2D" uid="uid://c0hwuevqtdyx3" path="res://Textures/snow_textures/slot0_normal_roughness.png" id="7_g8307"]
+[ext_resource type="Texture2D" uid="uid://bpuf3w404ycsb" path="res://Textures/snow_textures/slot1_normal_roughness.png" id="8_3d282"]
+[ext_resource type="Texture2D" uid="uid://c2cwyv45rx8eo" path="res://Textures/snow_textures/slot2_normal_roughness.png" id="9_nrkfa"]
+[ext_resource type="PackedScene" uid="uid://d1re2v1u6yut5" path="res://Scenes/Charapters/humans/player/main_player_betaV5.tscn" id="10_i8t36"]
+[ext_resource type="PackedScene" uid="uid://noa65r4ebe23" path="res://Scenes/Objects/other/vorkuta_sphere.tscn" id="11_1ichd"]
+
+[sub_resource type="Resource" id="Resource_xxx3j"]
+script = ExtResource("3_t81cg")
+mode = 0
+textures = [[ExtResource("4_1stx2"), ExtResource("5_wwhea"), ExtResource("6_lbyvg")], [ExtResource("7_g8307"), ExtResource("8_3d282"), ExtResource("9_nrkfa")]]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="HTerrain" type="Node3D" parent="."]
+script = ExtResource("1_j31rj")
+centered = true
+_terrain_data = ExtResource("2_473hk")
+chunk_size = 32
+collision_enabled = true
+collision_layer = 1
+collision_mask = 1
+shader_type = "Classic4"
+custom_shader = null
+custom_globalmap_shader = null
+texture_set = SubResource("Resource_xxx3j")
+render_layers = 1
+cast_shadow = 1
+shader_params/u_ground_uv_scale_per_texture = Vector4(1, 0.395, 0.45, 0)
+shader_params/u_depth_blending = true
+shader_params/u_triplanar = false
+shader_params/u_tile_reduction = Vector4(7.2, 0.31, 0, 0)
+shader_params/u_globalmap_blend_start = 0.0
+shader_params/u_globalmap_blend_distance = 0.0
+shader_params/u_colormap_opacity_per_texture = Vector4(-0.615, 0, 0, 0)
+
+[node name="charapter" parent="." node_paths=PackedStringArray("_Weapon_Manager", "_Inventory_Manager", "_State_Machine_Component", "_Sounds_Component") instance=ExtResource("10_i8t36")]
+transform = Transform3D(0.006, 0, 0, 0, 0.006, 0, 0, 0, 0.006, 5.53957, 0.0038747, 0.757267)
+_Weapon_Manager = NodePath("")
+_Inventory_Manager = NodePath("")
+_State_Machine_Component = NodePath("")
+_Sounds_Component = NodePath("")
+
+[node name="67" parent="." instance=ExtResource("11_1ichd")]
+transform = Transform3D(0.460428, 0.111574, -0.348956, 0, 0.560447, 0.179196, 0.366359, -0.140222, 0.438556, 7.70595, 0.813402, 10.9651)

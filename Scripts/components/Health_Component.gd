@@ -13,7 +13,7 @@ var HP = 100
 func hit():
 	$AnimationPlayer2.play("hit")
 	sound_component.damage_sounds_func()
-	player.camera_shake_func(0.005)
+	player.camera_shake_func(0.001, 0.002)
 	
 
 func _on_health_timer_update_timeout():

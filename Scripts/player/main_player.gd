@@ -10,8 +10,6 @@ extends CharacterBody3D
 @export var _State_Machine_Component : State_Machine_Component
 @export var _Sounds_Component : Sound_Component
 
-var adddf 
-
 var HP = 100
 
 var cam_down_limit = 50
@@ -30,6 +28,8 @@ var cam_up_limit = -50
 
 var can_run = true
 var shaking = false
+
+var shake_jump = false
 
 var mouse_sens =  0.05
 
@@ -55,8 +55,12 @@ func _process(delta):
 
 func _physics_process(delta):
 	if not is_on_floor():
+		shake_jump = false
 		velocity.y -= gravity * delta
-				
+	if is_on_floor() and !shake_jump:
+		kickback(0.01, 0.01, 0.01, 0.01)
+		camera_shake_func(0.002, 0.002)
+		shake_jump = true
 	
 	if Input.is_action_pressed("shift") and Input.is_action_pressed("w") and _State_Machine_Component.state != _State_Machine_Component.states.RELOADING_A and can_run and _Inventory_Manager.current_weapon != "geyger" and ! _State_Machine_Component.state == _State_Machine_Component.states.RELOADING_P and _State_Machine_Component.state != _State_Machine_Component.states.RELOADING_S:
 		is_run = true
@@ -65,6 +69,9 @@ func _physics_process(delta):
 
 	if Input.is_action_just_pressed("space") and is_on_floor():
 		velocity.y = jump * delta * 50
+		kickback(0, 0, -0.01, -0.009)
+		
+
 
 	var input_direction = Input.get_vector("d", "a", "s", "w")
 	var direction = (transform.basis * Vector3(input_direction.x, 0, input_direction.y)).normalized()
@@ -149,13 +156,13 @@ func kickback(max_amount_x : float, min_amount_x : float , max_amount_y : float,
 	var random_y = randfn(max_amount_y, min_amount_y)
 	camera.rotation.x -= random_y
 		
-func camera_shake_func(shake_value : float):
+func camera_shake_func(shake_value_x : float, shake_value_y: float):
 	for i in range(3):
 		if !shaking:
 			shaking = true
 			var shake_offset = Vector3(
-			randf_range(-shake_value, shake_value), # Случайное смещение вдоль оси X
-			randf_range(-shake_value, shake_value), # Случайное смещение вдоль оси Y
+			randf_range(-shake_value_x, shake_value_x), # Случайное смещение вдоль оси X
+			randf_range(-shake_value_y, shake_value_y), # Случайное смещение вдоль оси Y
 			0
 			)
 			await get_tree().create_timer(0.03, false).timeout

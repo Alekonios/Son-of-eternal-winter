@@ -27,11 +27,11 @@ func _process(delta):
 			shake = true
 	elif is_run and moving:
 		if shake:
-			self.global_position.y -= 0.01 * delta * 5
+			self.global_position.y -= 0.015 * delta * 5
 			await get_tree().create_timer(0.15, false).timeout
 			shake = false
 		if !shake:
-			self.global_position.y += 0.01 * delta * 5
+			self.global_position.y += 0.015 * delta * 5
 			await get_tree().create_timer(0.15, false).timeout
 			shake = true
 

@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://5cv75gcj5opb"]
+[gd_scene load_steps=20 format=3 uid="uid://5cv75gcj5opb"]
 
 [ext_resource type="Texture2D" uid="uid://cw7mw2v2e0b34" path="res://Textures/other/5d0011edeb4f516b4846098c.png" id="1_re44i"]
 [ext_resource type="Script" path="res://Scripts/other/buller_hole.gd" id="2_lwsqq"]
+[ext_resource type="Texture2D" uid="uid://cvbfhf14165x3" path="res://Textures/snow_textures/0027254141_10-transformed.png" id="3_5q6s3"]
 
 [sub_resource type="Animation" id="Animation_1u7j7"]
 length = 0.001
@@ -17,9 +18,33 @@ tracks/0/keys = {
 "update": 0,
 "values": [Color(1, 1, 1, 1)]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("GPUParticles3D:emitting")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="Animation" id="Animation_o5pex"]
 resource_name = "of"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("GPUParticles3D:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
 
 [sub_resource type="Animation" id="Animation_udia1"]
 resource_name = "visible_of"
@@ -44,6 +69,82 @@ _data = {
 "visible_of": SubResource("Animation_udia1")
 }
 
+[sub_resource type="Curve" id="Curve_e4abo"]
+min_value = -360.0
+max_value = 360.0
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 360), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_a3f5m"]
+curve = SubResource("Curve_e4abo")
+
+[sub_resource type="CurveXYZTexture" id="CurveXYZTexture_5e8kn"]
+
+[sub_resource type="Curve" id="Curve_ytr12"]
+min_value = -2.0
+max_value = 2.0
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_ec1mf"]
+min_value = -2.0
+max_value = 663.33
+_data = [Vector2(0, 283.141), 0.0, 0.0, 0, 0, Vector2(0.944751, 663.33), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_rp3s2"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.961326, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveXYZTexture" id="CurveXYZTexture_a0d1c"]
+curve_x = SubResource("Curve_ytr12")
+curve_y = SubResource("Curve_ec1mf")
+curve_z = SubResource("Curve_rp3s2")
+
+[sub_resource type="Curve" id="Curve_se1js"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.961326, 0.263736), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_3t0uy"]
+curve = SubResource("Curve_se1js")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_xrbx8"]
+emission_shape_scale = Vector3(0.06, 0.06, 0.06)
+emission_shape = 1
+emission_sphere_radius = 0.5
+angle_max = 720.0
+angle_curve = SubResource("CurveTexture_a3f5m")
+directional_velocity_min = 0.0
+directional_velocity_max = 2.0
+directional_velocity_curve = SubResource("CurveXYZTexture_5e8kn")
+orbit_velocity_curve = SubResource("CurveXYZTexture_a0d1c")
+velocity_limit_curve = SubResource("CurveTexture_3t0uy")
+gravity = Vector3(11.19, 0.5, 0)
+tangential_accel_max = 1.0
+scale_min = 0.01
+scale_max = 0.05
+turbulence_enabled = true
+turbulence_noise_strength = 20.0
+turbulence_noise_speed = Vector3(4.88, 1.005, -3.77)
+turbulence_noise_speed_random = 4.0
+turbulence_influence_min = 0.0
+turbulence_influence_max = 0.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_q1jbw"]
+transparency = 1
+blend_mode = 1
+depth_draw_mode = 2
+shading_mode = 2
+albedo_texture = ExtResource("3_5q6s3")
+albedo_texture_force_srgb = true
+metallic = 1.0
+metallic_specular = 0.0
+billboard_mode = 1
+billboard_keep_scale = true
+
+[sub_resource type="QuadMesh" id="QuadMesh_ga8dy"]
+material = SubResource("StandardMaterial3D_q1jbw")
+
 [node name="Decal" type="Decal"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, -0.02)
 size = Vector3(0.05, 0.05, 0.05)
@@ -60,5 +161,18 @@ libraries = {
 "": SubResource("AnimationLibrary_bxpol")
 }
 autoplay = "of"
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+transform = Transform3D(0.502021, 0, 0, 0, 0.502021, 0, 0, 0, 0.50202, 0, 0, 0)
+transparency = 0.18
+emitting = false
+amount = 15
+lifetime = 0.1
+one_shot = true
+speed_scale = 0.5
+explosiveness = 0.12
+randomness = 1.0
+process_material = SubResource("ParticleProcessMaterial_xrbx8")
+draw_pass_1 = SubResource("QuadMesh_ga8dy")
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

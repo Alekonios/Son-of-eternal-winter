@@ -34,7 +34,7 @@ window/size/borderless=true
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/zylann.hterrain/plugin.cfg")
+enabled=PackedStringArray("res://addons/SIsilicon.vfx.lens flare/plugin.cfg", "res://addons/zylann.hterrain/plugin.cfg")
 
 [file_customization]
 
@@ -46,7 +46,8 @@ folder_colors={
 "res://Shaders/": "pink",
 "res://Sounds/": "teal",
 "res://Textures/": "purple",
-"res://fonts/": "pink"
+"res://fonts/": "pink",
+"res://lightmaps/": "yellow"
 }
 
 [input]

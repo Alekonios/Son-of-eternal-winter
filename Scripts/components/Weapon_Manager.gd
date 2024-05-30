@@ -45,6 +45,7 @@ func _process(delta):
 	#AIM
 	if Input.is_action_pressed("rc") and !cycle_aim_anim and _Inventory_Manager.current_weapon != "" and !AK_ORIG_NODE.reloadnig and !PISTOL_ORIG_NODE.reloadnig and _Inventory_Manager.current_weapon != "geyger" and !SNIPER_ORIG_NODE.reloadnig and player.moving == false:
 		is_aim = true
+		camera.fov = lerp(camera.fov, 40.0, delta * 5.0)
 		if _Inventory_Manager.current_weapon == "AK-74":
 			_State_Machine_Component.state = _State_Machine_Component.states.AIM_A
 		elif _Inventory_Manager.current_weapon == "pistol":
@@ -56,6 +57,7 @@ func _process(delta):
 		cycle_aim_anim = true
 	
 	elif !Input.is_action_pressed("rc") and cycle_aim_anim:
+		camera.fov = lerp(camera.fov, 65.0, delta * 5.0)
 		if is_aim:
 			is_aim = false
 			player.mouse_sens = 0.05
@@ -77,7 +79,7 @@ func shoot():
 					_State_Machine_Component.ak_animator.play("gilza")
 					shoot_cd = 0.1
 					player.kickback(0.001, -0.002, 0.02, 0.001)
-					player.camera_shake_func(0.0005)
+					player.camera_shake_func(0.0005, 0.001)
 					shoot_func("_body")
 					for i in fires_AK:
 						i.rotation.z = randi_range(1, 360)
@@ -101,7 +103,7 @@ func shoot():
 					_State_Machine_Component.pistol_animator.play("Armature|FPS_Pistol_Fire")
 					shoot_cd = 0.2
 					player.kickback(0.001, -0.002, 0.01, 0.0001)
-					player.camera_shake_func(0.0004)
+					player.camera_shake_func(0.0005, 0.0005)
 					shoot_func("_body")
 					for i in fires_pistol:
 						i.rotation.z = randi_range(1, 360)
@@ -127,7 +129,7 @@ func shoot():
 					_State_Machine_Component.sniper_animator.play("Rig|SRifle_Shot_nosight")
 					shoot_cd = 1.8
 					player.kickback(0.001, -0.002, 0.03, 0.001)
-					player.camera_shake_func(0.008)
+					player.camera_shake_func(0.008, 0.008)
 					shoot_func("_body")
 					for i in fires_sniper:
 						i.rotation.z = randi_range(1, 360)
@@ -152,7 +154,7 @@ func shoot():
 					SAIGA_ORIG_NODE.ammo -= 1
 					shoot_cd = 0.6
 					player.kickback(0.001, -0.001, 0.02, 0.01)
-					player.camera_shake_func(0.0005)
+					player.camera_shake_func(0.0005, 0.0009)
 					shoot_func("_body")
 					_Sound_Component.saiga_sounds[0].play()
 					$"../ARMS_CAM_POS/saiga_cam_pos/saiga_aim_pos/saiga_arms/Sketchfab_model/95ac79517a844ea1b13875322aa37f27_fbx/Object_2/RootNode/Rig/Object_6/Skeleton3D/BoneAttachment3D/GPUParticles3D".emitting = true

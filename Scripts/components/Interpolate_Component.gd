@@ -18,7 +18,7 @@ func _process(delta):
 	elif state == states.RUN: 
 		camera.global_position= lerp(camera.global_position, cam_origin[5].global_position, delta * 5)
 	elif state == states.IDLE_A:
-		camera.global_position= lerp(camera.global_position, cam_origin[3].global_position, delta * 5)
+		camera.global_position= lerp(camera.global_position, cam_origin[15].global_position, delta * 5)
 	elif state == states.WALK_A:
 		camera.global_position= lerp(camera.global_position, cam_origin[4].global_position, delta * 5)
 	elif state == states.RUN_A:
